@@ -1,0 +1,25 @@
+fileFormatVersion: 2
+guid: 296174b2d21e68f42a414f1e0e2aaf3b
+labels:
+- usfx
+- imphenzia
+- audience
+- spectator
+- spectators
+- arena
+- stereo
+- crowd
+- clap
+- claps
+- cheer
+- cheers
+AudioImporter:
+  serializedVersion: 4
+  format: -1
+  quality: -1
+  stream: 1
+  3D: 1
+  forceToMono: 0
+  useHardware: 0
+  loopable: 0
+  userData: 

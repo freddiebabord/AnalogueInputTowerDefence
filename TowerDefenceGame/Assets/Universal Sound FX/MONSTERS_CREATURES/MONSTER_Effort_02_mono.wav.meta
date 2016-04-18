@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: 810483457eae06c4c922b28b788d776c
+labels:
+- usfx
+- imphenzia
+- monster
+- gigant
+- effort
+- struggle
+- mono
+AudioImporter:
+  serializedVersion: 4
+  format: -1
+  quality: -1
+  stream: 1
+  3D: 1
+  forceToMono: 0
+  useHardware: 0
+  loopable: 0
+  userData: 

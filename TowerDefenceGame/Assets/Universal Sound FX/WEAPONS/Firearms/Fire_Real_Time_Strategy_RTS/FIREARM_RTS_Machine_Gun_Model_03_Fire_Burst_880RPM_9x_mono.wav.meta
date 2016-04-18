@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: be2b98c12d3f0fd4ab0a361385770208
+labels:
+- usfx
+- imphenzia
+- weapon
+- machinegun
+- machine gun
+- gun
+- RTS
+- fire
+- loop
+- mono
+AudioImporter:
+  serializedVersion: 4
+  format: -1
+  quality: -1
+  stream: 1
+  3D: 1
+  forceToMono: 0
+  useHardware: 0
+  loopable: 0
+  userData: 

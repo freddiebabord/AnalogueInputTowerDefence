@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 38e92f4c4d0098343aa017a3b3d1f12b
+labels:
+- usfx
+- imphenzia
+- monster
+- gigant
+- growl
+- mono
+AudioImporter:
+  serializedVersion: 4
+  format: -1
+  quality: -1
+  stream: 1
+  3D: 1
+  forceToMono: 0
+  useHardware: 0
+  loopable: 0
+  userData: 

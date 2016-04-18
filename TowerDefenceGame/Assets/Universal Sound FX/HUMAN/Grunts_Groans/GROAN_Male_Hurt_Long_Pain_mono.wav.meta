@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 27e118d54aa58304780a5f6bb96cb64c
+labels:
+- usfx
+- imphenzia
+- human
+- male
+- groan
+- hurt
+- mono
+- voice
+- pain
+AudioImporter:
+  serializedVersion: 4
+  format: -1
+  quality: -1
+  stream: 1
+  3D: 1
+  forceToMono: 0
+  useHardware: 0
+  loopable: 0
+  userData: 

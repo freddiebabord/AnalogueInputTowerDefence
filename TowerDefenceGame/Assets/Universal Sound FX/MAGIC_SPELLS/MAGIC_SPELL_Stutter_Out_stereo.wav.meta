@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 8ebf988a888d1be42806770d14ba0722
+labels:
+- usfx
+- imphenzia
+- magic
+- spell
+- stereo
+- wizard
+- sourcer
+- cast
+- enchant
+AudioImporter:
+  serializedVersion: 4
+  format: -1
+  quality: -1
+  stream: 1
+  3D: 1
+  forceToMono: 0
+  useHardware: 0
+  loopable: 0
+  userData: 

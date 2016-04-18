@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 31d43461da62d144c9d69404fe7999a1
+labels:
+- usfx
+- imphenzia
+- explosion
+- explode
+- bang
+- stereo
+AudioImporter:
+  serializedVersion: 4
+  format: -1
+  quality: -1
+  stream: 1
+  3D: 1
+  forceToMono: 0
+  useHardware: 0
+  loopable: 0
+  userData: 

@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: b6956a7842fc6474ea26f8c4b3e77719
+labels:
+- usfx
+- imphenzia
+- weapon
+- medieval
+- bow
+- arrow
+- archer
+- archery
+- stereo
+- hit
+AudioImporter:
+  serializedVersion: 4
+  format: -1
+  quality: -1
+  stream: 1
+  3D: 1
+  forceToMono: 0
+  useHardware: 0
+  loopable: 0
+  userData: 

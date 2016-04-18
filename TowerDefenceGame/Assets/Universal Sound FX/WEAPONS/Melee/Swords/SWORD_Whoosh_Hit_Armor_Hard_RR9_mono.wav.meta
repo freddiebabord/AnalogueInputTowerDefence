@@ -1,0 +1,25 @@
+fileFormatVersion: 2
+guid: d749a299b8cf427458f36ff641158df3
+labels:
+- usfx
+- imphenzia
+- mono
+- sword
+- impact
+- hit
+- medieval
+- metal
+- armor
+- clang
+- cling
+- whoosh
+AudioImporter:
+  serializedVersion: 4
+  format: -1
+  quality: -1
+  stream: 1
+  3D: 1
+  forceToMono: 0
+  useHardware: 0
+  loopable: 0
+  userData: 

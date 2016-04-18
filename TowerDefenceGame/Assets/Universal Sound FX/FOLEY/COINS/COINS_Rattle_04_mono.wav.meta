@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 63af593e0ab80574e9094f8bf21dc6bd
+labels:
+- usfx
+- imphenzia
+- mono
+- coin
+- coins
+- rattle
+- money
+- cash
+- pay
+- metal
+AudioImporter:
+  serializedVersion: 4
+  format: -1
+  quality: -1
+  stream: 1
+  3D: 1
+  forceToMono: 0
+  useHardware: 0
+  loopable: 0
+  userData: 
