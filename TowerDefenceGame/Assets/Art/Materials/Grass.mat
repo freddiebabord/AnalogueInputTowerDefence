@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Grass
-  m_Shader: {fileID: 7, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 4800000, guid: 605b487a9d7918649ae7b0b8d56f17e3, type: 3}
   m_ShaderKeywords: []
   m_CustomRenderQueue: -1
   m_SavedProperties:
@@ -26,3 +26,11 @@ Material:
         first:
           name: _Color
         second: {r: .358811677, g: .823529422, b: .175605565, a: 1}
+      data:
+        first:
+          name: _DiffColor
+        second: {r: .101960786, g: .627451003, b: 0, a: 1}
+      data:
+        first:
+          name: _ShadowColour
+        second: {r: .274509817, g: .56078434, b: .117647059, a: 1}
