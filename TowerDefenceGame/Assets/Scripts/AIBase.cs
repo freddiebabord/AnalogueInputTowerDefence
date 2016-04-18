@@ -19,7 +19,6 @@ public class AIBase : MonoBehaviour {
 	// Use this for initialization
 	public virtual void Start () 
 	{
-
 	}
 
 	public virtual void Update()
