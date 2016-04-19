@@ -23,7 +23,7 @@ public class TowerClass : MonoBehaviour {
 	
 	public int level;
 
-	float rotateSpeed = 1f;
+	float rotateSpeed = 3f;
 
 	public float lastShot = 0f;
 
@@ -36,12 +36,15 @@ public class TowerClass : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		ai = GameObject.FindGameObjectsWithTag ("Enemy");
 	
 		if (lastShot > cooldown) 
 		{
 			isFired = false;
 		}
+
+		if (!isFired)
+			ai = GameObject.FindGameObjectsWithTag ("Enemy");
+
 
 		if (HasEnemyInSight (ai) && !isFired) 
 		{
@@ -60,14 +63,15 @@ public class TowerClass : MonoBehaviour {
 		{
 			direction = enemy.gameObject.transform.position - gameObject.transform.position;
 
-			Quaternion rotate = Quaternion.LookRotation(direction);
+			Quaternion rotate = Quaternion.LookRotation (direction);
 			rotate.x = 0;
 			rotate.z = 0;
 
-			gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, rotate, Time.deltaTime * rotateSpeed);
+			gameObject.transform.rotation = Quaternion.Slerp (gameObject.transform.rotation, rotate, Time.deltaTime * rotateSpeed);
 
 			return true;
 		}
+
 		return false;
 	}
 
@@ -81,7 +85,7 @@ public class TowerClass : MonoBehaviour {
 		GameObject go = Instantiate (bullet) as GameObject;
 		go.transform.position = spawnPoint.transform.position;
 		go.transform.rotation = spawnPoint.transform.rotation;
-		go.GetComponent<Rigidbody> ().velocity = direction;
+		go.GetComponent<Rigidbody> ().velocity = direction * 4;
 	}
 
 	GameObject GetClosestEnemy(GameObject[] enemies)
@@ -92,11 +96,16 @@ public class TowerClass : MonoBehaviour {
 
 		for (int i = 0; i < enemies.Length; i++) 
 		{
-
-			if (Vector3.Distance (enemies [i].transform.position, goal.transform.position) < close) 
+			if(enemies[i] != null)
 			{
-				close = Vector3.Distance (enemies [i].transform.position, goal.transform.position);
-				index = i;
+				if (Vector3.Distance (gameObject.transform.position, enemies[i].gameObject.transform.position) < radius)
+				{
+					if (Vector3.Distance (enemies [i].transform.position, goal.transform.position) < close) 
+					{
+						close = Vector3.Distance (enemies [i].transform.position, goal.transform.position);
+						index = i;
+					}
+				}
 			}
 		}
 
