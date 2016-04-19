@@ -37,6 +37,7 @@ public class RailManager : MonoBehaviour {
 	{
 		targetNodeIndex.Add(0);
 		directionVector.Add(new Vector3(0,0,0));
+		entity.transform.parent = transform;
 		objectToMove.Add (entity.transform);
 	}
 
@@ -44,6 +45,7 @@ public class RailManager : MonoBehaviour {
 	{
 		targetNodeIndex.Add(0);
 		directionVector.Add(new Vector3(0,0,0));
+		entity.transform.parent = transform;
 		objectToMove.Insert (index, entity.transform);
 	}
 	
@@ -69,6 +71,8 @@ public class RailManager : MonoBehaviour {
 			
 			//Moving the object towards the target node.
 			directionVector[i] = (railNodes[targetNodeIndex[i]].position - objectToMove[i].position).normalized;
+			if(objectToMove[i].GetComponent<Rigidbody>() != null)
+				objectToMove[i].GetComponent<Rigidbody>().velocity = directionVector[i] * moveSpeed * Time.deltaTime;
 			objectToMove[i].Translate (directionVector[i] * Time.deltaTime * moveSpeed, Space.World);
 			
 			//Rotating the object to face the target node

@@ -15,10 +15,12 @@ public class AIBase : MonoBehaviour {
 	public GameObject inspectorOverrideTarget;
 	[SerializeField]
 	protected int goldDrop;
+	protected GameManager game;
 
 	// Use this for initialization
 	public virtual void Start () 
 	{
+		game = GameObject.FindObjectOfType<GameManager> ();
 	}
 
 	public virtual void Update()
@@ -26,9 +28,10 @@ public class AIBase : MonoBehaviour {
 		if (hp <= 0)
 			Die ();
 
-		if(currentTarget != null)
-		if (currentTarget != inspectorOverrideTarget)
-			currentTarget = inspectorOverrideTarget;
+		if (currentTarget != null) {
+			if (currentTarget != inspectorOverrideTarget)
+				currentTarget = inspectorOverrideTarget;
+		}
 	}
 
 	public virtual void Attack()
@@ -37,6 +40,7 @@ public class AIBase : MonoBehaviour {
 
 	public virtual void Die()
 	{
+		game.AddGold (goldDrop);
 		Destroy (gameObject);
 	}
 
