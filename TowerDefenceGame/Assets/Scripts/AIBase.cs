@@ -4,7 +4,7 @@ using System.Collections;
 public class AIBase : MonoBehaviour {
 
 	[SerializeField]
-	protected float hp;
+	protected float hp = 100;
 	[SerializeField]
 	protected float speed;
 	[SerializeField]
@@ -49,4 +49,5 @@ public class AIBase : MonoBehaviour {
 	{
 		hp -= damageAmount;
 	}
+
 }
