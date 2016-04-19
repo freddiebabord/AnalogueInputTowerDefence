@@ -17,6 +17,7 @@ public struct MobWave {
 	public WaveType Type;
 	public GameObject Prefab;
 	public int Count;
+	public float waveEndTimer;
 }
 
 public class WaveManager : MonoBehaviour {
@@ -31,11 +32,10 @@ public class WaveManager : MonoBehaviour {
 	//Spawn rate in seconds
 	[SerializeField]
 	private float enemySpawnRate = 0.5f;
-	[SerializeField]
-	private float waveSleepTimer = 5;
 	private int waveToSpawn = 0;
 	private int spawnedEnemies = 0;
-
+	public int maxWaves = 0;
+	public int currentWave = 0;
 	// Use this for initialization
 	void Start () {
 		aiNodePathing = GetComponent<RailManager> ();
@@ -53,7 +53,6 @@ public class WaveManager : MonoBehaviour {
 				{
 					if(aiNodePathing.EnemiesThisCycle == 0)
 					{
-						spawnedEnemies = 0;
 						StartCoroutine(WaveComplete());
 					}
 				}
@@ -64,9 +63,10 @@ public class WaveManager : MonoBehaviour {
 	IEnumerator WaveComplete()
 	{
 		waveInterimWait = true;
-		aiNodePathing.objectToMove.Clear ();
-		yield return new WaitForSeconds (waveSleepTimer);
+		aiNodePathing.ResetEntities ();
+		yield return new WaitForSeconds (Waves[waveToSpawn].waveEndTimer);
 		waveToSpawn++;
+		spawnedEnemies = 0;
 		waveInterimWait = false;
 	}
 
@@ -75,8 +75,7 @@ public class WaveManager : MonoBehaviour {
 	{
 		isSpawning = true;
 		GameObject obj = Instantiate (Waves [waveToSpawn].Prefab, spawnPoint.position, spawnPoint.rotation) as GameObject;
-		obj.tag = "Enemy";
-		aiNodePathing.AddEntity(obj, spawnedEnemies);
+		aiNodePathing.AddEntity(obj);
 		yield return new WaitForSeconds (enemySpawnRate);
 		spawnedEnemies++;
 		isSpawning = false;

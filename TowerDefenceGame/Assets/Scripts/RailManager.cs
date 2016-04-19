@@ -129,4 +129,11 @@ public class RailManager : MonoBehaviour {
 		//Checking if the distance from the object to the target node is less than the proximity distance.
 		return (Vector3.Distance (objectToMove[index].position, railNodes [nodeIndex].position) < nodeProximityDistance);
 	}
+
+	public void ResetEntities()
+	{
+		objectToMove.Clear ();
+		targetNodeIndex.Clear ();
+		directionVector.Clear ();
+	}
 }
