@@ -9,7 +9,7 @@ public class TowerClass : MonoBehaviour {
 
 	public GameObject spawnPoint;
 
-	public GameObject goal;
+	GameObject goal;
 
 	int health = 100;
 
@@ -23,7 +23,7 @@ public class TowerClass : MonoBehaviour {
 	
 	public int level;
 
-	float rotateSpeed = 3f;
+	float rotateSpeed = 4f;
 
 	public float lastShot = 0f;
 
@@ -32,6 +32,11 @@ public class TowerClass : MonoBehaviour {
 	bool isFired = false;
 
 	Vector3 direction = new Vector3(0,0,0);
+
+	void Start()
+	{
+		goal = GameObject.FindGameObjectWithTag("Goal");
+	}
 
 	// Update is called once per frame
 	void Update () {
@@ -82,10 +87,9 @@ public class TowerClass : MonoBehaviour {
 		lastShot = 0f;
 
 		Vector3 position = gameObject.transform.position;
-		GameObject go = Instantiate (bullet) as GameObject;
-		go.transform.position = spawnPoint.transform.position;
-		go.transform.rotation = spawnPoint.transform.rotation;
-		go.GetComponent<Rigidbody> ().velocity = direction * 4;
+		GameObject go = Instantiate (bullet, spawnPoint.transform.position, spawnPoint.transform.rotation) as GameObject;
+		go.transform.localScale = new Vector3 (1, 1, 1);
+		go.GetComponent<Rigidbody> ().velocity = direction * 3;
 	}
 
 	GameObject GetClosestEnemy(GameObject[] enemies)
