@@ -20,6 +20,13 @@ Material:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _DiffTexture
+        second:
+          m_Texture: {fileID: 2800000, guid: d569c8ac0ae4dde4c96f010ebc11c902, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
     m_Floats: {}
     m_Colors:
       data:
@@ -29,8 +36,8 @@ Material:
       data:
         first:
           name: _DiffColor
-        second: {r: .91911763, g: .762327015, b: .527140975, a: 1}
+        second: {r: 1, g: 1, b: 1, a: 1}
       data:
         first:
           name: _ShadowColour
-        second: {r: .727941155, g: .537760973, b: .128460199, a: 1}
+        second: {r: .529411793, g: .529411793, b: .529411793, a: 1}
