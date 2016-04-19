@@ -748,6 +748,10 @@ Prefab:
       propertyPath: m_TagString
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 5442724, guid: 28945923513cfe945acce5c8811d0000, type: 2}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 28945923513cfe945acce5c8811d0000, type: 2}
   m_RootGameObject: {fileID: 1828405139}
@@ -2423,7 +2427,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 4
   m_CollisionDetection: 0
 --- !u!136 &1062721354
 CapsuleCollider:
@@ -4749,7 +4753,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 4
   m_CollisionDetection: 0
 --- !u!136 &1781575903
 CapsuleCollider:
@@ -4997,6 +5001,10 @@ Prefab:
       propertyPath: m_TagString
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 5442724, guid: 28945923513cfe945acce5c8811d0000, type: 2}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 28945923513cfe945acce5c8811d0000, type: 2}
   m_RootGameObject: {fileID: 1781575901}
@@ -5101,7 +5109,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 4
   m_CollisionDetection: 0
 --- !u!136 &1828405142
 CapsuleCollider:
@@ -5840,6 +5848,10 @@ Prefab:
     - target: {fileID: 142720, guid: 28945923513cfe945acce5c8811d0000, type: 2}
       propertyPath: m_TagString
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 5442724, guid: 28945923513cfe945acce5c8811d0000, type: 2}
+      propertyPath: m_Constraints
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 28945923513cfe945acce5c8811d0000, type: 2}
