@@ -3,11 +3,13 @@ using System.Collections;
 
 public class TowerClass : MonoBehaviour {
 
-	public GameObject ai;
+	GameObject[] ai;
 
 	public GameObject bullet;
 
 	public GameObject spawnPoint;
+
+	public GameObject goal;
 
 	int health = 100;
 
@@ -33,6 +35,8 @@ public class TowerClass : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+
+		ai = GameObject.FindGameObjectsWithTag ("Enemy");
 	
 		if (lastShot > cooldown) 
 		{
@@ -48,8 +52,10 @@ public class TowerClass : MonoBehaviour {
 
 	}
 
-	bool HasEnemyInSight(GameObject enemy)
+	bool HasEnemyInSight(GameObject[] enemies)
 	{
+		GameObject enemy = GetClosestEnemy (enemies);
+
 		if (Vector3.Distance (gameObject.transform.position, enemy.gameObject.transform.position) < radius) 
 		{
 			direction = enemy.gameObject.transform.position - gameObject.transform.position;
@@ -75,7 +81,26 @@ public class TowerClass : MonoBehaviour {
 		GameObject go = Instantiate (bullet) as GameObject;
 		go.transform.position = spawnPoint.transform.position;
 		go.transform.rotation = spawnPoint.transform.rotation;
-		go.AddComponent<Rigidbody> ();
 		go.GetComponent<Rigidbody> ().velocity = direction;
 	}
+
+	GameObject GetClosestEnemy(GameObject[] enemies)
+	{
+		float close = 10000000;
+
+		int index = 0;
+
+		for (int i = 0; i < enemies.Length; i++) 
+		{
+
+			if (Vector3.Distance (enemies [i].transform.position, goal.transform.position) < close) 
+			{
+				close = Vector3.Distance (enemies [i].transform.position, goal.transform.position);
+				index = i;
+			}
+		}
+
+		return enemies [index];
+	}
+	
 }
