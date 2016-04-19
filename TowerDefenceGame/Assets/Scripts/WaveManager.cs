@@ -75,6 +75,7 @@ public class WaveManager : MonoBehaviour {
 	{
 		isSpawning = true;
 		GameObject obj = Instantiate (Waves [waveToSpawn].Prefab, spawnPoint.position, spawnPoint.rotation) as GameObject;
+		obj.tag = "Enemy";
 		aiNodePathing.AddEntity(obj, spawnedEnemies);
 		yield return new WaitForSeconds (enemySpawnRate);
 		spawnedEnemies++;
