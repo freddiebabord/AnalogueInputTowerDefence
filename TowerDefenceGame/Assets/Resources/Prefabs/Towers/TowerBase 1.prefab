@@ -105,6 +105,7 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+<<<<<<< HEAD
 --- !u!1 &136528
 GameObject:
   m_ObjectHideFlags: 1
@@ -124,6 +125,9 @@ GameObject:
   m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!1 &136530
+=======
+--- !u!1 &144094
+>>>>>>> Whatever-Adam
 GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -182,12 +186,20 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 136522}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+<<<<<<< HEAD
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: .5, y: .200000003, z: .5}
   m_Children:
   - {fileID: 436528}
   - {fileID: 436518}
   m_Father: {fileID: 436524}
+=======
+  m_LocalPosition: {x: 1.20561528, y: 5.03520107, z: -17.7313004}
+  m_LocalScale: {x: 2, y: 1, z: 2}
+  m_Children:
+  - {fileID: 444088}
+  m_Father: {fileID: 0}
+>>>>>>> Whatever-Adam
   m_RootOrder: 0
 --- !u!4 &436524
 Transform:
@@ -217,6 +229,7 @@ Transform:
   - {fileID: 436516}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+<<<<<<< HEAD
 --- !u!4 &436528
 Transform:
   m_ObjectHideFlags: 1
@@ -230,6 +243,9 @@ Transform:
   m_Father: {fileID: 436522}
   m_RootOrder: 0
 --- !u!4 &436530
+=======
+--- !u!4 &444094
+>>>>>>> Whatever-Adam
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -301,6 +317,7 @@ Renderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
   m_SortingOrder: 0
+<<<<<<< HEAD
 --- !u!23 &2336522
 Renderer:
   m_ObjectHideFlags: 1
@@ -322,6 +339,9 @@ Renderer:
   m_SortingLayerID: 0
   m_SortingOrder: 0
 --- !u!23 &2336524
+=======
+--- !u!23 &2344094
+>>>>>>> Whatever-Adam
 Renderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -362,6 +382,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 136522}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+<<<<<<< HEAD
 --- !u!33 &3336522
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -370,10 +391,14 @@ MeshFilter:
   m_GameObject: {fileID: 136526}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!33 &3336524
+=======
+--- !u!33 &3344094
+>>>>>>> Whatever-Adam
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
+<<<<<<< HEAD
   m_GameObject: {fileID: 136528}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!54 &5436516
@@ -392,6 +417,11 @@ Rigidbody:
   m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!114 &11436516
+=======
+  m_GameObject: {fileID: 144094}
+  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &11444092
+>>>>>>> Whatever-Adam
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -402,6 +432,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af5cacc445c097a42a0b7114d13f08bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< HEAD
 --- !u!114 &11436518
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -415,10 +446,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet: {fileID: 136520}
   spawnPoint: {fileID: 136530}
+=======
+  bullet: {fileID: 0}
+  spawnPoint: {fileID: 144082}
+  goal: {fileID: 0}
+>>>>>>> Whatever-Adam
   upgradable: 0
   level: 0
   lastShot: 0
   cooldown: 1
+<<<<<<< HEAD
 --- !u!135 &13536516
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -432,6 +469,9 @@ SphereCollider:
   m_Radius: .5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!136 &13636516
+=======
+--- !u!136 &13644088
+>>>>>>> Whatever-Adam
 CapsuleCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
