@@ -10057,9 +10057,9 @@ Light:
   m_Shadows:
     m_Type: 2
     m_Resolution: 3
-    m_Strength: .5
+    m_Strength: 1
     m_Bias: 0
-    m_Softness: 3.97000003
+    m_Softness: 4
     m_SoftnessFade: .100000001
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
@@ -10081,7 +10081,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 259534735}
-  m_LocalRotation: {x: .408217937, y: -.234569728, z: .109381661, w: .875426114}
+  m_LocalRotation: {x: .446570218, y: -.393359065, z: .0431356505, w: .802485526}
   m_LocalPosition: {x: -1.06452286, y: 3.71011424, z: 6.98838758}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -37760,6 +37760,8 @@ GameObject:
   - 124: {fileID: 994572644}
   - 92: {fileID: 994572643}
   - 81: {fileID: 994572642}
+  - 114: {fileID: 994572647}
+  - 114: {fileID: 994572648}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -37826,12 +37828,46 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 994572641}
-  m_LocalRotation: {x: .119509332, y: -.856786668, z: .229575306, w: .446014881}
+  m_LocalRotation: {x: -.0990457535, y: .892399132, z: -.239117622, w: -.369643778}
   m_LocalPosition: {x: 18.6000004, y: 21.7999992, z: 8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
+--- !u!114 &994572647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 994572641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57378565f2adf4d3fbe949ebe1453f09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mode: 1
+  sensitivityDepth: 1
+  sensitivityNormals: 1
+  lumThreshhold: .200000003
+  edgeExp: 1
+  sampleDist: .200000003
+  edgesOnly: .100000001
+  edgesOnlyBgColor: {r: 1, g: 1, b: 1, a: 1}
+  edgeDetectShader: {fileID: 4800000, guid: 0d1644bdf064147baa97f235fc5b4903, type: 3}
+--- !u!114 &994572648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 994572641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d5488e098d8f4eb492591bb089fe793, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  strengthX: .0500000007
+  strengthY: .0500000007
+  fishEyeShader: {fileID: 4800000, guid: 874ceab4425f64bccb1d14032f4452b1, type: 3}
 --- !u!1 &996560180
 GameObject:
   m_ObjectHideFlags: 0
