@@ -25,7 +25,7 @@ public class WaveManager : MonoBehaviour {
 	[HideInInspector]
 	public List<MobWave> Waves = new List<MobWave>();
 	[SerializeField]
-	private Transform spawnPoint;
+	private List<Transform> spawnPoint = new List<Transform>();
 	private RailManager aiNodePathing;
 	private bool isSpawning = false;
 	private bool waveInterimWait = false;
@@ -36,6 +36,8 @@ public class WaveManager : MonoBehaviour {
 	private int spawnedEnemies = 0;
 	public int maxWaves = 0;
 	public int currentWave = 0;
+    private int currentSpawnPoint;
+
 	// Use this for initialization
 	void Start () {
 		aiNodePathing = GetComponent<RailManager> ();
@@ -74,7 +76,8 @@ public class WaveManager : MonoBehaviour {
 	IEnumerator SpawnEnemy()
 	{
 		isSpawning = true;
-		GameObject obj = Instantiate (Waves [waveToSpawn].Prefab, spawnPoint.position, spawnPoint.rotation) as GameObject;
+        currentSpawnPoint = currentWave > 5 ? 0 : UnityEngine.Random.Range(0, spawnPoint.Count);
+        GameObject obj = Instantiate(Waves[waveToSpawn].Prefab, spawnPoint[currentSpawnPoint].position, spawnPoint[currentSpawnPoint].rotation) as GameObject;
 		aiNodePathing.AddEntity(obj);
 		yield return new WaitForSeconds (enemySpawnRate);
 		spawnedEnemies++;
