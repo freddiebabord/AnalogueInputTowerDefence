@@ -22,19 +22,23 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _DiffTexture
+          name: _DiffuseTex
         second:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _DiffuseTex
+          name: _DiffTexture
         second:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
     m_Floats:
+      data:
+        first:
+          name: _ShadeSteps
+        second: 4
       data:
         first:
           name: _GradientSharpness
@@ -43,15 +47,15 @@ Material:
         first:
           name: _node_3937
         second: .100000001
-      data:
-        first:
-          name: _ShadeSteps
-        second: 4
     m_Colors:
       data:
         first:
           name: _Color
         second: {r: .358811677, g: .823529422, b: .175605565, a: 1}
+      data:
+        first:
+          name: _DiffuseColour
+        second: {r: .361030847, g: .602941155, b: .22166954, a: 1}
       data:
         first:
           name: _DiffColor
@@ -60,7 +64,3 @@ Material:
         first:
           name: _ShadowColour
         second: {r: .625, g: .576825559, b: .188419104, a: 1}
-      data:
-        first:
-          name: _DiffuseColour
-        second: {r: .361030847, g: .602941155, b: .22166954, a: 1}
