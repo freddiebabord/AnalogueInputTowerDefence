@@ -36,7 +36,7 @@ public class WaveManager : MonoBehaviour {
 	private int spawnedEnemies = 0;
 	public int maxWaves = 0;
 	public int currentWave = 0;
-    private int currentSpawnPoint;
+    private int currentSpawnPoint = 0;
 
 	// Use this for initialization
 	void Start () {

@@ -5,6 +5,8 @@ public class TowerClass : MonoBehaviour {
 
 	GameObject[] ai;
 
+	GameObject chosen;
+
 	public GameObject bullet;
 
 	public GameObject spawnPoint;
@@ -29,17 +31,17 @@ public class TowerClass : MonoBehaviour {
 
 	public float cooldown = 3f;
 
-	bool isFired = false;
+	public bool isFired = false;
 
 	Vector3 direction = new Vector3(0,0,0);
 
-	void Start()
+	protected void Start()
 	{
 		goal = GameObject.FindGameObjectWithTag("Goal");
 	}
 
 	// Update is called once per frame
-	void Update () {
+	public virtual void Update () {
 
 	
 		if (lastShot > cooldown) 
@@ -62,25 +64,28 @@ public class TowerClass : MonoBehaviour {
 
 	bool HasEnemyInSight(GameObject[] enemies)
 	{
-		GameObject enemy = GetClosestEnemy (enemies);
+		chosen = GetClosestEnemy (enemies);
 
-		if (Vector3.Distance (gameObject.transform.position, enemy.gameObject.transform.position) < radius) 
+		if (chosen != null) 
 		{
-			direction = enemy.gameObject.transform.position - gameObject.transform.position;
+			if (Vector3.Distance (gameObject.transform.position, chosen.gameObject.transform.position) < radius) 
+			{
+				direction = chosen.gameObject.transform.position - gameObject.transform.position;
 
-			Quaternion rotate = Quaternion.LookRotation (direction);
-			rotate.x = 0;
-			rotate.z = 0;
+				Quaternion rotate = Quaternion.LookRotation (direction);
+				rotate.x = 0;
+				rotate.z = 0;
 
-			gameObject.transform.rotation = Quaternion.Slerp (gameObject.transform.rotation, rotate, Time.deltaTime * rotateSpeed);
+				gameObject.transform.rotation = Quaternion.Slerp (gameObject.transform.rotation, rotate, Time.deltaTime * rotateSpeed);
 
-			return true;
+				return true;
+			}
 		}
 
 		return false;
 	}
 
-	virtual public void Shooting()
+	public virtual void Shooting()
 	{
 		isFired = true;
 
@@ -113,7 +118,12 @@ public class TowerClass : MonoBehaviour {
 			}
 		}
 
-		return enemies [index];
+		return index < enemies.Length ? enemies[index] : null;
+	}
+
+	public GameObject GetChosen()
+	{
+		return chosen;
 	}
 	
 }
