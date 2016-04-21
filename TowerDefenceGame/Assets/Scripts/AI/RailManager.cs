@@ -7,6 +7,7 @@ public enum RailRotationMode
 	None, Snap, Slerp
 };
 
+[RequireComponent (typeof(GameManager))]
 public class RailManager : MonoBehaviour {
 	
 	public bool activated = true;
