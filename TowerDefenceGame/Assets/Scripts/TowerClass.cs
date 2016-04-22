@@ -3,6 +3,8 @@ using System.Collections;
 
 public class TowerClass : MonoBehaviour {
 
+	RailManager rails;
+
 	GameObject[] ai;
 
 	GameObject chosen;
@@ -17,27 +19,32 @@ public class TowerClass : MonoBehaviour {
 
 	int damage = 5;
 
-	float fireRate = 3f;
-
-	public bool upgradable;
-
-	float radius = 12f;
+	int levelOfUpgrade = 0;
 	
-	public int level;
+	bool upgradable;
+
+	[SerializeField]
+	float radius = 10f;
+	
+	int level = 0;
 
 	float rotateSpeed = 4f;
 
-	public float lastShot = 0f;
+	protected float lastShot = 0f;
 
-	public float cooldown = 3f;
+	float cooldown = 0f;
 
-	public bool isFired = false;
+	protected bool isFired = false;
 
 	Vector3 direction = new Vector3(0,0,0);
 
-	protected void Start()
+	int classHealth = 0;
+
+	protected virtual void Start()
 	{
-		goal = GameObject.FindGameObjectWithTag("Goal");
+		SetGoal(GameObject.FindGameObjectWithTag("Goal"));
+		SetTower (0, 1, 0);
+		SetCooldown (2);
 	}
 
 	// Update is called once per frame
@@ -94,26 +101,21 @@ public class TowerClass : MonoBehaviour {
 		Vector3 position = gameObject.transform.position;
 		GameObject go = Instantiate (bullet, spawnPoint.transform.position, spawnPoint.transform.rotation) as GameObject;
 		go.transform.localScale = new Vector3 (1, 1, 1);
-		go.GetComponent<Rigidbody> ().velocity = direction * 3;
+		go.GetComponent<Rigidbody> ().velocity = direction * 3 + (GetChosen().rigidbody.velocity * Time.deltaTime);
 	}
 
 	GameObject GetClosestEnemy(GameObject[] enemies)
 	{
-		float close = 10000000;
-
 		int index = 0;
 
 		for (int i = 0; i < enemies.Length; i++) 
 		{
 			if(enemies[i] != null)
 			{
-				if (Vector3.Distance (gameObject.transform.position, enemies[i].gameObject.transform.position) < radius)
+				if(Vector3.Distance(transform.position, enemies[i].transform.position) < radius)
 				{
-					if (Vector3.Distance (enemies [i].transform.position, goal.transform.position) < close) 
-					{
-						close = Vector3.Distance (enemies [i].transform.position, goal.transform.position);
-						index = i;
-					}
+					index = i;
+					break;
 				}
 			}
 		}
@@ -125,5 +127,86 @@ public class TowerClass : MonoBehaviour {
 	{
 		return chosen;
 	}
-	
+
+	public void SetClassHealth(int hp)
+	{
+		classHealth = hp;
+	}
+
+	public void SetLevel(int level_)
+	{
+		level += level_;
+	}
+
+	public void SetHealth()
+	{
+		health += level * classHealth;
+	}
+
+	public void SetRadius(float radii)
+	{
+		radius += level * radii;
+	}
+
+	public void SetLevelOfUpgrade(int upgrade)
+	{
+		levelOfUpgrade += upgrade;
+	}
+
+	public void SetTower(int hp, int lvl, float rad)
+	{
+		SetClassHealth (hp);
+		SetLevel (lvl);
+		SetRadius (rad);
+		SetHealth ();
+	}
+
+	public void SetGoal(GameObject goal_)
+	{
+		goal = goal_;
+	}
+
+	public int GetClassHealth()
+	{
+		return classHealth;
+	}
+
+	public int GetHealth()
+	{
+		return health;
+	}
+
+	public float GetRadius()
+	{
+		return radius;
+	}
+
+	public void SetCooldown(int cool)
+	{
+		cooldown = cool;
+	}
+
+	public int GetLevel()
+	{
+		return level;
+	}
+
+	public void Upgrade()
+	{
+		if (levelOfUpgrade >= 100 * level)
+			upgradable = true;
+
+		if (upgradable) 
+		{
+			Debug.Log ("Tower Upgradable");
+			SetTower(GetHealth(), GetLevel(), GetRadius());
+		}
+	}
+
+	void OnDrawGizmos()
+	{
+		Gizmos.color = new Color (1, 1, 1, 0.5f);
+		Gizmos.DrawWireSphere (transform.position, radius);
+	}
+
 }

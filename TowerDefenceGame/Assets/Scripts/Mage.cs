@@ -4,15 +4,26 @@ using System.Collections;
 public class Mage : TowerClass {
 
 	LineRenderer line;
-	
-	// Use this for initialization
-	void Start () {
 
-		base.Start ();
-	
+
+
+	// Use this for initialization
+	protected override void Start () {
+
+		SetClassHealth (3);
+		SetRadius (0);
+		SetLevel (1);
+		SetCooldown (0);
+		SetHealth ();
+
+		Debug.Log (GetClassHealth());
+		Debug.Log (GetLevel());
+		Debug.Log (GetRadius());
+					
+		SetGoal(GameObject.FindGameObjectWithTag("Goal"));
+
 		line = gameObject.GetComponentInChildren<LineRenderer>();
-		//line.SetPosition(0, GameObject.FindGameObjectWithTag("Mage"));
-		//line.SetPosition(1, tower.)
+
 	}
 
 	// Update is called once per frame
