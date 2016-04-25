@@ -35,20 +35,28 @@ public class RailManager : MonoBehaviour {
 
 	public void AddEntity(GameObject entity)
 	{
-		targetNodeIndex.Add(0);
-		entity.transform.parent = transform;
-        entity.GetComponent<AIBase>().Speed = initialSpeed;
-		objectToMove.Add (entity.GetComponent<AIBase>());
+        objectToMove.Add(SpawnEntity(entity).GetComponent<AIBase>());
 	}
 
 	public void AddEntity(GameObject entity, int index)
 	{
-		targetNodeIndex.Add(0);
-		entity.transform.parent = transform;
-        entity.GetComponent<AIBase>().Speed = initialSpeed;
-		objectToMove.Insert (index, entity.GetComponent<AIBase>());
+        objectToMove.Insert(index, SpawnEntity(entity).GetComponent<AIBase>());
 	}
 	
+    private GameObject SpawnEntity(GameObject objectToSpawn)
+    {
+        objectToSpawn.transform.parent = transform;
+        if (objectToSpawn.GetComponent<AIBase>().Speed <= 0)
+            objectToSpawn.GetComponent<AIBase>().Speed = initialSpeed;
+
+        if (objectToSpawn.GetComponent<AIBase>().CurrentIndex > 0)
+            targetNodeIndex.Add(objectToSpawn.GetComponent<AIBase>().CurrentIndex);
+        else
+            targetNodeIndex.Add(0);
+
+        return objectToSpawn;
+    }
+
 	void Update()
 	{
 		if(!activated) return;
@@ -100,6 +108,7 @@ public class RailManager : MonoBehaviour {
                 {
                     //objectToMove[i].position = railNodes [targetNodeIndex[i]].position;
                     targetNodeIndex[i]++;
+                    objectToMove[i].CurrentIndex = targetNodeIndex[i];
                 }
             }
             else
