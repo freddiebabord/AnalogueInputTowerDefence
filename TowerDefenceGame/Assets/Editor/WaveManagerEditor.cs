@@ -53,11 +53,11 @@ public class WaveManagerEditor : Editor {
 
         list.onRemoveCallback = (ReorderableList l) =>
         {
-            if (EditorUtility.DisplayDialog("Warning!",
-                "Are you sure you want to delete the wave?", "Yes", "No"))
-            {
+            //if (EditorUtility.DisplayDialog("Warning!",
+            //    "Are you sure you want to delete the wave?", "Yes", "No"))
+            //{
                 ReorderableList.defaultBehaviours.DoRemoveButton(l);
-            }
+            //}
         };
 
         list.onAddCallback = (ReorderableList l) =>

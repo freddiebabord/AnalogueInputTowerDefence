@@ -7,7 +7,7 @@ using System.Collections;
 public class AnaoguButtonEditor : UnityEditor.UI.ButtonEditor {
 
 	public override void OnInspectorGUI() {
-        AnalogueButtons component = (AnalogueButtons)target;
+        //AnalogueButtons component = (AnalogueButtons)target;
 
 		base.OnInspectorGUI();
 	}

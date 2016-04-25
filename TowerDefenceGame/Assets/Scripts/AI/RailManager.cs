@@ -27,7 +27,7 @@ public class RailManager : MonoBehaviour {
 	{
 		//Moving the object to the first node.
 		int counter = 0;
-		foreach (var obj in objectToMove) {
+		for(int i = 0; i < objectToMove.Count; ++i){
 			targetNodeIndex.Add(0);
 			counter++;
 		}
@@ -68,37 +68,51 @@ public class RailManager : MonoBehaviour {
 				continue;
 			}
 			EnemiesThisCycle++;
-			
-			//Moving the object towards the target node.
-            objectToMove[i].DirectionVector = (railNodes[targetNodeIndex[i]].position - objectToMove[i].transform.position).normalized;
-			if(objectToMove[i].GetComponent<Rigidbody>() != null)
-                objectToMove[i].GetComponent<Rigidbody>().velocity = objectToMove[i].DirectionVector * objectToMove[i].Speed * Time.deltaTime;
-            objectToMove[i].transform.Translate(objectToMove[i].DirectionVector * Time.deltaTime * objectToMove[i].Speed, Space.World);
-			
-			//Rotating the object to face the target node
-			//depending on the specified rotation mode.
-			switch (rotationMode) 
-			{
-			case RailRotationMode.Snap:
-				objectToMove[i].transform.LookAt (railNodes [targetNodeIndex[i]].position);
-				break;
-				
-			case RailRotationMode.Slerp:
-                Quaternion targetRotation = Quaternion.LookRotation(railNodes[targetNodeIndex[i]].position - objectToMove[i].transform.position);
+
+            if (objectToMove[i].currentTarget == null)
+            {
+                //Moving the object towards the target node.
+                objectToMove[i].DirectionVector = (railNodes[targetNodeIndex[i]].position - objectToMove[i].transform.position).normalized;
+                if (objectToMove[i].GetComponent<Rigidbody>() != null)
+                    objectToMove[i].GetComponent<Rigidbody>().velocity = objectToMove[i].DirectionVector * objectToMove[i].Speed * Time.deltaTime;
+                objectToMove[i].transform.Translate(objectToMove[i].DirectionVector * Time.deltaTime * objectToMove[i].Speed, Space.World);
+
+                //Rotating the object to face the target node
+                //depending on the specified rotation mode.
+                switch (rotationMode)
+                {
+                    case RailRotationMode.Snap:
+                        objectToMove[i].transform.LookAt(railNodes[targetNodeIndex[i]].position);
+                        break;
+
+                    case RailRotationMode.Slerp:
+                        Quaternion targetRotation = Quaternion.LookRotation(railNodes[targetNodeIndex[i]].position - objectToMove[i].transform.position);
+                        objectToMove[i].transform.rotation = Quaternion.Slerp(objectToMove[i].transform.rotation, targetRotation, Time.deltaTime * slerpRotationSpeed);
+                        break;
+
+                    default:
+                        break;
+                }
+
+                //Incrementing the target node if the object 
+                //has reached the previous target node.
+                if (ObjectIsOnNode(targetNodeIndex[i], i))
+                {
+                    //objectToMove[i].position = railNodes [targetNodeIndex[i]].position;
+                    targetNodeIndex[i]++;
+                }
+            }
+            else
+            {
+
+                objectToMove[i].DirectionVector = (objectToMove[i].currentTarget.transform.position - objectToMove[i].transform.position).normalized;
+                if (objectToMove[i].GetComponent<Rigidbody>() != null)
+                    objectToMove[i].GetComponent<Rigidbody>().velocity = objectToMove[i].DirectionVector * objectToMove[i].Speed * Time.deltaTime;
+                objectToMove[i].transform.Translate(objectToMove[i].DirectionVector * Time.deltaTime * objectToMove[i].Speed, Space.World);
+
+                Quaternion targetRotation = Quaternion.LookRotation(objectToMove[i].currentTarget.transform.position - objectToMove[i].transform.position);
                 objectToMove[i].transform.rotation = Quaternion.Slerp(objectToMove[i].transform.rotation, targetRotation, Time.deltaTime * slerpRotationSpeed);
-				break;
-				
-			default:
-				break;
-			}
-			
-			//Incrementing the target node if the object 
-			//has reached the previous target node.
-			if (ObjectIsOnNode (targetNodeIndex[i], i)) 
-			{
-				//objectToMove[i].position = railNodes [targetNodeIndex[i]].position;
-				targetNodeIndex[i]++;
-			}
+            }
 		}
 
 
