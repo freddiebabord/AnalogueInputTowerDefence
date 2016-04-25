@@ -18,6 +18,9 @@ public class AIBase : MonoBehaviour {
 	protected int goldDrop;
 	protected GameManager game;
     protected Vector3 directionVector = new Vector3(0,1,0);
+    protected int currentIndex = 0;
+
+    public int CurrentIndex { get { return currentIndex; } set { currentIndex = value; } }
 
     public float Speed
     {
@@ -40,7 +43,7 @@ public class AIBase : MonoBehaviour {
 	public virtual void Update()
 	{
 		if (hp <= 0)
-			Die ();
+			DieWithGold ();
 
 	}
 
