@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[System.Serializable]
 public class AIBase : MonoBehaviour {
 
 	[SerializeField]
 	protected float hp = 100;
 	[SerializeField]
-	protected float speed;
+	protected float speed = 10;
 	[SerializeField]
 	protected float damage;
 	[SerializeField]
@@ -16,6 +17,19 @@ public class AIBase : MonoBehaviour {
 	[SerializeField]
 	protected int goldDrop;
 	protected GameManager game;
+    protected Vector3 directionVector = new Vector3(0,1,0);
+
+    public float Speed
+    {
+        get { return speed; }
+        set { speed = value; }
+    }
+
+    public Vector3 DirectionVector
+    {
+        get { return directionVector; }
+        set { directionVector = value; }
+    }
 
 	// Use this for initialization
 	public virtual void Start () 

@@ -11,16 +11,16 @@ public enum RailRotationMode
 public class RailManager : MonoBehaviour {
 	
 	public bool activated = true;
-	public List<Transform> objectToMove = new List<Transform>();
-	public float moveSpeed = 1.0f;
+    [SerializeField]
+	public List<Transform> railNodes = new List<Transform>();
+    public List<AIBase> objectToMove = new List<AIBase>();
+	private List<int> targetNodeIndex = new List<int>();
 	public float nodeProximityDistance = 0.1f;
 	public RailRotationMode rotationMode;
 	public float slerpRotationSpeed = 1.0f;
-	public List<Transform> railNodes = new List<Transform>();
-	
-	private List<int> targetNodeIndex = new List<int>();
-	private List<Vector3> directionVector = new List<Vector3>();
 	public int EnemiesThisCycle = 0;
+    public float initialSpeed = 15;
+
 	//--------------------Unity Functions--------------------
 	
 	void Start()
@@ -29,7 +29,6 @@ public class RailManager : MonoBehaviour {
 		int counter = 0;
 		foreach (var obj in objectToMove) {
 			targetNodeIndex.Add(0);
-			directionVector.Add(new Vector3(0,0,0));
 			counter++;
 		}
 	}
@@ -37,17 +36,17 @@ public class RailManager : MonoBehaviour {
 	public void AddEntity(GameObject entity)
 	{
 		targetNodeIndex.Add(0);
-		directionVector.Add(new Vector3(0,0,0));
 		entity.transform.parent = transform;
-		objectToMove.Add (entity.transform);
+        entity.GetComponent<AIBase>().Speed = initialSpeed;
+		objectToMove.Add (entity.GetComponent<AIBase>());
 	}
 
 	public void AddEntity(GameObject entity, int index)
 	{
 		targetNodeIndex.Add(0);
-		directionVector.Add(new Vector3(0,0,0));
 		entity.transform.parent = transform;
-		objectToMove.Insert (index, entity.transform);
+        entity.GetComponent<AIBase>().Speed = initialSpeed;
+		objectToMove.Insert (index, entity.GetComponent<AIBase>());
 	}
 	
 	void Update()
@@ -71,22 +70,22 @@ public class RailManager : MonoBehaviour {
 			EnemiesThisCycle++;
 			
 			//Moving the object towards the target node.
-			directionVector[i] = (railNodes[targetNodeIndex[i]].position - objectToMove[i].position).normalized;
+            objectToMove[i].DirectionVector = (railNodes[targetNodeIndex[i]].position - objectToMove[i].transform.position).normalized;
 			if(objectToMove[i].GetComponent<Rigidbody>() != null)
-				objectToMove[i].GetComponent<Rigidbody>().velocity = directionVector[i] * moveSpeed * Time.deltaTime;
-			objectToMove[i].Translate (directionVector[i] * Time.deltaTime * moveSpeed, Space.World);
+                objectToMove[i].GetComponent<Rigidbody>().velocity = objectToMove[i].DirectionVector * objectToMove[i].Speed * Time.deltaTime;
+            objectToMove[i].transform.Translate(objectToMove[i].DirectionVector * Time.deltaTime * objectToMove[i].Speed, Space.World);
 			
 			//Rotating the object to face the target node
 			//depending on the specified rotation mode.
 			switch (rotationMode) 
 			{
 			case RailRotationMode.Snap:
-				objectToMove[i].LookAt (railNodes [targetNodeIndex[i]].position);
+				objectToMove[i].transform.LookAt (railNodes [targetNodeIndex[i]].position);
 				break;
 				
 			case RailRotationMode.Slerp:
-				Quaternion targetRotation = Quaternion.LookRotation(railNodes [targetNodeIndex[i]].position - objectToMove[i].position);
-				objectToMove[i].rotation = Quaternion.Slerp(objectToMove[i].rotation, targetRotation, Time.deltaTime * slerpRotationSpeed);
+                Quaternion targetRotation = Quaternion.LookRotation(railNodes[targetNodeIndex[i]].position - objectToMove[i].transform.position);
+                objectToMove[i].transform.rotation = Quaternion.Slerp(objectToMove[i].transform.rotation, targetRotation, Time.deltaTime * slerpRotationSpeed);
 				break;
 				
 			default:
@@ -132,13 +131,12 @@ public class RailManager : MonoBehaviour {
 	bool ObjectIsOnNode(int nodeIndex, int index)
 	{
 		//Checking if the distance from the object to the target node is less than the proximity distance.
-		return (Vector3.Distance (objectToMove[index].position, railNodes [nodeIndex].position) < nodeProximityDistance);
+		return (Vector3.Distance (objectToMove[index].transform.position, railNodes [nodeIndex].position) < nodeProximityDistance);
 	}
 
 	public void ResetEntities()
 	{
 		objectToMove.Clear ();
 		targetNodeIndex.Clear ();
-		directionVector.Clear ();
 	}
 }
