@@ -5,45 +5,64 @@ using UnityEngine.EventSystems;
 
 public class AnalogueButtons : Button, ISelectHandler, IDeselectHandler {
 
-	bool isSelected = false;
-	public GameObject scriptObject;
-	public string functionToCall = "OnClick";
-	public string parameters = "";
+	public bool isHovering = false;
+    [HideInInspector]
+    public bool isSelected = false;
 
 	private float clickTimeout = 0.5f;
-	private bool clicked = false;
-
+	[HideInInspector]
+    public bool clicked = false;
+    
 	// Update is called once per frame
 	void Update () {
-		if (isSelected) {
-			if(Input.GetAxis("TriggerSelect") >= 1)
-				OnClick ();
-		}
+        //if (isSelected) {
+        //    if(Input.GetAxis("TriggerSelect") >= 1)
+        //        this.OnClick();
+        //}
 	}
+
+    public void OnSelect()
+    {
+        this.isSelected = true;
+        this.DoStateTransition(SelectionState.Highlighted, false);
+    }
 
 	public void OnSelect (BaseEventData eventData) 
 	{
-		isSelected = true;
+        this.isSelected = true;
+        this.DoStateTransition(SelectionState.Highlighted, false);
 	}
+
+    public void OnDeselect()
+    {
+        this.isSelected = false;
+        this.DoStateTransition(SelectionState.Normal, false);
+    }
 
 	public void OnDeselect (BaseEventData data) 
 	{
-		isSelected = false;
+        this.isSelected = false;
+        this.DoStateTransition(SelectionState.Normal, false);
 	}
+
 
 	public void OnClick()
 	{
 		if (!clicked) {
-			scriptObject.SendMessage (functionToCall, parameters, SendMessageOptions.DontRequireReceiver);
+
+            this.onClick.Invoke();
+            this.DoStateTransition(SelectionState.Pressed, false);
 			StartCoroutine(clickTimeOut());
 		}
+        
 	}
 
 	IEnumerator clickTimeOut()
 	{
-		clicked = true;
+        this.clicked = true;
 		yield return new WaitForSeconds (clickTimeout);
-		clicked = false;
+        OnDeselect();
+        this.clicked = false;
 	}
 
 }
