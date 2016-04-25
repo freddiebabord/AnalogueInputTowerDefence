@@ -12,11 +12,22 @@ public class Pointer : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		rt = GetComponent<RectTransform> ();
+        if (!Application.isEditor)
+        {
+            Screen.lockCursor = true;
+            Screen.showCursor = false;
+        }
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		rt.Translate (Input.GetAxis ("Horizontal"), Input.GetAxis ("Vertical"), 0);
+
+        //if (Input.GetAxis("TriggerSelect") >= 1 && Input.GetAxis("TriggerSelect2") >= 1)
+        //{
+        //    rt.position = new Vector3(0, 0, 0);
+        //}
+
+        rt.Translate (Input.GetAxis ("Horizontal"), Input.GetAxis ("Vertical"), 0);
 
         PointerEventData pointer = new PointerEventData(EventSystem.current);
         // convert to a 2D position

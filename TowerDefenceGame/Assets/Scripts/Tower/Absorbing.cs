@@ -50,7 +50,7 @@ public class Absorbing : TowerClass {
 		if (GetChosen ().gameObject.tag == "Enemy") 
 		{
 			GetChosen ().gameObject.GetComponent<AIBase> ().ApplyDamage (10);
-			rail.moveSpeed = rail.moveSpeed/2;
+            GetChosen().gameObject.GetComponent<AIBase>().Speed /= 2;
 		}
 	}
 }
