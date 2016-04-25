@@ -12,8 +12,8 @@ public class AIBase : MonoBehaviour {
 	protected float damage;
 	[SerializeField]
 	protected bool flying;
-	protected GameObject currentTarget;
-	public GameObject inspectorOverrideTarget;
+    [HideInInspector]
+	public GameObject currentTarget;
 	[SerializeField]
 	protected int goldDrop;
 	protected GameManager game;
@@ -42,21 +42,22 @@ public class AIBase : MonoBehaviour {
 		if (hp <= 0)
 			Die ();
 
-		if (currentTarget != null) {
-			if (currentTarget != inspectorOverrideTarget)
-				currentTarget = inspectorOverrideTarget;
-		}
 	}
 
 	public virtual void Attack()
 	{
 	}
 
-	public virtual void Die()
+	public virtual void DieWithGold()
 	{
 		game.AddGold (goldDrop);
-		Destroy (gameObject);
+        Die();
 	}
+
+    public virtual void Die()
+    {
+        Destroy(gameObject);
+    }
 
 	public virtual void SwitchTarget(GameObject newTarget)
 	{

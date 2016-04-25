@@ -3,8 +3,11 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class AnalogueButtons : Button, ISelectHandler, IDeselectHandler {
+[RequireComponent(typeof(Image))]
+[AddComponentMenu("UI/Analogue Button", 30)]
 
+public class AnalogueButtons : Button, ISelectHandler, IDeselectHandler {
+    
 	public bool isHovering = false;
     [HideInInspector]
     public bool isSelected = false;
