@@ -63,9 +63,7 @@ Shader "Custom/CellShader" {
 ////// Lighting:
                 float attenuation = LIGHT_ATTENUATION(i);
                 float4 _DiffuseTex_var = tex2D(_DiffuseTex,TRANSFORM_TEX(i.uv0, _DiffuseTex));
-                float node_9293 = max(0,dot(lightDirection,i.normalDir));
-                float node_1476 = floor(node_9293 * _ShadeSteps) / (_ShadeSteps - 1);
-                float3 finalColor = (_DiffuseTex_var.rgb*_DiffuseColour.rgb*(node_1476*attenuation*2.0));
+                float3 finalColor = (_DiffuseTex_var.rgb*_DiffuseColour.rgb*(floor(max(0,dot(lightDirection,i.normalDir)) * _ShadeSteps) / (_ShadeSteps - 1)*attenuation*2.0));
                 return fixed4(finalColor,1);
             }
             ENDCG
@@ -121,9 +119,7 @@ Shader "Custom/CellShader" {
 ////// Lighting:
                 float attenuation = LIGHT_ATTENUATION(i);
                 float4 _DiffuseTex_var = tex2D(_DiffuseTex,TRANSFORM_TEX(i.uv0, _DiffuseTex));
-                float node_9293 = max(0,dot(lightDirection,i.normalDir));
-                float node_1476 = floor(node_9293 * _ShadeSteps) / (_ShadeSteps - 1);
-                float3 finalColor = (_DiffuseTex_var.rgb*_DiffuseColour.rgb*(node_1476*attenuation*2.0));
+                float3 finalColor = (_DiffuseTex_var.rgb*_DiffuseColour.rgb*(floor(max(0,dot(lightDirection,i.normalDir)) * _ShadeSteps) / (_ShadeSteps - 1)*attenuation*2.0));
                 return fixed4(finalColor * 1,0);
             }
             ENDCG
