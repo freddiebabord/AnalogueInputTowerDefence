@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: TreeBark
-  m_Shader: {fileID: 7, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 4800000, guid: 5ea8268123cda4a45a73c195bed29dba, type: 3}
   m_ShaderKeywords: []
   m_CustomRenderQueue: -1
   m_SavedProperties:
@@ -20,9 +20,47 @@ Material:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
-    m_Floats: {}
+      data:
+        first:
+          name: _DiffuseTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 69693e80ccd8f5647aed4da4d8c1f4d0, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _DiffTexture
+        second:
+          m_Texture: {fileID: 2800000, guid: 69693e80ccd8f5647aed4da4d8c1f4d0, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats:
+      data:
+        first:
+          name: _ShadeSteps
+        second: 3
+      data:
+        first:
+          name: _GradientSharpness
+        second: 5
+      data:
+        first:
+          name: _node_3937
+        second: .100000001
     m_Colors:
       data:
         first:
           name: _Color
         second: {r: .926470578, g: .614045143, b: .27930361, a: 1}
+      data:
+        first:
+          name: _DiffuseColour
+        second: {r: 1, g: 1, b: 1, a: .501960814}
+      data:
+        first:
+          name: _DiffColor
+        second: {r: 1, g: .700000107, b: .25, a: 1}
+      data:
+        first:
+          name: _ShadowColour
+        second: {r: .926470578, g: .656704247, b: .252054513, a: 1}
