@@ -202,10 +202,28 @@ public class TowerClass : MonoBehaviour {
 		}
 	}
 
+    public void SetBullet(GameObject shot)
+    {
+        bullet = shot;
+    }
+
 	void OnDrawGizmos()
 	{
 		Gizmos.color = new Color (1, 1, 1, 0.5f);
 		Gizmos.DrawWireSphere (transform.position, radius);
 	}
+
+    void ApplyDamage(int HPLoss)
+    {
+        health -= HPLoss;
+    }
+
+    void OnDie()
+    {
+        if(health <= 0)
+        {
+            Destroy(transform.parent.gameObject);
+        }
+    }
 
 }
