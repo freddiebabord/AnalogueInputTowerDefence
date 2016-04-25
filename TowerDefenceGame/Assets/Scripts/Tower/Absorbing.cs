@@ -19,6 +19,8 @@ public class Absorbing : TowerClass {
 		
 		SetGoal(GameObject.FindGameObjectWithTag("Goal"));
 
+        SetBullet(GameObject.FindGameObjectWithTag("Freeze"));
+
 		line = gameObject.GetComponentInChildren<LineRenderer>();
 
 	}
