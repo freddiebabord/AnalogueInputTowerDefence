@@ -22,17 +22,17 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _Texture
-        second:
-          m_Texture: {fileID: 2800000, guid: f953b555ea1969f43ae0f036f27677bd, type: 3}
-          m_Scale: {x: 10, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
           name: _Noise
         second:
           m_Texture: {fileID: 2800000, guid: ba744c2169b750241b0b3fc80fc1493b, type: 3}
           m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Texture
+        second:
+          m_Texture: {fileID: 2800000, guid: f953b555ea1969f43ae0f036f27677bd, type: 3}
+          m_Scale: {x: 2, y: 1}
           m_Offset: {x: 0, y: 0}
     m_Floats:
       data:

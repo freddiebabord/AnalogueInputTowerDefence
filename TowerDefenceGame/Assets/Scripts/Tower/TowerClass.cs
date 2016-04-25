@@ -2,9 +2,7 @@
 using System.Collections;
 
 public class TowerClass : MonoBehaviour {
-
-	RailManager rails;
-
+	
 	GameObject[] ai;
 
 	GameObject chosen;
@@ -22,7 +20,7 @@ public class TowerClass : MonoBehaviour {
 	int levelOfUpgrade = 0;
 	
 	bool upgradable;
-
+	
 	[SerializeField]
 	float radius = 10f;
 	
@@ -45,6 +43,7 @@ public class TowerClass : MonoBehaviour {
 		SetGoal(GameObject.FindGameObjectWithTag("Goal"));
 		SetTower (0, 1, 0);
 		SetCooldown (2);
+
 	}
 
 	// Update is called once per frame
