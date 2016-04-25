@@ -5,20 +5,15 @@ public class Mage : TowerClass {
 
 	LineRenderer line;
 
-
-
 	// Use this for initialization
 	protected override void Start () {
+		gameObject.tag = "Mage";
 
 		SetClassHealth (3);
 		SetRadius (0);
 		SetLevel (1);
 		SetCooldown (0);
 		SetHealth ();
-
-		Debug.Log (GetClassHealth());
-		Debug.Log (GetLevel());
-		Debug.Log (GetRadius());
 					
 		SetGoal(GameObject.FindGameObjectWithTag("Goal"));
 
