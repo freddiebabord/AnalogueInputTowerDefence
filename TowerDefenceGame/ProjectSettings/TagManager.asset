@@ -9,6 +9,13 @@ TagManager:
   - Goal
   - Mage
   - Absorbing
+  - Path
+  - Empty
+  - Grass
+  - Rock
+  - Water
+  - Tree
+  - Node
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX

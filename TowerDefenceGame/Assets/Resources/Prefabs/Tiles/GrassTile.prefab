@@ -13,7 +13,7 @@ GameObject:
   - 23: {fileID: 2352482}
   m_Layer: 0
   m_Name: GrassTile
-  m_TagString: Untagged
+  m_TagString: Grass
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

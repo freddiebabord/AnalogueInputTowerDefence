@@ -13,7 +13,7 @@ GameObject:
   - 23: {fileID: 2372856}
   m_Layer: 0
   m_Name: PathTile
-  m_TagString: Untagged
+  m_TagString: Path
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

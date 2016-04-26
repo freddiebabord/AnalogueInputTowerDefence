@@ -13,7 +13,7 @@ GameObject:
   - 23: {fileID: 2337262}
   m_Layer: 0
   m_Name: EmptyTile
-  m_TagString: Untagged
+  m_TagString: Empty
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45,7 +45,7 @@ Renderer:
   - {fileID: 2100000, guid: 189f97fd0a2966a4ca97a3a58ce4ff44, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 0
+  m_UseLightProbes: 1
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
