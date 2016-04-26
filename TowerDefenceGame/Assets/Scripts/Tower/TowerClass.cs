@@ -38,6 +38,8 @@ public class TowerClass : MonoBehaviour {
 
 	int classHealth = 0;
 
+	public int speed = 0;
+
 	protected virtual void Start()
 	{
 		SetGoal(GameObject.FindGameObjectWithTag("Goal"));
@@ -100,7 +102,7 @@ public class TowerClass : MonoBehaviour {
 		Vector3 position = gameObject.transform.position;
 		GameObject go = Instantiate (bullet, spawnPoint.transform.position, spawnPoint.transform.rotation) as GameObject;
 		go.transform.localScale = new Vector3 (1, 1, 1);
-		go.GetComponent<Rigidbody> ().velocity = direction * 3 + (GetChosen().rigidbody.velocity * Time.deltaTime);
+		go.GetComponent<Rigidbody> ().velocity = direction * speed + (GetChosen().rigidbody.velocity * Time.deltaTime);
 	}
 
 	GameObject GetClosestEnemy(GameObject[] enemies)
@@ -180,7 +182,7 @@ public class TowerClass : MonoBehaviour {
 		return radius;
 	}
 
-	public void SetCooldown(int cool)
+	public void SetCooldown(float cool)
 	{
 		cooldown = cool;
 	}
