@@ -27,4 +27,11 @@ public class BalistaString : MonoBehaviour {
 		renderer.SetPosition (2, armPoint2.position);
 
 	}
+
+    void OnDrawGizmos()
+    {
+        Gizmos.DrawLine(armPoint1.position, pullBack.position);
+        Gizmos.DrawLine(armPoint2.position, pullBack.position);
+    }
+    
 }
