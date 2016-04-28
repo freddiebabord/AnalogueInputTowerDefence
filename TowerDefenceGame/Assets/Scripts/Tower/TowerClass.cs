@@ -19,7 +19,7 @@ public class TowerClass : MonoBehaviour {
 
 	int levelOfUpgrade = 0;
 	
-	bool upgradable;
+	bool upgradable = false;
 	
 	[SerializeField]
 	float radius = 10f;
@@ -40,6 +40,9 @@ public class TowerClass : MonoBehaviour {
 
 	public int speed = 0;
 
+	[SerializeField]
+	int exp = 0;
+	 
 	protected virtual void Start()
 	{
 		SetGoal(GameObject.FindGameObjectWithTag("Goal"));
@@ -51,7 +54,16 @@ public class TowerClass : MonoBehaviour {
 	// Update is called once per frame
 	public virtual void Update () {
 
-	
+		if (exp == 100) 
+		{
+			upgradable = true;
+		}
+
+		if (upgradable) 
+		{
+			Debug.Log ("Upgrade Available");
+		}
+
 		if (lastShot > cooldown) 
 		{
 			isFired = false;
@@ -63,6 +75,12 @@ public class TowerClass : MonoBehaviour {
 
 		if (HasEnemyInSight (ai) && !isFired) 
 		{
+			if(!upgradable)
+			{
+				Debug.Log("EXP");
+				exp += 5;
+			}
+
 			Shooting ();
 		}
 
@@ -102,7 +120,8 @@ public class TowerClass : MonoBehaviour {
 		Vector3 position = gameObject.transform.position;
 		GameObject go = Instantiate (bullet, spawnPoint.transform.position, spawnPoint.transform.rotation) as GameObject;
 		go.transform.localScale = new Vector3 (1, 1, 1);
-		go.GetComponent<Rigidbody> ().velocity = direction * speed + (GetChosen().rigidbody.velocity * Time.deltaTime);
+		go.GetComponent<Rigidbody> ().velocity = direction * speed;
+
 	}
 
 	GameObject GetClosestEnemy(GameObject[] enemies)
