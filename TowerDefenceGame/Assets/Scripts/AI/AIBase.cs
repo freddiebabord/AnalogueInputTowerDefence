@@ -8,12 +8,12 @@ public class AIBase : MonoBehaviour {
 	[SerializeField] protected float speed = 10;
 	[SerializeField] protected float damage;
 	[SerializeField] protected bool flying;
+	[SerializeField] protected int goldDrop;
+    [SerializeField] protected int currentIndex = 0;
     [HideInInspector] public GameObject currentTarget;
     [HideInInspector] public Vector3 currentNodeTarget;
-	[SerializeField] protected int goldDrop;
 	protected GameManager game;
     protected Vector3 directionVector = new Vector3(0,1,0);
-    protected int currentIndex = 0;
     protected Animation animations;
     protected Vector3 deathLocation;
 
@@ -104,7 +104,7 @@ public class AIBase : MonoBehaviour {
     protected virtual void OnDrawGizmos()
     {
         Gizmos.color = Color.cyan;
-        Gizmos.DrawSphere(currentNodeTarget, 0.5f);
+        Gizmos.DrawSphere(currentNodeTarget, 0.25f);
         Gizmos.color = Color.grey;
         Gizmos.DrawLine(transform.position, currentNodeTarget);
     }
