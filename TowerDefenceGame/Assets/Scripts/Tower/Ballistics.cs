@@ -13,7 +13,7 @@ public class Ballistics : TowerClass {
 		SetClassHealth (4);
 		SetRadius (0);
 		SetLevel (1);
-		SetCooldown (1);
+		SetCooldown (0.5f);
 		SetHealth ();
 		
 		SetGoal(GameObject.FindGameObjectWithTag("Goal"));
