@@ -43,11 +43,20 @@ public class AITrojenHose : AIBase {
         {
             for (int i = 0; i < maxSpawnCount; i++)
             {
-                GameObject child = (GameObject)Instantiate(objectToSpawn, spawnPoint.position, spawnPoint.rotation);
+                Vector3 spawnPosition = new Vector3((Random.insideUnitSphere.x * collider.bounds.extents.magnitude)/2,
+                 transform.position.y + 2, (Random.insideUnitSphere.z * collider.bounds.extents.magnitude)/2);
+                GameObject child = (GameObject)Instantiate(objectToSpawn, transform.position + spawnPosition, Quaternion.Euler(new Vector3(0, 0, 0)));
                 child.GetComponent<AIBase>().CurrentIndex = currentIndex;
                 aiNodePathing.AddEntity(child);
             }
         }
         base.DieWithGold();
+    }
+
+    protected override void OnDrawGizmos()
+    {
+        Gizmos.color = Color.gray;
+        Gizmos.DrawWireSphere(transform.position, collider.bounds.extents.magnitude);
+        base.OnDrawGizmos();
     }
 }

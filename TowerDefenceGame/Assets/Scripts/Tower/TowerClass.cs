@@ -126,6 +126,7 @@ public class TowerClass : MonoBehaviour {
 
 	public GameObject GetChosen()
 	{
+        Debug.Log(chosen);
 		return chosen;
 	}
 

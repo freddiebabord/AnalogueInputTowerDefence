@@ -8,6 +8,7 @@ public class Pointer : MonoBehaviour {
 
 	RectTransform rt;
     List<AnalogueButtons> selectedButtons = new List<AnalogueButtons>();
+    GameObject latSelected;
 
 	// Use this for initialization
 	void Start () {
@@ -29,8 +30,8 @@ public class Pointer : MonoBehaviour {
 
         rt.Translate (Input.GetAxis ("Horizontal"), Input.GetAxis ("Vertical"), 0);
 
+        // Simulates the OnSelect event
         PointerEventData pointer = new PointerEventData(EventSystem.current);
-        // convert to a 2D position
         pointer.position = Camera.main.WorldToScreenPoint(transform.position);
         var raycastResults = new List<RaycastResult>();
         EventSystem.current.RaycastAll(pointer, raycastResults);
@@ -49,6 +50,7 @@ public class Pointer : MonoBehaviour {
             }
         }
 
+        // Simulation of click event
         if(Input.GetAxis("TriggerSelect") >= 1)
         {
             if (raycastResults.Count > 0)
@@ -68,6 +70,12 @@ public class Pointer : MonoBehaviour {
         }
 
         selectedButtons.Clear();
+
+        // Hack to prevent mouse clicks
+        if (EventSystem.current.currentSelectedGameObject == null)
+            EventSystem.current.SetSelectedGameObject(latSelected);
+        else
+            latSelected = EventSystem.current.currentSelectedGameObject;
 
 	}
 }

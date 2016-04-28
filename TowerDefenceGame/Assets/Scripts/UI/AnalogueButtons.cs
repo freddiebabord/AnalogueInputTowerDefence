@@ -57,7 +57,7 @@ public class AnalogueButtons : Button, ISelectHandler, IDeselectHandler {
     }
 
     // Called by Unitys UI Event System
-    private void OnSelect(BaseEventData eventData) 
+    public override void OnSelect(BaseEventData eventData) 
 	{
         if (this.interactable)
         {
@@ -77,7 +77,7 @@ public class AnalogueButtons : Button, ISelectHandler, IDeselectHandler {
     }
 
     // Called by Unitys UI Event System
-    private void OnDeselect(BaseEventData data) 
+    public override void OnDeselect(BaseEventData data) 
 	{
         if (this.interactable)
         {

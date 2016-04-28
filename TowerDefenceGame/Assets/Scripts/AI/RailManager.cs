@@ -7,12 +7,26 @@ public enum RailRotationMode
 	None, Snap, Slerp
 };
 
+[System.Serializable]
+public class Node
+{
+
+    public Node() { }
+    public Node(Transform transform_)
+    {
+        transform = transform_;
+    }
+
+    public Transform transform;
+}
+
+[System.Serializable]
 [RequireComponent (typeof(GameManager))]
 public class RailManager : MonoBehaviour {
 	
 	public bool activated = true;
-    [SerializeField]
-	public List<Transform> railNodes = new List<Transform>();
+    [HideInInspector][SerializeField]
+    public List<Node> railNodes = new List<Node>();
     public List<AIBase> objectToMove = new List<AIBase>();
 	private List<int> targetNodeIndex = new List<int>();
 	public float nodeProximityDistance = 0.1f;
@@ -54,6 +68,11 @@ public class RailManager : MonoBehaviour {
         else
             targetNodeIndex.Add(0);
 
+        Vector3 targetPosition = new Vector3((Random.insideUnitSphere.x * nodeProximityDistance),
+                                                        0 + (objectToSpawn.collider.bounds.extents.magnitude) / 2,
+                                                        (Random.insideUnitSphere.z * nodeProximityDistance));
+        objectToSpawn.GetComponent<AIBase>().currentNodeTarget = targetPosition + railNodes[targetNodeIndex[0]].transform.position;
+
         return objectToSpawn;
     }
 
@@ -80,21 +99,31 @@ public class RailManager : MonoBehaviour {
             if (objectToMove[i].currentTarget == null)
             {
                 //Moving the object towards the target node.
-                objectToMove[i].DirectionVector = (railNodes[targetNodeIndex[i]].position - objectToMove[i].transform.position).normalized;
+                if (objectToMove[i].currentNodeTarget == null)
+                {
+                    Vector3 targetPosition = new Vector3((Random.insideUnitSphere.x * nodeProximityDistance),
+                                                        0 + (objectToMove[i].collider.bounds.extents.magnitude)/2, 
+                                                        (Random.insideUnitSphere.z * nodeProximityDistance));
+                    objectToMove[i].currentNodeTarget = targetPosition + railNodes[targetNodeIndex[i]].transform.position;
+
+                }
+                objectToMove[i].DirectionVector = (objectToMove[i].currentNodeTarget - objectToMove[i].transform.position ).normalized;
                 if (objectToMove[i].GetComponent<Rigidbody>() != null)
                     objectToMove[i].GetComponent<Rigidbody>().velocity = objectToMove[i].DirectionVector * objectToMove[i].Speed * Time.deltaTime;
                 objectToMove[i].transform.Translate(objectToMove[i].DirectionVector * Time.deltaTime * objectToMove[i].Speed, Space.World);
+
+                Vector3 smudgeFactor = new Vector3(Random.Range(-2, 2), 0, Random.Range(-2, 2));
 
                 //Rotating the object to face the target node
                 //depending on the specified rotation mode.
                 switch (rotationMode)
                 {
                     case RailRotationMode.Snap:
-                        objectToMove[i].transform.LookAt(railNodes[targetNodeIndex[i]].position);
+                        objectToMove[i].transform.LookAt(objectToMove[i].currentNodeTarget + smudgeFactor);
                         break;
 
                     case RailRotationMode.Slerp:
-                        Quaternion targetRotation = Quaternion.LookRotation(railNodes[targetNodeIndex[i]].position - objectToMove[i].transform.position);
+                        Quaternion targetRotation = Quaternion.LookRotation((objectToMove[i].currentNodeTarget + smudgeFactor) - objectToMove[i].transform.position);
                         objectToMove[i].transform.rotation = Quaternion.Slerp(objectToMove[i].transform.rotation, targetRotation, Time.deltaTime * slerpRotationSpeed);
                         break;
 
@@ -109,6 +138,11 @@ public class RailManager : MonoBehaviour {
                     //objectToMove[i].position = railNodes [targetNodeIndex[i]].position;
                     targetNodeIndex[i]++;
                     objectToMove[i].CurrentIndex = targetNodeIndex[i];
+                    
+                    Vector3 targetPosition = new Vector3((Random.insideUnitSphere.x * nodeProximityDistance),
+                     0 + (objectToMove[i].collider.bounds.extents.magnitude) / 2, 
+                     (Random.insideUnitSphere.z * nodeProximityDistance));
+                    objectToMove[i].currentNodeTarget = targetPosition + railNodes[targetNodeIndex[i]].transform.position;
                 }
             }
             else
@@ -134,19 +168,19 @@ public class RailManager : MonoBehaviour {
 		if(railNodes.Count > 0)
 		{
 			Gizmos.color = Color.red;
-			Vector3 previousNode = railNodes [0].position;
+            Vector3 previousNode = railNodes[0].transform.position;
 			foreach(var node in railNodes)
 			{
-				Gizmos.DrawSphere (node.position, 0.15f);
-				Gizmos.DrawLine(previousNode, node.position);
-				previousNode = node.position;
+                Gizmos.DrawWireSphere(node.transform.position, nodeProximityDistance);
+                Gizmos.DrawLine(previousNode, node.transform.position);
+                previousNode = node.transform.position;
 			}
 		}
 	}
 
 	void AddNode(Transform newNode, int index)
 	{
-		railNodes.Insert (index, newNode);
+        railNodes.Insert(index, new Node(newNode));
 	}
 	
 	//--------------------Private Functions--------------------
@@ -154,7 +188,7 @@ public class RailManager : MonoBehaviour {
 	bool ObjectIsOnNode(int nodeIndex, int index)
 	{
 		//Checking if the distance from the object to the target node is less than the proximity distance.
-		return (Vector3.Distance (objectToMove[index].transform.position, railNodes [nodeIndex].position) < nodeProximityDistance);
+        return (Vector3.Distance(objectToMove[index].transform.position, objectToMove[index].currentNodeTarget) < nodeProximityDistance);
 	}
 
 	public void ResetEntities()
