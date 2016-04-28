@@ -1,7 +1,7 @@
 // Shader created with Shader Forge v1.06 
 // Shader Forge (c) Neat Corporation / Joachim Holmer - http://www.acegikmo.com/shaderforge/
 // Note: Manually altering this data may prevent you from opening it in Shader Forge
-/*SF_DATA;ver:1.06;sub:START;pass:START;ps:flbk:,lico:1,lgpr:1,nrmq:1,limd:0,uamb:True,mssp:True,lmpd:False,lprd:False,rprd:False,enco:False,frtr:True,vitr:True,dbil:False,rmgx:True,rpth:0,hqsc:True,hqlp:False,tesm:0,blpr:0,bsrc:0,bdst:1,culm:0,dpts:2,wrdp:True,dith:0,ufog:True,aust:True,igpj:False,qofs:0,qpre:1,rntp:1,fgom:False,fgoc:False,fgod:False,fgor:False,fgmd:0,fgcr:0.5,fgcg:0.5,fgcb:0.5,fgca:1,fgde:0.01,fgrn:0,fgrf:300,ofsf:0,ofsu:0,f2p0:False;n:type:ShaderForge.SFN_Final,id:5021,x:32719,y:32712,varname:node_5021,prsc:2|custl-8451-OUT;n:type:ShaderForge.SFN_Tex2d,id:6039,x:32145,y:32565,ptovrint:False,ptlb:Diffuse Tex,ptin:_DiffuseTex,varname:node_6039,prsc:2,tex:d895447653b6e1c4ebe0c65a3bc926b6,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Multiply,id:8451,x:32460,y:32736,varname:node_8451,prsc:2|A-6039-RGB,B-6467-RGB,C-2657-OUT;n:type:ShaderForge.SFN_Color,id:6467,x:32145,y:32740,ptovrint:False,ptlb:Diffuse Colour,ptin:_DiffuseColour,varname:node_6467,prsc:2,glob:False,c1:1,c2:1,c3:1,c4:1;n:type:ShaderForge.SFN_NormalVector,id:6833,x:31584,y:33022,prsc:2,pt:False;n:type:ShaderForge.SFN_LightVector,id:981,x:31584,y:32890,varname:node_981,prsc:2;n:type:ShaderForge.SFN_Dot,id:9293,x:31772,y:32963,varname:node_9293,prsc:2,dt:1|A-981-OUT,B-6833-OUT;n:type:ShaderForge.SFN_LightAttenuation,id:562,x:31987,y:33092,varname:node_562,prsc:2;n:type:ShaderForge.SFN_Vector1,id:4392,x:31987,y:33220,varname:node_4392,prsc:2,v1:2;n:type:ShaderForge.SFN_Multiply,id:2657,x:32352,y:32946,varname:node_2657,prsc:2|A-1476-OUT,B-562-OUT,C-4392-OUT;n:type:ShaderForge.SFN_Posterize,id:1476,x:31990,y:32963,varname:node_1476,prsc:2|IN-9293-OUT,STPS-2731-OUT;n:type:ShaderForge.SFN_ValueProperty,id:2731,x:31772,y:33126,ptovrint:False,ptlb:Shade Steps,ptin:_ShadeSteps,varname:node_2731,prsc:2,glob:False,v1:4;proporder:6039-6467-2731;pass:END;sub:END;*/
+/*SF_DATA;ver:1.06;sub:START;pass:START;ps:flbk:,lico:1,lgpr:1,nrmq:1,limd:0,uamb:True,mssp:True,lmpd:False,lprd:False,rprd:False,enco:False,frtr:True,vitr:True,dbil:False,rmgx:True,rpth:0,hqsc:True,hqlp:False,tesm:0,blpr:0,bsrc:0,bdst:1,culm:0,dpts:2,wrdp:True,dith:0,ufog:True,aust:True,igpj:False,qofs:0,qpre:1,rntp:1,fgom:False,fgoc:False,fgod:False,fgor:False,fgmd:0,fgcr:0.5,fgcg:0.5,fgcb:0.5,fgca:1,fgde:0.01,fgrn:0,fgrf:300,ofsf:0,ofsu:0,f2p0:False;n:type:ShaderForge.SFN_Final,id:5021,x:32719,y:32712,varname:node_5021,prsc:2|custl-8451-OUT;n:type:ShaderForge.SFN_Tex2d,id:6039,x:32145,y:32565,ptovrint:False,ptlb:Diffuse Tex,ptin:_DiffuseTex,varname:node_6039,prsc:2,tex:d895447653b6e1c4ebe0c65a3bc926b6,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Multiply,id:8451,x:32460,y:32736,varname:node_8451,prsc:2|A-6039-RGB,B-6467-RGB,C-2657-OUT;n:type:ShaderForge.SFN_Color,id:6467,x:32145,y:32740,ptovrint:False,ptlb:Diffuse Colour,ptin:_DiffuseColour,varname:node_6467,prsc:2,glob:False,c1:1,c2:1,c3:1,c4:1;n:type:ShaderForge.SFN_NormalVector,id:6833,x:31584,y:33022,prsc:2,pt:False;n:type:ShaderForge.SFN_LightVector,id:981,x:31584,y:32890,varname:node_981,prsc:2;n:type:ShaderForge.SFN_Dot,id:9293,x:31772,y:32963,varname:node_9293,prsc:2,dt:1|A-981-OUT,B-6833-OUT;n:type:ShaderForge.SFN_LightAttenuation,id:562,x:31987,y:33092,varname:node_562,prsc:2;n:type:ShaderForge.SFN_Multiply,id:2657,x:32241,y:32963,varname:node_2657,prsc:2|A-1476-OUT,B-562-OUT,C-7336-RGB;n:type:ShaderForge.SFN_Posterize,id:1476,x:31990,y:32963,varname:node_1476,prsc:2|IN-9293-OUT,STPS-2731-OUT;n:type:ShaderForge.SFN_ValueProperty,id:2731,x:31772,y:33126,ptovrint:False,ptlb:Shade Steps,ptin:_ShadeSteps,varname:node_2731,prsc:2,glob:False,v1:4;n:type:ShaderForge.SFN_LightColor,id:7336,x:31987,y:33229,varname:node_7336,prsc:2;proporder:6039-6467-2731;pass:END;sub:END;*/
 
 Shader "Custom/CellShader" {
     Properties {
@@ -51,6 +51,7 @@ Shader "Custom/CellShader" {
                 o.uv0 = v.texcoord0;
                 o.normalDir = mul(_Object2World, float4(v.normal,0)).xyz;
                 o.posWorld = mul(_Object2World, v.vertex);
+                float3 lightColor = _LightColor0.rgb;
                 o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
                 TRANSFER_VERTEX_TO_FRAGMENT(o)
                 return o;
@@ -60,10 +61,12 @@ Shader "Custom/CellShader" {
 /////// Vectors:
                 float3 normalDirection = i.normalDir;
                 float3 lightDirection = normalize(_WorldSpaceLightPos0.xyz);
+                float3 lightColor = _LightColor0.rgb;
 ////// Lighting:
                 float attenuation = LIGHT_ATTENUATION(i);
                 float4 _DiffuseTex_var = tex2D(_DiffuseTex,TRANSFORM_TEX(i.uv0, _DiffuseTex));
-                float3 finalColor = (_DiffuseTex_var.rgb*_DiffuseColour.rgb*(floor(max(0,dot(lightDirection,i.normalDir)) * _ShadeSteps) / (_ShadeSteps - 1)*attenuation*2.0));
+                float node_1476 = floor(max(0,dot(lightDirection,i.normalDir)) * _ShadeSteps) / (_ShadeSteps - 1);
+                float3 finalColor = (_DiffuseTex_var.rgb*_DiffuseColour.rgb*(node_1476*attenuation*_LightColor0.rgb));
                 return fixed4(finalColor,1);
             }
             ENDCG
@@ -107,6 +110,7 @@ Shader "Custom/CellShader" {
                 o.uv0 = v.texcoord0;
                 o.normalDir = mul(_Object2World, float4(v.normal,0)).xyz;
                 o.posWorld = mul(_Object2World, v.vertex);
+                float3 lightColor = _LightColor0.rgb;
                 o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
                 TRANSFER_VERTEX_TO_FRAGMENT(o)
                 return o;
@@ -116,10 +120,12 @@ Shader "Custom/CellShader" {
 /////// Vectors:
                 float3 normalDirection = i.normalDir;
                 float3 lightDirection = normalize(lerp(_WorldSpaceLightPos0.xyz, _WorldSpaceLightPos0.xyz - i.posWorld.xyz,_WorldSpaceLightPos0.w));
+                float3 lightColor = _LightColor0.rgb;
 ////// Lighting:
                 float attenuation = LIGHT_ATTENUATION(i);
                 float4 _DiffuseTex_var = tex2D(_DiffuseTex,TRANSFORM_TEX(i.uv0, _DiffuseTex));
-                float3 finalColor = (_DiffuseTex_var.rgb*_DiffuseColour.rgb*(floor(max(0,dot(lightDirection,i.normalDir)) * _ShadeSteps) / (_ShadeSteps - 1)*attenuation*2.0));
+                float node_1476 = floor(max(0,dot(lightDirection,i.normalDir)) * _ShadeSteps) / (_ShadeSteps - 1);
+                float3 finalColor = (_DiffuseTex_var.rgb*_DiffuseColour.rgb*(node_1476*attenuation*_LightColor0.rgb));
                 return fixed4(finalColor * 1,0);
             }
             ENDCG

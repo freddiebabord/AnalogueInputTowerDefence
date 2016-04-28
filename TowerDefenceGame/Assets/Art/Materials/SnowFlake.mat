@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Leaves
-  m_Shader: {fileID: 4800000, guid: 2c6f1f074f62f624aa7b7536642ddc4d, type: 3}
+  m_Name: SnowFlake
+  m_Shader: {fileID: 4800000, guid: e44eda8f7be55204ab00fb90e0f901d5, type: 3}
   m_ShaderKeywords: []
   m_CustomRenderQueue: -1
   m_SavedProperties:
@@ -17,21 +17,14 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: edb03e0de6963cd40a41032af05a7400, type: 3}
+          m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
         first:
           name: _Texture
         second:
-          m_Texture: {fileID: 2800000, guid: edb03e0de6963cd40a41032af05a7400, type: 3}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _Normal
-        second:
-          m_Texture: {fileID: 2800000, guid: a38d6b08923129845b9d0977b24a2f0f, type: 3}
+          m_Texture: {fileID: 2800000, guid: 033f96ec678ff084a835c63d442f650b, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
     m_Floats:
@@ -43,4 +36,4 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: .800000012, g: .800000012, b: .800000012, a: 1}
+        second: {r: 1, g: 1, b: 1, a: 1}
