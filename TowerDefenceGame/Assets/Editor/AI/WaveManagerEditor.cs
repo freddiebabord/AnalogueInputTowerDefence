@@ -15,10 +15,9 @@ public class WaveManagerEditor : Editor {
 
 		list.drawElementCallback =  
 		(Rect rect, int index, bool isActive, bool isFocused) => {
-			var element = list.serializedProperty.GetArrayElementAtIndex(index);
+            var element = list.serializedProperty.GetArrayElementAtIndex(index);
 			rect.y += 2;
-
-
+            
 			GUIContent typeContent = new GUIContent("", "The difficulty of the enemy. Note: Not linked to anything yet.");
 			Rect typeRect = new Rect(rect.x, rect.y, 60, EditorGUIUtility.singleLineHeight);
 			EditorGUI.PropertyField( typeRect, element.FindPropertyRelative("Type"), GUIContent.none);
