@@ -28,7 +28,6 @@ public class RailManager : MonoBehaviour {
     [HideInInspector][SerializeField]
     public List<Node> railNodes = new List<Node>();
     public List<AIBase> objectToMove = new List<AIBase>();
-	private List<int> targetNodeIndex = new List<int>();
 	public float nodeProximityDistance = 0.1f;
 	public RailRotationMode rotationMode;
 	public float slerpRotationSpeed = 1.0f;
@@ -37,16 +36,6 @@ public class RailManager : MonoBehaviour {
 
 	//--------------------Unity Functions--------------------
 	
-	void Start()
-	{
-		//Moving the object to the first node.
-		int counter = 0;
-		for(int i = 0; i < objectToMove.Count; ++i){
-			targetNodeIndex.Add(0);
-			counter++;
-		}
-	}
-
 	public void AddEntity(GameObject entity)
 	{
         objectToMove.Add(SpawnEntity(entity).GetComponent<AIBase>());
@@ -63,15 +52,11 @@ public class RailManager : MonoBehaviour {
         if (objectToSpawn.GetComponent<AIBase>().Speed <= 0)
             objectToSpawn.GetComponent<AIBase>().Speed = initialSpeed;
 
-        if (objectToSpawn.GetComponent<AIBase>().CurrentIndex > 0)
-            targetNodeIndex.Add(objectToSpawn.GetComponent<AIBase>().CurrentIndex);
-        else
-            targetNodeIndex.Add(0);
 
-        Vector3 targetPosition = new Vector3((Random.insideUnitSphere.x * nodeProximityDistance),
+        Vector3 targetPosition = new Vector3(((Random.insideUnitSphere.x * 2) * nodeProximityDistance),
                                                         0 + (objectToSpawn.collider.bounds.extents.magnitude) / 2,
-                                                        (Random.insideUnitSphere.z * nodeProximityDistance));
-        objectToSpawn.GetComponent<AIBase>().currentNodeTarget = targetPosition + railNodes[targetNodeIndex[0]].transform.position;
+                                                        ((Random.insideUnitSphere.z * 2) * nodeProximityDistance));
+        objectToSpawn.GetComponent<AIBase>().currentNodeTarget = targetPosition + railNodes[objectToSpawn.GetComponent<AIBase>().CurrentIndex].transform.position;
 
         return objectToSpawn;
     }
@@ -87,9 +72,10 @@ public class RailManager : MonoBehaviour {
 			if(objectToMove[i] == null)
 				continue;
 
+            
 			//Exiting if the target node is 
 			//outside of the railNodes list.
-			if (targetNodeIndex[i] >= railNodes.Count) 
+            if (objectToMove[i].CurrentIndex >= railNodes.Count) 
 			{
 				Destroy(objectToMove[i].gameObject);
 				continue;
@@ -98,18 +84,11 @@ public class RailManager : MonoBehaviour {
 
             if (objectToMove[i].currentTarget == null)
             {
-                //Moving the object towards the target node.
-                if (objectToMove[i].currentNodeTarget == null)
-                {
-                    Vector3 targetPosition = new Vector3((Random.insideUnitSphere.x * nodeProximityDistance),
-                                                        0 + (objectToMove[i].collider.bounds.extents.magnitude)/2, 
-                                                        (Random.insideUnitSphere.z * nodeProximityDistance));
-                    objectToMove[i].currentNodeTarget = targetPosition + railNodes[targetNodeIndex[i]].transform.position;
 
-                }
                 objectToMove[i].DirectionVector = (objectToMove[i].currentNodeTarget - objectToMove[i].transform.position ).normalized;
                 if (objectToMove[i].GetComponent<Rigidbody>() != null)
                     objectToMove[i].GetComponent<Rigidbody>().velocity = objectToMove[i].DirectionVector * objectToMove[i].Speed * Time.deltaTime;
+                
                 objectToMove[i].transform.Translate(objectToMove[i].DirectionVector * Time.deltaTime * objectToMove[i].Speed, Space.World);
 
                 Vector3 smudgeFactor = new Vector3(Random.Range(-2, 2), 0, Random.Range(-2, 2));
@@ -133,16 +112,23 @@ public class RailManager : MonoBehaviour {
 
                 //Incrementing the target node if the object 
                 //has reached the previous target node.
-                if (ObjectIsOnNode(targetNodeIndex[i], i))
+                if (ObjectIsOnNode(objectToMove[i].CurrentIndex, i))
                 {
                     //objectToMove[i].position = railNodes [targetNodeIndex[i]].position;
-                    targetNodeIndex[i]++;
-                    objectToMove[i].CurrentIndex = targetNodeIndex[i];
+                    objectToMove[i].CurrentIndex++;
+
+                    if (objectToMove[i].CurrentIndex >= railNodes.Count)
+                    {
+                        Destroy(objectToMove[i].gameObject);
+                        continue;
+                    }
+
                     
-                    Vector3 targetPosition = new Vector3((Random.insideUnitSphere.x * nodeProximityDistance),
+                    Vector3 targetPosition = new Vector3(((Random.insideUnitSphere.x * 2) * nodeProximityDistance),
                      0 + (objectToMove[i].collider.bounds.extents.magnitude) / 2, 
-                     (Random.insideUnitSphere.z * nodeProximityDistance));
-                    objectToMove[i].currentNodeTarget = targetPosition + railNodes[targetNodeIndex[i]].transform.position;
+                     ((Random.insideUnitSphere.z * 2) * nodeProximityDistance));
+
+                    objectToMove[i].currentNodeTarget = targetPosition + railNodes[objectToMove[i].CurrentIndex].transform.position;
                 }
             }
             else
@@ -182,6 +168,11 @@ public class RailManager : MonoBehaviour {
 	{
         railNodes.Insert(index, new Node(newNode));
 	}
+
+    void AddNode(Transform newNode)
+    {
+        railNodes.Add(new Node(newNode));
+    }
 	
 	//--------------------Private Functions--------------------
 	
@@ -194,6 +185,5 @@ public class RailManager : MonoBehaviour {
 	public void ResetEntities()
 	{
 		objectToMove.Clear ();
-		targetNodeIndex.Clear ();
 	}
 }
