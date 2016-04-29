@@ -9,6 +9,8 @@ public class Pointer : MonoBehaviour {
 	RectTransform rt;
     List<AnalogueButtons> selectedButtons = new List<AnalogueButtons>();
     GameObject latSelected;
+    GameObject currentTile;
+    Color currentTileOriginalColour;
 
 	// Use this for initialization
 	void Start () {
@@ -49,6 +51,37 @@ public class Pointer : MonoBehaviour {
                 }
             }
         }
+
+        Ray screenToGround = new Ray(transform.position, transform.forward);
+        RaycastHit hit;
+        if(Physics.Raycast(screenToGround, out hit, 150))
+        {
+            Debug.DrawLine(transform.position, hit.transform.position, Color.yellow);
+            if(hit.collider.gameObject.GetComponent<NodePath>())
+            {
+                if (currentTile != hit.collider.gameObject)
+                {
+                    if (hit.collider.gameObject.GetComponent<NodePath>().pathType == NodePath.PathType.Grass)
+                    {
+                        if (currentTile != null)
+                            currentTile.renderer.material.SetColor("_DiffuseColour", currentTileOriginalColour);
+                        currentTile = hit.collider.gameObject;
+                        currentTileOriginalColour = currentTile.renderer.material.GetColor("_DiffuseColour");
+                        currentTile.renderer.material.SetColor("_DiffuseColour", new Color(0, 1, 0, 1));
+                    }
+                    else
+                    {
+                        if (currentTile != null)
+                            currentTile.renderer.material.SetColor("_DiffuseColour", currentTileOriginalColour);
+                        currentTile = hit.collider.gameObject;
+                        currentTileOriginalColour = currentTile.renderer.material.GetColor("_DiffuseColour");
+                        currentTile.renderer.material.SetColor("_DiffuseColour", new Color(1, 0, 0, 1));
+                    }
+                }
+            }
+        }
+
+
 
         // Simulation of click event
         if(Input.GetAxis("TriggerSelect") >= 1)

@@ -62,6 +62,11 @@ public class WaveManager : MonoBehaviour {
 		}
 	}
 
+    public void AddSpawnPoint(Transform newSpawnPoint)
+    {
+        spawnPoint.Add(newSpawnPoint);
+    }
+
 	IEnumerator WaveComplete()
 	{
 		waveInterimWait = true;

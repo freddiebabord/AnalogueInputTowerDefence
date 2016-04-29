@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Water
-  m_Shader: {fileID: 4800000, guid: 5ea8268123cda4a45a73c195bed29dba, type: 3}
+  m_Name: Smoke
+  m_Shader: {fileID: 206, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: []
   m_CustomRenderQueue: -1
   m_SavedProperties:
@@ -17,27 +17,24 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _DiffuseTex
-        second:
-          m_Texture: {fileID: 0}
+          m_Texture: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
     m_Floats:
       data:
         first:
-          name: _ShadeSteps
-        second: 4
+          name: _InvFade
+        second: 2.57285714
     m_Colors:
       data:
         first:
           name: _Color
-        second: {r: .328449398, g: .745290458, b: .992647052, a: 1}
+        second: {r: 1, g: 1, b: 1, a: 1}
       data:
         first:
-          name: _DiffuseColour
-        second: {r: 0, g: 1, b: 1, a: 1}
+          name: _EmisColor
+        second: {r: .639705896, g: .639705896, b: .639705896, a: 0}
+      data:
+        first:
+          name: _TintColor
+        second: {r: .5, g: .5, b: .5, a: .5}
