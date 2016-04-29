@@ -23,13 +23,17 @@ public class AITowerSeeker : AIBase {
         base.Update();
 	}
 
+    public override void Die()
+    {
+        GameObject go = (GameObject)Instantiate(Resources.Load("Prefabs/VolumetricExplosion", typeof(GameObject)), transform.position, Quaternion.identity);
+        go.GetComponent<VolumetricExplosion>().explosionDamage = damage;
+        base.Die();
+    }
+
     void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.GetComponentInChildren<TowerClass>())
-        {
-            collision.gameObject.SendMessage("ApplyDamage", damage, SendMessageOptions.DontRequireReceiver);
             Die();
-        }
     }
 
 	void OnTriggerEnter(Collider other)

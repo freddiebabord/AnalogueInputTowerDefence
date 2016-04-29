@@ -87,7 +87,7 @@ public class AIBase : MonoBehaviour {
 
     protected IEnumerator DieAnimDelay()
     {
-        yield return new WaitForSeconds(animations.GetClip("AI_Basic_Death").averageDuration + 2.5f);
+        yield return new WaitForSeconds(/*animations.GetClip("AI_Basic_Death").averageDuration + */2.5f);
         Destroy(gameObject);
     }
 
