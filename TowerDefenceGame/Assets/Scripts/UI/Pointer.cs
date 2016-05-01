@@ -11,6 +11,9 @@ public class Pointer : MonoBehaviour {
     GameObject latSelected;
     GameObject currentTile;
     Color currentTileOriginalColour;
+    public float pointerSpeed = 5.0f;
+    public string horizontalAxis = "HorizontalLeft";
+    public string verticalAxis = "VerticalLeft";
 
 	// Use this for initialization
 	void Start () {
@@ -30,8 +33,12 @@ public class Pointer : MonoBehaviour {
         //    rt.position = new Vector3(0, 0, 0);
         //}
 
-        rt.Translate (Input.GetAxis ("Horizontal"), Input.GetAxis ("Vertical"), 0);
-
+        Vector3 inputVector = new Vector3(Input.GetAxis(horizontalAxis), Input.GetAxis(verticalAxis), 0.0f);
+       // if (rt.position.x + inputVector.x < transform.parent.GetComponent<RectTransform>().sizeDelta.x / 2 && rt.position.x + inputVector.x > transform.parent.GetComponent<RectTransform>().sizeDelta.x / 2)
+        {
+            //if (rt.position.y + inputVector.y < transform.parent.GetComponent<RectTransform>().sizeDelta.y / 2 && rt.position.y + inputVector.y > transform.parent.GetComponent<RectTransform>().sizeDelta.y / 2)
+                rt.Translate(inputVector * pointerSpeed * Time.deltaTime);
+        }
         // Simulates the OnSelect event
         PointerEventData pointer = new PointerEventData(EventSystem.current);
         pointer.position = Camera.main.WorldToScreenPoint(transform.position);
@@ -84,14 +91,17 @@ public class Pointer : MonoBehaviour {
 
 
         // Simulation of click event
-        if(Input.GetAxis("TriggerSelect") >= 1)
+        if(Input.GetAxis("TriggerSelectRight") >= 1)
         {
             if (raycastResults.Count > 0)
             {
                 for (int i = 0; i < raycastResults.Count; i++)
                 {
                     if (raycastResults[i].gameObject.GetComponent<AnalogueButtons>())
-                        raycastResults[i].gameObject.GetComponent<AnalogueButtons>().OnClick();
+                    {
+                        if (!raycastResults[i].gameObject.GetComponent<AnalogueButtons>().clicked)
+                            raycastResults[i].gameObject.GetComponent<AnalogueButtons>().OnClick();
+                    }
                 }
             } 
         }
