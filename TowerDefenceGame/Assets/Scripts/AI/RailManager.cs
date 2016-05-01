@@ -192,7 +192,8 @@ public class RailManager : MonoBehaviour {
 	{
         foreach (var item in objectToMove)
         {
-            Destroy(item.gameObject);
+            if(item != null)
+                Destroy(item.gameObject);
         }
         objectToMove.Clear ();
 	}
