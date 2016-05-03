@@ -26,9 +26,10 @@ GameObject:
   - 114: {fileID: 11473800}
   - 54: {fileID: 5449758}
   - 65: {fileID: 6573800}
+  - 111: {fileID: 11112302}
   m_Layer: 0
   m_Name: AI_Trojen Horse_OnDeath
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -464,7 +465,7 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 173800}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 450
   m_Drag: 0
   m_AngularDrag: .0500000007
   m_UseGravity: 1
@@ -484,6 +485,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2, y: 4, z: 4}
   m_Center: {x: 0, y: -.289999992, z: 0}
+--- !u!111 &11112302
+Animation:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 173800}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 3b361dd30df30e34d8fdf2e0774d1ec7, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 3b361dd30df30e34d8fdf2e0774d1ec7, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!114 &11473800
 MonoBehaviour:
   m_ObjectHideFlags: 1
