@@ -89,7 +89,15 @@ public class WaveManager : MonoBehaviour {
 		isSpawning = false;
 	}
 
+    public void StartClassic(GameManager.Difficulty difficulty_)
+    {
 
+    }
+
+    public void StartProcedural(GameManager.Difficulty difficulty_)
+    {
+
+    }
 
 }
 
