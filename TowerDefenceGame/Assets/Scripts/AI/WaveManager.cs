@@ -62,6 +62,11 @@ public class WaveManager : MonoBehaviour {
 		}
 	}
 
+    public void AddSpawnPoint(Transform newSpawnPoint)
+    {
+        spawnPoint.Add(newSpawnPoint);
+    }
+
 	IEnumerator WaveComplete()
 	{
 		waveInterimWait = true;
@@ -84,7 +89,15 @@ public class WaveManager : MonoBehaviour {
 		isSpawning = false;
 	}
 
+    public void StartClassic(GameManager.Difficulty difficulty_)
+    {
 
+    }
+
+    public void StartProcedural(GameManager.Difficulty difficulty_)
+    {
+
+    }
 
 }
 

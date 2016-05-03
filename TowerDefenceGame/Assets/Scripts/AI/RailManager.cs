@@ -33,9 +33,15 @@ public class RailManager : MonoBehaviour {
 	public float slerpRotationSpeed = 1.0f;
 	public int EnemiesThisCycle = 0;
     public float initialSpeed = 15;
+    private WaveManager waveManager;
 
 	//--------------------Unity Functions--------------------
 	
+    void Start()
+    {
+        waveManager = GetComponent<WaveManager>();
+    }
+
 	public void AddEntity(GameObject entity)
 	{
         objectToMove.Add(SpawnEntity(entity).GetComponent<AIBase>());
@@ -67,7 +73,7 @@ public class RailManager : MonoBehaviour {
 
 		EnemiesThisCycle = 0;
 
-		for (int i = 0; i < objectToMove.Count; i++) {
+		for (int i = 0; i < objectToMove.Count; ++i) {
 
 			if(objectToMove[i] == null)
 				continue;
@@ -86,8 +92,8 @@ public class RailManager : MonoBehaviour {
             {
 
                 objectToMove[i].DirectionVector = (objectToMove[i].currentNodeTarget - objectToMove[i].transform.position ).normalized;
-                if (objectToMove[i].GetComponent<Rigidbody>() != null)
-                    objectToMove[i].GetComponent<Rigidbody>().velocity = objectToMove[i].DirectionVector * objectToMove[i].Speed * Time.deltaTime;
+                /*if (objectToMove[i].GetComponent<Rigidbody>() != null)
+                    objectToMove[i].GetComponent<Rigidbody>().velocity = objectToMove[i].DirectionVector * objectToMove[i].Speed * Time.deltaTime;*/
                 
                 objectToMove[i].transform.Translate(objectToMove[i].DirectionVector * Time.deltaTime * objectToMove[i].Speed, Space.World);
 
@@ -184,6 +190,99 @@ public class RailManager : MonoBehaviour {
 
 	public void ResetEntities()
 	{
-		objectToMove.Clear ();
+        foreach (var item in objectToMove)
+        {
+            if(item != null)
+                Destroy(item.gameObject);
+        }
+        objectToMove.Clear ();
 	}
+
+    private void ClearNodes()
+    {
+        foreach (var node in railNodes)
+        {
+            Destroy(node.transform.gameObject);
+        }
+
+        railNodes.Clear();
+    }
+
+    #region // Dynamic Node Creation
+
+    private struct Map
+    {
+        public GameObject[,] map;
+        public int sizeX;
+        public int sizeY;
+    }
+
+    public bool BuildNavigationMap(GameObject[,] tiles, int sizeX_, int sizeY_)
+    {
+        if (railNodes.Count > 0)
+            ClearNodes();
+
+        GameObject[] startNodes = GameObject.FindGameObjectsWithTag("EnemyStart");
+        foreach (GameObject startNode in startNodes)
+        {
+            waveManager.AddSpawnPoint(startNode.transform);
+        }
+
+        Map map_ = new Map() { map = tiles, sizeX = sizeX_, sizeY = sizeY_ };
+        FindNextPoint(map_, startNodes[0]);
+
+        return true;
+    }
+
+    private void FindNextPoint(Map map_, GameObject currentPoint)
+    {
+        NodePath path_ = currentPoint.GetComponent<NodePath>();
+        if(currentPoint.gameObject.tag == "EnemyEnd")
+            return;
+
+        if (path_.posX + 1 < map_.sizeX)
+        {
+            if (IsEnemyPathTile(map_.map[path_.posX + 1, path_.posY]))
+            {
+                AddNode((map_.map[path_.posX + 1, path_.posY]).transform);
+                FindNextPoint(map_, (map_.map[path_.posX + 1, path_.posY]));
+            }
+        }
+
+        if (path_.posX - 1 >= 0)
+        {
+            if (IsEnemyPathTile(map_.map[path_.posX - 1, path_.posY]))
+            {
+                AddNode((map_.map[path_.posX - 1, path_.posY]).transform);
+                FindNextPoint(map_, (map_.map[path_.posX - 1, path_.posY]));
+            }
+        }
+
+        if (path_.posY + 1 < map_.sizeY)
+        {
+            if (IsEnemyPathTile(map_.map[path_.posX, path_.posY + 1]))
+            {
+                AddNode((map_.map[path_.posX, path_.posY + 1]).transform);
+                FindNextPoint(map_, (map_.map[path_.posX, path_.posY + 1]));
+            }
+        }
+
+        if (path_.posY - 1 >= 0)
+        {
+            if (IsEnemyPathTile(map_.map[path_.posX, path_.posY - 1]))
+            {
+                AddNode((map_.map[path_.posX + 1, path_.posY]).transform);
+                FindNextPoint(map_, (map_.map[path_.posX, path_.posY - 1]));
+            }
+        }
+    }
+
+    private bool IsEnemyPathTile(GameObject tileToCheck)
+    {
+        return tileToCheck.GetComponent<NodePath>().pathType == NodePath.PathType.EnemyPath ? true : false;
+    }
+
+    #endregion 
 }
+
+

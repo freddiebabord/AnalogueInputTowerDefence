@@ -54,15 +54,10 @@ public class TowerClass : MonoBehaviour {
 	// Update is called once per frame
 	public virtual void Update () {
 
-		if (exp == 100) 
-		{
-			upgradable = true;
-		}
-
-		if (upgradable) 
-		{
-			Debug.Log ("Upgrade Available");
-		}
+        if (exp == 100)
+        {
+            upgradable = true;
+        }
 
 		if (lastShot > cooldown) 
 		{
@@ -77,7 +72,6 @@ public class TowerClass : MonoBehaviour {
 		{
 			if(!upgradable)
 			{
-				Debug.Log("EXP");
 				exp += 5;
 			}
 
@@ -86,6 +80,8 @@ public class TowerClass : MonoBehaviour {
 
 		lastShot += Time.deltaTime;
 
+        if (health <= 0)
+            OnDie();
 	}
 
 	bool HasEnemyInSight(GameObject[] enemies)
@@ -239,12 +235,14 @@ public class TowerClass : MonoBehaviour {
         health -= HPLoss;
     }
 
-    void OnDie()
+    void ApplyDamage(float HPLoss)
     {
-        if(health <= 0)
-        {
-            Destroy(transform.parent.gameObject);
-        }
+        health -= Mathf.RoundToInt(HPLoss);
+    }
+
+    protected virtual void OnDie()
+    {
+        Destroy(transform.parent.gameObject);
     }
 
 }

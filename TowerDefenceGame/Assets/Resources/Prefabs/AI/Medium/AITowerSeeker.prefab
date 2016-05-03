@@ -88,11 +88,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 100
   speed: 10
-  damage: 0
+  damage: 150
   flying: 0
-  currentTarget: {fileID: 0}
   goldDrop: 0
-  seekRadius: 15
+  currentIndex: 0
+  currentTarget: {fileID: 0}
+  currentNodeTarget: {x: 0, y: 0, z: 0}
+  seekRadius: 10
 --- !u!135 &13503664
 SphereCollider:
   m_ObjectHideFlags: 1
