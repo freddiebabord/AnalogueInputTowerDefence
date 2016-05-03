@@ -3,7 +3,7 @@ using System.Collections;
 
 public class TowerClass : MonoBehaviour {
 	
-	GameObject[] ai;
+	protected GameObject[] ai;
 
 	GameObject chosen;
 
