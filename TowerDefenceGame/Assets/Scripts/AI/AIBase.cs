@@ -42,8 +42,11 @@ public class AIBase : MonoBehaviour {
 	{
         if (animations != null)
         {
-            if (!animations.IsPlaying("AI_Basic_Walk") && (hp > 0))
-                animations.Play("AI_Basic_Walk");
+            if (animations.GetClip("AI_Basic_Walk"))
+            {
+                if (!animations.IsPlaying("AI_Basic_Walk") && (hp > 0))
+                    animations.Play("AI_Basic_Walk");
+            }
         }
         if (hp <= 0)
         {

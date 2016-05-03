@@ -131,7 +131,7 @@ public class RailManager : MonoBehaviour {
 
                     
                     Vector3 targetPosition = new Vector3(((Random.insideUnitSphere.x * 2) * nodeProximityDistance),
-                     0 + (objectToMove[i].collider.bounds.extents.magnitude) / 2, 
+                     0 + (objectToMove[i].collider.bounds.extents.magnitude) / 2 +0.5f, 
                      ((Random.insideUnitSphere.z * 2) * nodeProximityDistance));
 
                     objectToMove[i].currentNodeTarget = targetPosition + railNodes[objectToMove[i].CurrentIndex].transform.position;
