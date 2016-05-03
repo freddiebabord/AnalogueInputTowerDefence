@@ -10,12 +10,16 @@ TagManager:
   - Mage
   - Absorbing
   - Path
-  - Empty
+  - Null
   - Grass
   - Rock
   - Water
   - Tree
+  - Start
+  - End
+  - 
   - Node
+  - Empty
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX

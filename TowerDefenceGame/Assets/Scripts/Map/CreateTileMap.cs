@@ -44,11 +44,19 @@ public class CreateTileMap : MonoBehaviour {
 		if (Input.GetKeyDown ("5")) {changeTile("WaterTile");}
 		if (Input.GetKeyDown ("6")) {changeTile("EmptyTile");}
 		if (Input.GetKeyDown ("space")) {getTextFile();}
-		if (Input.GetKeyDown ("n")) {changeTile("NodeTile");}
+		if (Input.GetKeyDown ("s")) {changeTile("StartTile");}
+		if (Input.GetKeyDown ("e")) {changeTile("EndTile");}
 	}
 
 	void changeTile(string tile)
 	{
+		if(tile == "EndTile")
+		{
+			for(int t = 0; t < TileType.Length; t++)
+			{
+				if (TileType[t].tag == "End") {return;}
+			}
+		}
 		Temp = TileType[index].transform.position;
 		Destroy(TileType[index]);
 		TileType[index] = Instantiate(Resources.Load("Prefabs/Tiles/" + tile)) as GameObject;
@@ -113,8 +121,9 @@ public class CreateTileMap : MonoBehaviour {
 		if (tag == "Tree"){return (char)'T';}
 		if (tag == "Rock"){return (char)'R';}
 		if (tag == "Path"){return (char)'P';}
-		if (tag == "Empty"){return (char)'E';}
-		if (tag == "Empty"){return (char)'N';}
+		if (tag == "Null"){return (char)'N';}
+		if (tag == "Start"){return (char)'S';}
+		if (tag == "End"){return (char)'E';}
 		return (char)'_';
 	}
 }

@@ -56,7 +56,8 @@ public class TileBase : MonoBehaviour {
 		if (TileType == 'R') {return "Prefabs/Tiles/RockTile";}
 		if (TileType == 'T') {return "Prefabs/Tiles/TreeTile";}
 		if (TileType == 'W') {return "Prefabs/Tiles/WaterTile";}
-		if (TileType == 'N') {return "Prefabs/Tiles/PathTile";}
+		if (TileType == 'S') {return "Prefabs/Tiles/PathTile";}
+		if (TileType == 'E') {return "Prefabs/Tiles/PathTile";}
 		return "";
 	}
 }

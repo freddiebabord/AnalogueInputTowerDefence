@@ -12,7 +12,7 @@ GameObject:
   - 64: {fileID: 6498928}
   - 23: {fileID: 2398926}
   m_Layer: 0
-  m_Name: NodeTile
+  m_Name: StartTile
   m_TagString: Node
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
