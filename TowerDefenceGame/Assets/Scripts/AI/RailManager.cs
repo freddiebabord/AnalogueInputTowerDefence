@@ -67,6 +67,14 @@ public class RailManager : MonoBehaviour {
         return objectToSpawn;
     }
 
+
+    public void RemoveEntity(AIBase entity)
+    {
+        if (objectToMove.Contains(entity))
+            objectToMove.Remove(entity);
+    }
+
+
 	void Update()
 	{
 		if(!activated) return;
@@ -92,9 +100,7 @@ public class RailManager : MonoBehaviour {
             {
 
                 objectToMove[i].DirectionVector = (objectToMove[i].currentNodeTarget - objectToMove[i].transform.position ).normalized;
-                /*if (objectToMove[i].GetComponent<Rigidbody>() != null)
-                    objectToMove[i].GetComponent<Rigidbody>().velocity = objectToMove[i].DirectionVector * objectToMove[i].Speed * Time.deltaTime;*/
-                
+
                 objectToMove[i].transform.Translate(objectToMove[i].DirectionVector * Time.deltaTime * objectToMove[i].Speed, Space.World);
 
                 Vector3 smudgeFactor = new Vector3(Random.Range(-2, 2), 0, Random.Range(-2, 2));
@@ -141,8 +147,7 @@ public class RailManager : MonoBehaviour {
             {
 
                 objectToMove[i].DirectionVector = (objectToMove[i].currentTarget.transform.position - objectToMove[i].transform.position).normalized;
-                if (objectToMove[i].GetComponent<Rigidbody>() != null)
-                    objectToMove[i].GetComponent<Rigidbody>().velocity = objectToMove[i].DirectionVector * objectToMove[i].Speed * Time.deltaTime;
+               
                 objectToMove[i].transform.Translate(objectToMove[i].DirectionVector * Time.deltaTime * objectToMove[i].Speed, Space.World);
 
                 Quaternion targetRotation = Quaternion.LookRotation(objectToMove[i].currentTarget.transform.position - objectToMove[i].transform.position);
