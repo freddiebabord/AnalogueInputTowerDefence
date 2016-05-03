@@ -23,7 +23,7 @@ public class AITowerSeeker : AIBase {
         base.Update();
 	}
 
-    public override void Die()
+    public override void Die(float delay = 0)
     {
         GameObject go = (GameObject)Instantiate(Resources.Load("Prefabs/VolumetricExplosion", typeof(GameObject)), transform.position, Quaternion.identity);
         go.GetComponent<VolumetricExplosion>().explosionDamage = damage;

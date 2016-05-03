@@ -31,37 +31,55 @@ public class AIBase : MonoBehaviour {
         set { directionVector = value; }
     }
 
+    public float Health
+    {
+        get { return hp; }
+    }
+
 	// Use this for initialization
 	public virtual void Start () 
 	{
 		game = GameObject.FindObjectOfType<GameManager> ();
         animations = GetComponent<Animation>();
+       
+        foreach (MeshCollider child in gameObject.GetComponentsInChildren<MeshCollider>())
+        {
+            child.enabled = false;
+            if (child.gameObject.GetComponent<Rigidbody>())
+            {
+                child.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+                child.gameObject.GetComponent<Rigidbody>().detectCollisions = false;
+            }
+        }
 	}
 
 	public virtual void Update()
 	{
         if (animations != null)
         {
-            if (!animations.IsPlaying("AI_Basic_Walk") && (hp > 0))
-                animations.Play("AI_Basic_Walk");
+            if (animations.GetClip("AI_Basic_Walk"))
+            {
+                if (!animations.IsPlaying("AI_Basic_Walk") && (hp > 0))
+                    animations.Play("AI_Basic_Walk");
+            }
         }
         if (hp <= 0)
         {
-            if (deathLocation != transform.position)
-                deathLocation = transform.position;
-            if (animations != null)
+            GameObject.FindObjectOfType<RailManager>().RemoveEntity(this);
+            GetComponent<Animator>().enabled = false;
+            foreach (Transform child in gameObject.GetComponentsInChildren<Transform>())
             {
-                if (!animations.IsPlaying("AI_Basic_Death"))
+                if (child.transform.position.y <= 0)
+                    child.transform.position = new Vector3(child.transform.position.x, 0.1f, child.transform.position.z);
+                if (child.GetComponent<MeshCollider>())
+                    child.GetComponent<MeshCollider>().enabled = true;
+                if (child.gameObject.GetComponent<Rigidbody>())
                 {
-                    animations.Stop();
-                    animations.Play("AI_Basic_Death");
-                    DieWithGold();
+                    child.rigidbody.isKinematic = false;
+                    child.rigidbody.detectCollisions = true;
                 }
             }
-            else
-            {
-                DieWithGold();
-            }
+            DieWithGold();
         }
 
 	}
@@ -73,21 +91,31 @@ public class AIBase : MonoBehaviour {
 	public virtual void DieWithGold()
 	{
 		game.AddGold (goldDrop);
-        Die();
+        var cols = gameObject.GetComponentsInChildren<MeshCollider>();
+        if (cols != null)
+            Die(3.5f);
+        else
+            Die();
 	}
 
-    public virtual void Die()
+    public virtual void Die(float delay = 0)
     {
-        if(animations != null)
+        if (animations != null)
             StartCoroutine(DieAnimDelay());
         else
-            Destroy(gameObject);
+            StartCoroutine(DieWithDelay(delay));
         
     }
 
     protected IEnumerator DieAnimDelay()
     {
         yield return new WaitForSeconds(/*animations.GetClip("AI_Basic_Death").averageDuration + */2.5f);
+        Destroy(gameObject);
+    }
+
+    protected IEnumerator DieWithDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
         Destroy(gameObject);
     }
 

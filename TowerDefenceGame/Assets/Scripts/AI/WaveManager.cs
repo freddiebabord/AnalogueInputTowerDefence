@@ -73,6 +73,10 @@ public class WaveManager : MonoBehaviour {
 		aiNodePathing.ResetEntities ();
 		yield return new WaitForSeconds (Waves[waveToSpawn].waveEndTimer);
 		waveToSpawn++;
+        if(Waves[waveToSpawn].Type == MobWave.WaveType.Boss)
+            GameObject.FindObjectOfType<EverloopMasterController>().ChangeLoopBasedOnTheme(EverloopTheme.Theme.Tense);
+        else
+            GameObject.FindObjectOfType<EverloopMasterController>().ChangeLoopBasedOnTheme(EverloopTheme.Theme.Normal);
 		spawnedEnemies = 0;
 		waveInterimWait = false;
 	}
