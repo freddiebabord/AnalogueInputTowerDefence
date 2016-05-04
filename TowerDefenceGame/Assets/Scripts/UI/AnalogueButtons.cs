@@ -96,7 +96,8 @@ public class AnalogueButtons : Button, ISelectHandler, IDeselectHandler {
                 this.onClick.Invoke();
                 clickReset = false;
                 this.DoStateTransition(SelectionState.Pressed, false);
-                StartCoroutine(clickTimeOut());
+                if(this.gameObject.activeInHierarchy)
+                    StartCoroutine(clickTimeOut());
             }
         }        
 	}

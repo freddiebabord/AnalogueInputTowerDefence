@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour {
 	[SerializeField] private float goldQuantity = 0;
 
     [SerializeField] public GameType gameType;
-    [SerializeField] public Difficulty difficulty;
+    [SerializeField][Range(1,50)] public int difficulty;
 
     private RailManager railSystem;
     private WaveManager waveSystem;
@@ -24,13 +24,6 @@ public class GameManager : MonoBehaviour {
     {
         Classic = 0,
         Infinite
-    }
-
-    public enum Difficulty
-    {
-        Easy = 1,
-        Medium = 5,
-        Hard = 10
     }
 
     void Start()
@@ -52,20 +45,29 @@ public class GameManager : MonoBehaviour {
     {
         if(levelID != 0)
         {
-            switch (gameType)
-            {
-                case GameType.Classic:
-                    if (waveSystem)
-                        waveSystem.StartClassic(difficulty);
-                    break;
-                case GameType.Infinite:
-                    if(waveSystem)
-                        waveSystem.StartProcedural(difficulty);
-                    break;
-                default:
-                    print("Error: Wave type not defined / wave type has no logic.");
-                    break;
-            }
+            StartCoroutine(WaitToStart());
+        }
+    }
+
+    IEnumerator WaitToStart()
+    {
+        yield return new WaitForSeconds(5);
+        waveSystem = GameObject.FindObjectOfType<WaveManager>();
+        if (waveSystem)
+            Debug.Log("Starting");
+        switch (gameType)
+        {
+            case GameType.Classic:
+                if (waveSystem)
+                    waveSystem.StartClassic(1);
+                break;
+            case GameType.Infinite:
+                if (waveSystem)
+                    waveSystem.StartProcedural(1);
+                break;
+            default:
+                print("Error: Wave type not defined / wave type has no logic.");
+                break;
         }
     }
 

@@ -21,7 +21,6 @@ public class Node
 }
 
 [System.Serializable]
-[RequireComponent (typeof(GameManager))]
 public class RailManager : MonoBehaviour {
 	
 	public bool activated = true;
@@ -31,7 +30,6 @@ public class RailManager : MonoBehaviour {
 	public float nodeProximityDistance = 0.1f;
 	public RailRotationMode rotationMode;
 	public float slerpRotationSpeed = 1.0f;
-	public int aliveEnemies = 0;
     public float initialSpeed = 15;
     private WaveManager waveManager;
 	private bool shouldClean = false;
@@ -40,6 +38,8 @@ public class RailManager : MonoBehaviour {
 	public int updateIntervalPerSecond = 20;
 	private float intervalRate;
 	private float timeSinceLastUpdate = 0.0f;
+
+    public int aliveEnemies { get { return objectToMove.Count; } }
 
 	//--------------------Unity Functions--------------------
 	
@@ -62,8 +62,19 @@ public class RailManager : MonoBehaviour {
 	public void EnableEntityAtIndex(int index)
 	{
 		objectToMove [index].gameObject.SetActive (true);
-		aliveEnemies++;
 	}
+
+    public void EnableInactiveEntity()
+    {
+        foreach (AIBase entity in objectToMove)
+        {
+            if (!entity.gameObject.activeInHierarchy)
+            {
+                entity.gameObject.SetActive(true);
+                return;
+            }
+        }
+    }
 	
     private GameObject SpawnEntity(GameObject objectToSpawn)
     {
@@ -85,6 +96,7 @@ public class RailManager : MonoBehaviour {
         if (objectToMove.Contains(entity))
             objectToMove.Remove(entity);
 		shouldClean = true;
+        objectToMove.TrimExcess();
     }
 
 	public void UpdateIntervalTime()
@@ -98,18 +110,26 @@ public class RailManager : MonoBehaviour {
 		if (Input.GetKey (KeyCode.Space))
 			UpdateIntervalTime ();
 
+        objectToMove.TrimExcess();
 		timeSinceLastUpdate += Time.deltaTime;
 		if (timeSinceLastUpdate >= intervalRate) {
-			for (int i = 0; i < aliveEnemies; ++i) {
-				AIBase aiObj = objectToMove[i];
-				if(aiObj == null)
-					continue;
+            for (int i = 0; i < objectToMove.Count; ++i)
+            {
+                if (objectToMove[i] == null)
+                {
+                    objectToMove.TrimExcess();
+                    continue;
+                }
+                if(!objectToMove[i].gameObject.activeInHierarchy)
+                    continue;
+
+                AIBase aiObj = objectToMove[i];
 				//Exiting if the target node is 
 				//outside of the railNodes list.
 				if (aiObj.CurrentIndex >= railNodes.Count) {
-					Destroy (aiObj.gameObject);
-					aliveEnemies--;
-					shouldClean = true;
+                    RemoveEntity(aiObj);
+                    Destroy(aiObj.gameObject);
+                    objectToMove.TrimExcess();
 					continue;
 				}
 
@@ -142,14 +162,6 @@ public class RailManager : MonoBehaviour {
 					if (ObjectIsOnNode (aiObj)) {
 
 						aiObj.CurrentIndex++;
-
-						if (aiObj.CurrentIndex >= railNodes.Count) {
-							Destroy (aiObj.gameObject);
-							shouldClean = true;
-							aliveEnemies--;
-							continue;
-						}
-
                     
 						Vector3 targetPosition = new Vector3 (((Random.insideUnitSphere.x * 2) * nodeProximityDistance),
 										                     0 + (aiObj.collider.bounds.extents.magnitude) / 2 + 0.5f, 

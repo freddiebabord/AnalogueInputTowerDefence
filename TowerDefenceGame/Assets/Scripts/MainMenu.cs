@@ -3,23 +3,25 @@ using System.Collections;
 
 public class MainMenu : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    public GameObject menuRoot;
+
+
 
     public void LoadClassicGame()
     {
+        GameObject.FindObjectOfType<GameManager>().gameType = GameManager.GameType.Classic;
         StartCoroutine(Load(1));
+    }
+
+    public void LoadSurvivalGame()
+    {
+        GameObject.FindObjectOfType<GameManager>().gameType = GameManager.GameType.Infinite;
+        StartCoroutine(Load(2));
     }
 
     IEnumerator Load(int index)
     {
+        menuRoot.SetActive(false);
         AsyncOperation async = Application.LoadLevelAsync(index);
         yield return async;
     }
