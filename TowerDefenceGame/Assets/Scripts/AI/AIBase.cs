@@ -41,21 +41,13 @@ public class AIBase : MonoBehaviour {
 		set { hp = value;}
     }
 
+    public float GoldDrop { set { goldDrop = value; } }
+
 	// Use this for initialization
 	public virtual void Start () 
 	{
 		game = GameObject.FindObjectOfType<GameManager> ();
         animations = GetComponent<Animation>();
-       
-//        foreach (MeshCollider child in gameObject.GetComponentsInChildren<MeshCollider>())
-//        {
-//            child.enabled = false;
-//            if (child.gameObject.GetComponent<Rigidbody>())
-//            {
-//                child.gameObject.GetComponent<Rigidbody>().isKinematic = true;
-//                child.gameObject.GetComponent<Rigidbody>().detectCollisions = false;
-//            }
-//        }
 
 		explosion = Instantiate (explosion, transform.position, Quaternion.identity) as GameObject;
 		explosion.transform.parent = transform.parent;
@@ -83,33 +75,15 @@ public class AIBase : MonoBehaviour {
 					GetComponent<BoxCollider>().enabled = false;
 
 
-//                foreach (Transform child in gameObject.GetComponentsInChildren<Transform>())
-//                {
-//                    if (child.transform.position.y <= 0)
-//                        child.transform.position = new Vector3(child.transform.position.x, 0.1f, child.transform.position.z);
-//                    if (child.GetComponent<MeshCollider>())
-//                        child.GetComponent<MeshCollider>().enabled = true;
-//                    if (child.gameObject.GetComponent<Rigidbody>())
-//                    {
-//                        child.rigidbody.isKinematic = false;
-//                        child.rigidbody.detectCollisions = true;
-//                    }
-//                }
                 if (shadow)
                     shadow.SetActive(false);
 				Die();
             }
-            //if (!transform.parent.GetComponent<RailManager>())
-            //    Destroy(gameObject);
-            //int remainingPieces = 0;
             foreach (Transform child in gameObject.GetComponentsInChildren<Transform>())
             {
-                //remainingPieces++;
                 if (child.transform.position.y <= 0)
                     Destroy(child.gameObject);
             }
-            //if (remainingPieces <= 2)
-            //    Destroy(gameObject);
         }
 
 	}

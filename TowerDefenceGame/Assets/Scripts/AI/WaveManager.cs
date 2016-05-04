@@ -35,8 +35,10 @@ public class WaveManager : MonoBehaviour {
 	[SerializeField]
 	private List<Transform> spawnPoint = new List<Transform>();
 	private RailManager aiNodePathing;
-	private bool isSpawning = false;
-	private bool waveInterimWait = false;
+    [SerializeField]
+    private bool isSpawning = false;
+    [SerializeField]
+    private bool waveInterimWait = false;
 	//Spawn rate in seconds
 	[SerializeField][Range(0.1f, 1.0f)]
 	private float enemySpawnRate = 0.5f;
@@ -48,7 +50,7 @@ public class WaveManager : MonoBehaviour {
 	private GameManager game;
 	private EverloopMasterController everloopMaster;
 	private bool hasStarted = false;
-	private GameManager.Difficulty difficulty;
+	private int difficulty;
 	public ProceduralWaveSetUp proceduralWaveSetUp;
 
 	// Use this for initialization
@@ -63,7 +65,10 @@ public class WaveManager : MonoBehaviour {
 		game.maxWaves = maxWaves;
 		everloopMaster = FindObjectOfType<EverloopMasterController>();
 
-		StartProcedural (GameManager.Difficulty.Medium);
+        //if (Waves.Count <= 0)
+        //    StartProcedural(20);
+        //else
+        //    StartClassic(20);
 	}
 
 	void Update () {
@@ -72,83 +77,18 @@ public class WaveManager : MonoBehaviour {
 
 		if (!isSpawning && !waveInterimWait) 
 		{
-			if(waveToSpawn < Waves.Count)
-			{
-				if(spawnedEnemies < Waves[waveToSpawn].Count)
-				{
-					StartCoroutine (SpawnEnemy ());
-				}
-				else
-				{
-					if(aiNodePathing.aliveEnemies == 0)
-					{
-						StartCoroutine(WaveComplete());
-					}
-				}
-			}
-			else
-			{
-				maxWaves++;
-				MobWave.WaveType rand = (MobWave.WaveType)UnityEngine.Random.Range(0, 4);
-				switch (rand) {
-				case(MobWave.WaveType.Basic):
-					int basicmaxCount = proceduralWaveSetUp.basic.Count;
-					MobWave BasicbobWave = new MobWave(){
-						Prefab = proceduralWaveSetUp.basic[UnityEngine.Random.Range(0,basicmaxCount)],
-						Type = MobWave.WaveType.Basic,
-						Count = maxWaves * (25 + UnityEngine.Random.Range(0, 25)),
-						waveEndTimer = UnityEngine.Random.Range(5, 10)
-					};
-					Waves.Add(BasicbobWave);
-					break;
-				case(MobWave.WaveType.Medium):
-					int MediummaxCount = proceduralWaveSetUp.basic.Count;
-					MobWave MediumbobWave = new MobWave(){
-						Prefab = proceduralWaveSetUp.basic[UnityEngine.Random.Range(0,MediummaxCount)],
-						Type = MobWave.WaveType.Medium,
-						Count = maxWaves * (15 + UnityEngine.Random.Range(0, 15)),
-						waveEndTimer = UnityEngine.Random.Range(5, 10)
-					};
-					Waves.Add(MediumbobWave);
-					break;
-				case(MobWave.WaveType.Heavy):
-					int HeavymaxCount = proceduralWaveSetUp.basic.Count;
-					MobWave HeavybobWave = new MobWave(){
-						Prefab = proceduralWaveSetUp.basic[UnityEngine.Random.Range(0,HeavymaxCount)],
-						Type = MobWave.WaveType.Heavy,
-						Count = maxWaves * (7 + UnityEngine.Random.Range(0, 7)),
-						waveEndTimer = UnityEngine.Random.Range(5, 10)
-					};
-					Waves.Add(HeavybobWave);
-					break;
-				case(MobWave.WaveType.Boss):
-					int BossmaxCount = proceduralWaveSetUp.basic.Count;
-					MobWave BossbobWave = new MobWave(){
-						Prefab = proceduralWaveSetUp.basic[UnityEngine.Random.Range(0,BossmaxCount)],
-						Type = MobWave.WaveType.Boss,
-						Count = maxWaves * (1 + UnityEngine.Random.Range(0, 3)),
-						waveEndTimer = UnityEngine.Random.Range(5, 10)
-					};
-					Waves.Add(BossbobWave);
-					break;
-				default:
-				break;
-				}
-				if(Waves[waveToSpawn].Type == MobWave.WaveType.Boss)
-					everloopMaster.ChangeLoopBasedOnTheme(EverloopTheme.Theme.Tense);
-				else
-					everloopMaster.ChangeLoopBasedOnTheme(EverloopTheme.Theme.Normal);
-				spawnedEnemies = 0;
-				for(int i = 0; i < Waves[waveToSpawn].Count; ++i)
-				{
-					currentSpawnPoint = waveToSpawn > maxWaves ? 0 : UnityEngine.Random.Range(0, spawnPoint.Count);
-					GameObject obj = Instantiate(Waves[waveToSpawn].Prefab, spawnPoint[currentSpawnPoint].position, spawnPoint[currentSpawnPoint].rotation) as GameObject;
-					obj.GetComponent<AIBase>().Health *= (int)difficulty;
-					aiNodePathing.AddEntity(obj);
-					obj.SetActive(false);
-				}
-
-			}
+            if (spawnedEnemies < Waves[waveToSpawn].Count)
+            {
+                StartCoroutine(SpawnEnemy());
+            }
+            else
+            {
+                if (aiNodePathing.aliveEnemies == 0)
+                {
+                    Debug.Log("Wave Complete");
+                    StartCoroutine(WaveComplete());
+                }
+            }
 		}
 	}
 
@@ -163,22 +103,33 @@ public class WaveManager : MonoBehaviour {
 		aiNodePathing.ResetEntities ();
 		if (Waves [waveToSpawn].waveEndTimer > 0)
 			game.maxWaves++;
+
 		yield return new WaitForSeconds (Waves[waveToSpawn].waveEndTimer);
 		waveToSpawn++;
-        if(Waves[waveToSpawn].Type == MobWave.WaveType.Boss)
-			everloopMaster.ChangeLoopBasedOnTheme(EverloopTheme.Theme.Tense);
-        else
-			everloopMaster.ChangeLoopBasedOnTheme(EverloopTheme.Theme.Normal);
-		spawnedEnemies = 0;
-		for(int i = 0; i < Waves[waveToSpawn].Count; ++i)
-		{
-			currentSpawnPoint = waveToSpawn > maxWaves ? 0 : UnityEngine.Random.Range(0, spawnPoint.Count);
-			GameObject obj = Instantiate(Waves[waveToSpawn].Prefab, spawnPoint[currentSpawnPoint].position, spawnPoint[currentSpawnPoint].rotation) as GameObject;
-			obj.GetComponent<AIBase>().Health *= (int)difficulty;
-			aiNodePathing.AddEntity(obj);
-			obj.SetActive(false);
-		}
 
+
+        if (waveToSpawn < Waves.Count)
+        {
+
+            if (Waves[waveToSpawn].Type == MobWave.WaveType.Boss)
+                everloopMaster.ChangeLoopBasedOnTheme(EverloopTheme.Theme.Tense);
+            else
+                everloopMaster.ChangeLoopBasedOnTheme(EverloopTheme.Theme.Normal);
+            spawnedEnemies = 0;
+            for (int i = 0; i < Waves[waveToSpawn].Count; ++i)
+            {
+                currentSpawnPoint = waveToSpawn > maxWaves ? 0 : UnityEngine.Random.Range(0, spawnPoint.Count);
+                GameObject obj = Instantiate(Waves[waveToSpawn].Prefab, spawnPoint[currentSpawnPoint].position, spawnPoint[currentSpawnPoint].rotation) as GameObject;
+                obj.GetComponent<AIBase>().Health *= (int)difficulty;
+                aiNodePathing.AddEntity(obj);
+                obj.SetActive(false);
+            }
+            
+        }
+        else
+        {
+            StartProcedural(difficulty);
+        }
 		waveInterimWait = false;
 	}
 
@@ -186,30 +137,37 @@ public class WaveManager : MonoBehaviour {
 	IEnumerator SpawnEnemy()
 	{
         isSpawning = true;
-		aiNodePathing.EnableEntityAtIndex (aiNodePathing.aliveEnemies);
+        aiNodePathing.EnableInactiveEntity();
 		spawnedEnemies++;
 		yield return new WaitForSeconds (enemySpawnRate);
 		isSpawning = false;
 	}
 
-    public void StartClassic(GameManager.Difficulty difficulty_)
+    public void StartClassic(int difficulty_)
     {
 		difficulty = difficulty_;
-		for(int i = 0; i < Waves[waveToSpawn].Count; ++i)
-		{
-			currentSpawnPoint = waveToSpawn > maxWaves ? 0 : UnityEngine.Random.Range(0, spawnPoint.Count);
-			GameObject obj = Instantiate(Waves[waveToSpawn].Prefab, spawnPoint[currentSpawnPoint].position, spawnPoint[currentSpawnPoint].rotation) as GameObject;
-			obj.GetComponent<AIBase>().Health *= (int)difficulty_;
-			aiNodePathing.AddEntity(obj);
-			obj.SetActive(false);
-		}
-		Debug.Log ("Starting classic waves");
-		hasStarted = true;
+        if (Waves.Count > 0)
+        {
+            Debug.Log("Starting Classic");
+            for (int i = 0; i < Waves[waveToSpawn].Count; ++i)
+            {
+                currentSpawnPoint = waveToSpawn > maxWaves ? 0 : UnityEngine.Random.Range(0, spawnPoint.Count);
+                GameObject obj = Instantiate(Waves[waveToSpawn].Prefab, spawnPoint[currentSpawnPoint].position, spawnPoint[currentSpawnPoint].rotation) as GameObject;
+                obj.GetComponent<AIBase>().Health *= (int)difficulty_;
+                aiNodePathing.AddEntity(obj);
+                obj.SetActive(false);
+            }
+            hasStarted = true;
+        }
+        else
+            StartProcedural(difficulty_);
     }
 
-    public void StartProcedural(GameManager.Difficulty difficulty_)
+    public void StartProcedural(int difficulty_)
     {
-		maxWaves++;
+        Debug.Log("Starting pROCEDURAL");
+        difficulty = difficulty_;
+        maxWaves++;
 		MobWave.WaveType rand = (MobWave.WaveType)UnityEngine.Random.Range(0, 4);
 		switch (rand) {
 		case(MobWave.WaveType.Basic):
@@ -255,18 +213,20 @@ public class WaveManager : MonoBehaviour {
 		default:
 			break;
 		}
-		Debug.Log ("Starting procedural waves");
 
-		if(Waves[waveToSpawn].Type == MobWave.WaveType.Boss)
-			everloopMaster.ChangeLoopBasedOnTheme(EverloopTheme.Theme.Tense);
-		else
-			everloopMaster.ChangeLoopBasedOnTheme(EverloopTheme.Theme.Normal);
+        if (Waves[waveToSpawn].Type == MobWave.WaveType.Boss)
+            everloopMaster.ChangeLoopBasedOnTheme(EverloopTheme.Theme.Tense);
+        else
+            everloopMaster.ChangeLoopBasedOnTheme(EverloopTheme.Theme.Normal);
+
 		spawnedEnemies = 0;
 		for(int i = 0; i < Waves[waveToSpawn].Count; ++i)
 		{
 			currentSpawnPoint = waveToSpawn > maxWaves ? 0 : UnityEngine.Random.Range(0, spawnPoint.Count);
 			GameObject obj = Instantiate(Waves[waveToSpawn].Prefab, spawnPoint[currentSpawnPoint].position, spawnPoint[currentSpawnPoint].rotation) as GameObject;
-			obj.GetComponent<AIBase>().Health *= (int)difficulty;
+            Debug.Log(obj.GetComponent<AIBase>().Health);
+            obj.GetComponent<AIBase>().Health *= (int)difficulty;
+
 			aiNodePathing.AddEntity(obj);
 			obj.SetActive(false);
 		}
