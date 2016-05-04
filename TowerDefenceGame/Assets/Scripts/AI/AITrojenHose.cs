@@ -37,7 +37,7 @@ public class AITrojenHose : AIBase {
         isSpawning = false;
     }
 
-    public override void DieWithGold()
+	public override void Die(float delay = 0)
     {
         if (spawnOnDeath)
         {
@@ -50,7 +50,7 @@ public class AITrojenHose : AIBase {
                 aiNodePathing.AddEntity(child);
             }
         }
-        base.DieWithGold();
+		base.Die();
     }
 
     protected override void OnDrawGizmos()
