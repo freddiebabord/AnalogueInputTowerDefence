@@ -63,7 +63,7 @@ public class WaveManager : MonoBehaviour {
 		game.maxWaves = maxWaves;
 		everloopMaster = FindObjectOfType<EverloopMasterController>();
 
-		StartProcedural (GameManager.Difficulty.Medium);
+		StartClassic(GameManager.Difficulty.Medium);
 	}
 
 	void Update () {
