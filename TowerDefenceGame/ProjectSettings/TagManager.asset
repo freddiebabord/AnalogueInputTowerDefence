@@ -9,6 +9,10 @@ TagManager:
   - Goal
   - Mage
   - Absorbing
+  - Freeze
+  - Piston
+  - Balista
+  - Upgrade
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX

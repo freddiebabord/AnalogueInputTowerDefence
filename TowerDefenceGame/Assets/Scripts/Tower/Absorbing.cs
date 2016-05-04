@@ -3,8 +3,9 @@ using System.Collections;
 
 public class Absorbing : TowerClass {
 
-	LineRenderer line;
-	public RailManager rail;
+	RailManager rail;
+	//LineRenderer line;
+	PlayFireAnim bomb;
 
 	// Use this for initialization
 	protected override void Start () {
@@ -19,21 +20,13 @@ public class Absorbing : TowerClass {
 		
 		SetGoal(GameObject.FindGameObjectWithTag("Goal"));
 
-		line = gameObject.GetComponentInChildren<LineRenderer>();
+		//line = gameObject.GetComponentInChildren<LineRenderer> ();
+		bomb = gameObject.GetComponentInChildren<PlayFireAnim> ();
 
 	}
 	
 	public override void Update () {
-		
-		if (!isFired) 
-		{
-			line.enabled = false;
-		} 
-		else 
-		{
-			line.enabled = true;
-		}
-		
+
 		base.Update ();
 		
 	}
@@ -43,14 +36,32 @@ public class Absorbing : TowerClass {
 		isFired = true;
 		
 		lastShot = 0f;
+
+		bomb.Play ();
 		
-		line.SetPosition (0, GameObject.FindGameObjectWithTag ("Absorbing").gameObject.transform.position);
-		line.SetPosition (1, GetChosen().transform.position);
-		
+		//line.SetPosition (0, gameObject.transform.position);
+		//line.SetPosition (1, GetChosen().transform.position);
+
+		/*
 		if (GetChosen ().gameObject.tag == "Enemy") 
 		{
-			GetChosen ().gameObject.GetComponent<AIBase> ().ApplyDamage (10);
+			GetChosen().gameObject.GetComponent<AIBase> ().ApplyDamage (10);
             GetChosen().gameObject.GetComponent<AIBase>().Speed /= 2;
 		}
+		*/
+
+		if (GetChosen ().gameObject.tag == "Enemy") 
+		{
+			foreach (GameObject enemy in ai) 
+			{
+				if (Vector3.Distance (enemy.transform.position, gameObject.transform.position) <= GetRadius ()) 
+				{
+					enemy.gameObject.GetComponent<AIBase> ().ApplyDamage (10);
+					if(enemy.gameObject.GetComponent<AIBase> ().Speed >= 3)
+						enemy.gameObject.GetComponent<AIBase> ().Speed /= 2;
+				}
+			}
+		}
+
 	}
 }

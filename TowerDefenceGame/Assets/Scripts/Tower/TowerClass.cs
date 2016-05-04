@@ -3,7 +3,7 @@ using System.Collections;
 
 public class TowerClass : MonoBehaviour {
 	
-	GameObject[] ai;
+	protected GameObject[] ai;
 
 	GameObject chosen;
 
@@ -19,7 +19,7 @@ public class TowerClass : MonoBehaviour {
 
 	int levelOfUpgrade = 0;
 	
-	bool upgradable;
+	bool upgradable = false;
 	
 	[SerializeField]
 	float radius = 10f;
@@ -38,6 +38,11 @@ public class TowerClass : MonoBehaviour {
 
 	int classHealth = 0;
 
+	public int speed = 0;
+
+	[SerializeField]
+	int exp = 0;
+	 
 	protected virtual void Start()
 	{
 		SetGoal(GameObject.FindGameObjectWithTag("Goal"));
@@ -49,7 +54,11 @@ public class TowerClass : MonoBehaviour {
 	// Update is called once per frame
 	public virtual void Update () {
 
-	
+        if (exp == 100)
+        {
+            upgradable = true;
+        }
+
 		if (lastShot > cooldown) 
 		{
 			isFired = false;
@@ -61,11 +70,18 @@ public class TowerClass : MonoBehaviour {
 
 		if (HasEnemyInSight (ai) && !isFired) 
 		{
+			if(!upgradable)
+			{
+				exp += 5;
+			}
+
 			Shooting ();
 		}
 
 		lastShot += Time.deltaTime;
 
+        if (health <= 0)
+            OnDie();
 	}
 
 	bool HasEnemyInSight(GameObject[] enemies)
@@ -100,7 +116,8 @@ public class TowerClass : MonoBehaviour {
 		Vector3 position = gameObject.transform.position;
 		GameObject go = Instantiate (bullet, spawnPoint.transform.position, spawnPoint.transform.rotation) as GameObject;
 		go.transform.localScale = new Vector3 (1, 1, 1);
-		go.GetComponent<Rigidbody> ().velocity = direction * 3 + (GetChosen().rigidbody.velocity * Time.deltaTime);
+		go.GetComponent<Rigidbody> ().velocity = direction * speed;
+
 	}
 
 	GameObject GetClosestEnemy(GameObject[] enemies)
@@ -180,7 +197,7 @@ public class TowerClass : MonoBehaviour {
 		return radius;
 	}
 
-	public void SetCooldown(int cool)
+	public void SetCooldown(float cool)
 	{
 		cooldown = cool;
 	}
@@ -202,10 +219,30 @@ public class TowerClass : MonoBehaviour {
 		}
 	}
 
+    public void SetBullet(GameObject shot)
+    {
+        bullet = shot;
+    }
+
 	void OnDrawGizmos()
 	{
 		Gizmos.color = new Color (1, 1, 1, 0.5f);
 		Gizmos.DrawWireSphere (transform.position, radius);
 	}
+
+    void ApplyDamage(int HPLoss)
+    {
+        health -= HPLoss;
+    }
+
+    void ApplyDamage(float HPLoss)
+    {
+        health -= Mathf.RoundToInt(HPLoss);
+    }
+
+    protected virtual void OnDie()
+    {
+        Destroy(transform.parent.gameObject);
+    }
 
 }

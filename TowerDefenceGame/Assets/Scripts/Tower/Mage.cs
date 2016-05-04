@@ -43,7 +43,7 @@ public class Mage : TowerClass {
 		
 		lastShot = 0f;
 
-		line.SetPosition (0, GameObject.FindGameObjectWithTag ("Mage").gameObject.transform.position);
+		line.SetPosition (0, gameObject.transform.position);
 		line.SetPosition (1, GetChosen().transform.position);
 
 		if (GetChosen ().gameObject.tag == "Enemy")

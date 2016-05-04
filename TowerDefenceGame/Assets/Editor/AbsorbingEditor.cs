@@ -9,7 +9,7 @@ public class AbsorbingEditor : Editor {
 	{
 		Absorbing myTarget = (Absorbing)target;
 		
-		//myTarget.rail = EditorGUILayout.ObjectField("Rail", myTarget.rail, typeof(RailManager)) as RailManager;
+		//myTarget.anim = EditorGUILayout.ObjectField("Anim", myTarget.anim, typeof(Animation)) as Animation;
 		myTarget.spawnPoint = EditorGUILayout.ObjectField ("Spawn Point", myTarget.spawnPoint, typeof(GameObject)) as GameObject;
 		
 	}
