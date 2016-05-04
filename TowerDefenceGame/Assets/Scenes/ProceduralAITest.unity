@@ -7421,7 +7421,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22470646, guid: 1b5a8e89dd4a6f245add542616c238fd, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 41.860466
+      value: 41
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1b5a8e89dd4a6f245add542616c238fd, type: 2}
@@ -9846,23 +9846,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bade4a22c42692445b9a7a13ce61d217, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Waves:
-  - Type: 0
-    Prefab: {fileID: 177038, guid: 05533e472bf967b46a04cd26599e7996, type: 2}
-    Count: 2500
-    waveEndTimer: 5
-  - Type: 2
-    Prefab: {fileID: 188292, guid: b7935c1844eadf8408a0df00bf10f561, type: 2}
-    Count: 1
-    waveEndTimer: 1
-  - Type: 2
-    Prefab: {fileID: 173800, guid: 08bdf81a60d9b5f4abe4e915baa955db, type: 2}
-    Count: 1
-    waveEndTimer: 1
-  - Type: 3
-    Prefab: {fileID: 160710, guid: 11278f8aec18bdf46af6350896b3f11e, type: 2}
-    Count: 50
-    waveEndTimer: 5
+  Waves: []
   spawnPoint:
   - {fileID: 825466886}
   - {fileID: 1423202663}
@@ -9870,10 +9854,14 @@ MonoBehaviour:
   maxWaves: 0
   currentWave: 0
   proceduralWaveSetUp:
-    basic: []
-    medium: []
-    heavy: []
-    boss: []
+    basic:
+    - {fileID: 177038, guid: 05533e472bf967b46a04cd26599e7996, type: 2}
+    medium:
+    - {fileID: 177038, guid: 05533e472bf967b46a04cd26599e7996, type: 2}
+    heavy:
+    - {fileID: 177038, guid: 05533e472bf967b46a04cd26599e7996, type: 2}
+    boss:
+    - {fileID: 177038, guid: 05533e472bf967b46a04cd26599e7996, type: 2}
 --- !u!114 &212501075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19962,7 +19950,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 41.860466, y: 20}
+  m_SizeDelta: {x: 41, y: 20}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &493324982
 MonoBehaviour:
