@@ -40,6 +40,21 @@ Transition:
   m_Solo: 0
   m_Mute: 0
   m_CanTransitionToSelf: 0
+--- !u!1102 &110260630
+State:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Male_Death
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Motions:
+  - {fileID: 7400000, guid: a96da93ca2481694db4067dca1c06167, type: 2}
+  m_ParentStateMachine: {fileID: 110798740}
+  m_Position: {x: 59, y: 221, z: 0}
+  m_IKOnFeet: 0
+  m_Mirror: 0
+  m_Tag: 
 --- !u!1102 &110298740
 State:
   m_ObjectHideFlags: 3
@@ -65,6 +80,7 @@ StateMachine:
   m_DefaultState: {fileID: 110298740}
   m_States:
   - {fileID: 110298740}
+  - {fileID: 110260630}
   m_ChildStateMachine: []
   m_ChildStateMachinePosition: []
   m_OrderedTransitions:
@@ -73,5 +89,5 @@ StateMachine:
       second:
       - {fileID: 110199990}
   m_MotionSetCount: 1
-  m_AnyStatePosition: {x: 50, y: 20, z: 0}
+  m_AnyStatePosition: {x: 36, y: 12, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}

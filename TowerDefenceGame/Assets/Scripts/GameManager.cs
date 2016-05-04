@@ -1,16 +1,24 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class GameManager : MonoBehaviour {
 
 	[SerializeField] private int enemiesPassed = 0;
-	[SerializeField] private int goldQuantity = 0;
+	[SerializeField] private float goldQuantity = 0;
 
     [SerializeField] public GameType gameType;
     [SerializeField] public Difficulty difficulty;
 
     private RailManager railSystem;
     private WaveManager waveSystem;
+
+	public Text goldQuantityText;
+	public Slider healthSlider;
+	public Text waveNumber;
+
+	public int currentWave = 0;
+	public int maxWaves = 0;
 
     public enum GameType
     {
@@ -20,9 +28,9 @@ public class GameManager : MonoBehaviour {
 
     public enum Difficulty
     {
-        Easy = 0,
-        Medium,
-        Hard
+        Easy = 1,
+        Medium = 5,
+        Hard = 10
     }
 
     void Start()
@@ -35,7 +43,7 @@ public class GameManager : MonoBehaviour {
 		enemiesPassed++;
 	}
 
-	public void AddGold(int amount)
+	public void AddGold(float amount)
 	{
 		goldQuantity += amount;
 	}
