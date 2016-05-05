@@ -18,7 +18,7 @@ public class AnalogueButtons : Button, ISelectHandler, IDeselectHandler {
 	[HideInInspector] public bool clicked = false;
     
     // The input AXIS that acts as a click check
-    public string clickAnalogueAxis = "TriggerSelect";
+    public string clickAnalogueAxis = "TriggerSelectRight";
 
     // The amount of time in seconds to wait before OnClick can be called again
 	private float clickTimeout = 0.5f;
@@ -26,9 +26,16 @@ public class AnalogueButtons : Button, ISelectHandler, IDeselectHandler {
     // This checks if the analogue "button" has been released
     private bool clickReset = true;
 
+    void Start()
+    {
+        if (clickAnalogueAxis == "TriggerSelect")
+            clickAnalogueAxis = "TriggerSelectRight";
+    }
+
     // Checks to see if the button is selectedand the analogue click is pressed
 	void Update ()
     {
+        
         if (this.interactable)
         {
             if (this.isSelected)
@@ -38,7 +45,7 @@ public class AnalogueButtons : Button, ISelectHandler, IDeselectHandler {
                     if (Input.GetAxis(clickAnalogueAxis) >= 1 && clickReset)
                         this.OnClick();
                     if (Input.GetAxis(clickAnalogueAxis) <= 0 && !clickReset)
-                        clickReset = false;
+                        clickReset = true;
                 }
             }
         }

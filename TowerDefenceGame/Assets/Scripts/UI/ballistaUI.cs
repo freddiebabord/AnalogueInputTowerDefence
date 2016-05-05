@@ -10,7 +10,7 @@ public class ballistaUI : MonoBehaviour {
 	GameObject tile;
 
 	bool ballista = false;
-	
+    public float cost = 150;
 	// Use this for initialization
 	void Start () {
 		
@@ -44,10 +44,20 @@ public class ballistaUI : MonoBehaviour {
 			
 			if(tile.GetComponent<NodePath>().pathType == NodePath.PathType.Grass && !tile.GetComponent<NodePath>().towerPlaced)
 			{
-				Instantiate (Resources.Load("Prefabs/Towers/Ballistics"), tile.transform.position, tile.transform.rotation);
-				tile.GetComponent<NodePath>().towerPlaced = true;
+                if (GameObject.FindObjectOfType<GameManager>().gold - cost > 0)
+                {
+                    Instantiate(Resources.Load("Prefabs/Towers/Ballistics"), tile.transform.position, tile.transform.rotation);
+                    tile.GetComponent<NodePath>().towerPlaced = true;
+                    GameObject.FindObjectOfType<GameManager>().RemoveGold(cost);
+                }
 			}
 		}
+        if (Input.GetAxis("TriggerSelectLeft") >= 1)
+        {
+            ballista = false;
+            point.placeTower = false;
+        }
+
 	}
 	
 	public void PlaceBallista()

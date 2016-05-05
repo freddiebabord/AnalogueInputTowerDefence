@@ -47,6 +47,9 @@ public class RailManager : MonoBehaviour {
     Task task;
 
     RailSystemThread railThread = new RailSystemThread();
+    GameManager gameManager;
+
+
 
     public int aliveEnemies { get { return objectToMove.Count; } }
 
@@ -58,7 +61,7 @@ public class RailManager : MonoBehaviour {
     {
         waveManager = GetComponent<WaveManager>();
 		intervalRate = 1 / updateIntervalPerSecond;
-        
+        gameManager = GameObject.FindObjectOfType<GameManager>();
     }
 
 	public void AddEntity(GameObject entity)
@@ -114,11 +117,13 @@ public class RailManager : MonoBehaviour {
 	public void UpdateIntervalTime()
 	{
 		intervalRate = 1 / updateIntervalPerSecond;
-		Debug.Log ("Updating rate");
 	}
 
 	void Update()
 	{
+        if (!gameManager.MapReady)
+            return;
+
 		if (Input.GetKey (KeyCode.Space))
 			UpdateIntervalTime ();
 
@@ -163,6 +168,7 @@ public class RailManager : MonoBehaviour {
                         RemoveEntity(aiObj);
                         Destroy(aiObj.gameObject);
                         objectToMove.TrimExcess();
+                        gameManager.AddEnemyInHome();
                         continue;
                     }
 
@@ -199,10 +205,20 @@ public class RailManager : MonoBehaviour {
 
                             aiObj.CurrentIndex++;
 
+                            if (aiObj.CurrentIndex >= railNodes.Count)
+                            {
+                                RemoveEntity(aiObj);
+                                Destroy(aiObj.gameObject);
+                                objectToMove.TrimExcess();
+                                gameManager.AddEnemyInHome();
+                                continue;
+                            }
+
                             Vector3 targetPosition = new Vector3(((Random.insideUnitSphere.x * 2) * nodeProximityDistance),
                                                                  0 + (aiObj.collider.bounds.extents.magnitude) / 2 + 0.5f,
                                                                  ((Random.insideUnitSphere.z * 2) * nodeProximityDistance));
 
+                            
                             aiObj.currentNodeTarget = targetPosition + railNodes[aiObj.CurrentIndex].transform.position;
                         }
                     }
@@ -254,6 +270,9 @@ public class RailManager : MonoBehaviour {
                     RemoveEntity(aiObj);
                     Destroy(aiObj.gameObject);
                     objectToMove.TrimExcess();
+                    if(gameManager == null)
+                        gameManager = GameObject.FindObjectOfType<GameManager>();
+                    gameManager.AddEnemyInHome();
                     continue;
                 }
                 yield return Ninja.JumpToUnity;
@@ -361,7 +380,7 @@ public class RailManager : MonoBehaviour {
         railNodes.Insert(index, new Node(newNode));
 	}
 
-    void AddNode(Transform newNode)
+    public void AddNode(Transform newNode)
     {
         railNodes.Add(new Node(newNode));
     }
@@ -409,6 +428,11 @@ public class RailManager : MonoBehaviour {
         public int sizeY;
     }
 
+    public void Addspawn(Transform point)
+    {
+        waveManager.AddSpawnPoint(point);
+    }
+
     public bool BuildNavigationMap(GameObject[,] tiles, int sizeX_, int sizeY_)
     {
         if (railNodes.Count > 0)
@@ -417,55 +441,54 @@ public class RailManager : MonoBehaviour {
         GameObject[] startNodes = GameObject.FindGameObjectsWithTag("EnemyStart");
         foreach (GameObject startNode in startNodes)
         {
-            waveManager.AddSpawnPoint(startNode.transform);
+            Vector3 newPos = new Vector3(startNode.transform.position.x, startNode.transform.position.y + 1, startNode.transform.position.z);
+            GameObject spawnNode = new GameObject("AISpawnPoint");
+            spawnNode.transform.parent = transform;
+            spawnNode.transform.position = newPos;
+            spawnNode.transform.Rotate(0, 0, 90);
+            waveManager.AddSpawnPoint(spawnNode.transform);
+            Instantiate(Resources.Load("Prefabs/Portal"), newPos, spawnNode.transform.rotation);
         }
 
         Map map_ = new Map() { map = tiles, sizeX = sizeX_, sizeY = sizeY_ };
-        FindNextPoint(map_, startNodes[0]);
-
+        FindNextPoint(map_, startNodes[0], startNodes[0]);
+        if(gameManager == null)gameManager = GameObject.FindObjectOfType<GameManager>();
+        gameManager.MapReady = true;
         return true;
     }
 
-    private void FindNextPoint(Map map_, GameObject currentPoint)
+    private void FindNextPoint(Map map_, GameObject currentPoint, GameObject previousNode)
     {
         NodePath path_ = currentPoint.GetComponent<NodePath>();
-        if(currentPoint.gameObject.tag == "EnemyEnd")
+        if (currentPoint.gameObject.tag == "EnemyEnd")
             return;
 
-        if (path_.posX + 1 < map_.sizeX)
+
+        if (path_.posX + 1 < map_.sizeX && previousNode != map_.map[path_.posX + 1, path_.posY].gameObject && IsEnemyPathTile(map_.map[path_.posX + 1, path_.posY]))
         {
-            if (IsEnemyPathTile(map_.map[path_.posX + 1, path_.posY]))
-            {
-                AddNode((map_.map[path_.posX + 1, path_.posY]).transform);
-                FindNextPoint(map_, (map_.map[path_.posX + 1, path_.posY]));
-            }
+            AddNode((map_.map[path_.posX + 1, path_.posY]).transform);
+            FindNextPoint(map_, (map_.map[path_.posX + 1, path_.posY]), currentPoint);
         }
 
-        if (path_.posX - 1 >= 0)
+        else if (path_.posX - 1 >= 0 && previousNode != map_.map[path_.posX - 1, path_.posY].gameObject && IsEnemyPathTile(map_.map[path_.posX - 1, path_.posY]))
         {
-            if (IsEnemyPathTile(map_.map[path_.posX - 1, path_.posY]))
-            {
-                AddNode((map_.map[path_.posX - 1, path_.posY]).transform);
-                FindNextPoint(map_, (map_.map[path_.posX - 1, path_.posY]));
-            }
+            AddNode((map_.map[path_.posX - 1, path_.posY]).transform);
+            FindNextPoint(map_, (map_.map[path_.posX - 1, path_.posY]), currentPoint);
+
         }
 
-        if (path_.posY + 1 < map_.sizeY)
+        else if (path_.posY + 1 < map_.sizeY && previousNode != map_.map[path_.posX, path_.posY + 1].gameObject && IsEnemyPathTile(map_.map[path_.posX, path_.posY + 1]))
         {
-            if (IsEnemyPathTile(map_.map[path_.posX, path_.posY + 1]))
-            {
-                AddNode((map_.map[path_.posX, path_.posY + 1]).transform);
-                FindNextPoint(map_, (map_.map[path_.posX, path_.posY + 1]));
-            }
+            AddNode((map_.map[path_.posX, path_.posY + 1]).transform);
+            FindNextPoint(map_, (map_.map[path_.posX, path_.posY + 1]), currentPoint);
+
         }
 
-        if (path_.posY - 1 >= 0)
+        else if (path_.posY - 1 >= 0 && previousNode != map_.map[path_.posX, path_.posY - 1].gameObject && IsEnemyPathTile(map_.map[path_.posX, path_.posY - 1]))
         {
-            if (IsEnemyPathTile(map_.map[path_.posX, path_.posY - 1]))
-            {
-                AddNode((map_.map[path_.posX + 1, path_.posY]).transform);
-                FindNextPoint(map_, (map_.map[path_.posX, path_.posY - 1]));
-            }
+            AddNode((map_.map[path_.posX, path_.posY - 1]).transform);
+            FindNextPoint(map_, (map_.map[path_.posX, path_.posY - 1]), currentPoint);
+
         }
     }
 

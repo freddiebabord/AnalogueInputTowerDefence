@@ -10,7 +10,7 @@ public class Ice : MonoBehaviour {
 	GameObject tile;
 
 	bool ice = false;
-	
+    public float cost = 200;
 	// Use this for initialization
 	void Start () {
 		
@@ -44,10 +44,20 @@ public class Ice : MonoBehaviour {
 			
 			if(tile.GetComponent<NodePath>().pathType == NodePath.PathType.Grass && !tile.GetComponent<NodePath>().towerPlaced)
 			{
-				Instantiate (Resources.Load("Prefabs/Towers/IceTower"), tile.transform.position, tile.transform.rotation);
-				tile.GetComponent<NodePath>().towerPlaced = true;
+                if (GameObject.FindObjectOfType<GameManager>().gold - cost > 0)
+                {
+                    Instantiate(Resources.Load("Prefabs/Towers/IceTower"), tile.transform.position, tile.transform.rotation);
+                    tile.GetComponent<NodePath>().towerPlaced = true;
+                    GameObject.FindObjectOfType<GameManager>().RemoveGold(cost);
+                }
 			}
 		}
+        if (Input.GetAxis("TriggerSelectLeft") >= 1)
+        {
+            ice = false;
+            point.placeTower = false;
+        }
+
 	}
 	
 	public void PlaceIce()

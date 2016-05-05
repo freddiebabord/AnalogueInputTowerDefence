@@ -49,12 +49,17 @@ public class MainMenu : MonoBehaviour {
 
     IEnumerator Load(int index)
     {
-        eoltransition.StartTranstion();
         AsyncOperation async = Application.LoadLevelAsync(index);
+        yield return async;
+        if (!eoltransition.gameObject.activeInHierarchy)
+            eoltransition.gameObject.SetActive(true);
+        if (!eoltransition.enabled)
+            eoltransition.enabled = true;
+        eoltransition.StartTranstion();
+        yield return new WaitForSeconds(2.5f);
         while (!eoltransition.TransitionComplete)
         {
             int i = 0; ++i;
         }
-        yield return async;
     }
 }
