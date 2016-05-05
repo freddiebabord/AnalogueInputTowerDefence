@@ -3,47 +3,31 @@ using System.Collections;
 
 public class TowerPlacement : MonoBehaviour {
 
-	enum Towers
-	{
-		IceTower = 0,
-		Magic,
-		ArrowTower,
-		Ballistics
-	};
+	public bool isTrue = false;
 
-	Pointer point;
-	Towers index = Towers.IceTower;
-
+	GameObject panel;
+	
 	void Start()
 	{
-		point = GameObject.FindObjectOfType<Pointer> ();
+		panel = GameObject.FindGameObjectWithTag ("TowerSelect");
 	}
 
 	void Update()
 	{
-		if (point.placeTower && Input.GetAxis ("TriggerSelectRight") >= 1) 
+		if (isTrue) 
 		{
-			GameObject tile = point.currentTile;
-
-			if(tile.GetComponent<NodePath>().pathType == NodePath.PathType.Grass && !tile.GetComponent<NodePath>().towerPlaced)
-			{
-				Instantiate (Resources.Load("Prefabs/Towers/"+index.ToString()), tile.transform.position, tile.transform.rotation);
-				tile.GetComponent<NodePath>().towerPlaced = true;
-			}
+			panel.SetActive (true);
+		} 
+		else 
+		{
+			panel.SetActive(false);
 		}
 
-		if (Input.GetAxis ("TriggerSelectLeft") >= 1) 
-		{
-			if(index > Towers.Ballistics)
-				index = Towers.IceTower;
-			else
-				index++;
-		}
 	}
 
 	public void Placement()
 	{
-		point.placeTower = !point.placeTower;
+		isTrue = !isTrue;
 
 	}
 }
