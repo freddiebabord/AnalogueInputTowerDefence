@@ -24,7 +24,7 @@ Material:
         first:
           name: _DiffuseTex
         second:
-          m_Texture: {fileID: 0}
+          m_Texture: {fileID: 2800000, guid: 19ff6284f3e7dee4ba0685156211decf, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -35,6 +35,10 @@ Material:
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
     m_Floats:
+      data:
+        first:
+          name: _Cutoff
+        second: .5
       data:
         first:
           name: _ShadeSteps
@@ -55,7 +59,7 @@ Material:
       data:
         first:
           name: _DiffuseColour
-        second: {r: .361030847, g: .602941155, b: .22166954, a: 1}
+        second: {r: 1, g: 1, b: 1, a: 1}
       data:
         first:
           name: _DiffColor
