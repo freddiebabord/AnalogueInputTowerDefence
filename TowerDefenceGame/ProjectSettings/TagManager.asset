@@ -3,23 +3,22 @@
 --- !u!78 &1
 TagManager:
   tags:
-  - Home
+  - 
   - Enemy
-  - Civilian
-  - Goal
+  - Tree
   - Mage
-  - Absorbing
+  - Piston
+  - Balista
+  - EnemyStart
+  - EnemyEnd
+  - Grass
+  - Water
+  - Rock
   - Path
   - Null
-  - Grass
-  - Rock
-  - Water
-  - Tree
   - Start
   - End
-  - 
-  - Node
-  - Empty
+  - Goal
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX
@@ -29,7 +28,7 @@ TagManager:
   Builtin Layer 5: UI
   Builtin Layer 6: 
   Builtin Layer 7: 
-  User Layer 8: Unwalkable
+  User Layer 8: 
   User Layer 9: 
   User Layer 10: 
   User Layer 11: 

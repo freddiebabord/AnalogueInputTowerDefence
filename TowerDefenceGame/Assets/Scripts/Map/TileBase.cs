@@ -7,10 +7,14 @@ public class TileBase : MonoBehaviour {
 	GameObject[] Tile;
 	string[] Txt;
 	Vector3 Temp;
+	public RailManager Rail;
+	int RowX;
+	int RowZ;
 
 	// Use this for initialization
 	void Start () {
 		CreateMap ();
+		//Rail.BuildNavigationMap (Tile, RowX, RowZ);
 	}
 	
 	// Update is called once per frame
@@ -23,8 +27,8 @@ public class TileBase : MonoBehaviour {
 		
 		StreamReader reader =new  StreamReader(file);
 		
-		int RowX = int.Parse(reader.ReadLine ());
-		int RowZ = int.Parse(reader.ReadLine ());
+		RowX = int.Parse(reader.ReadLine ());
+		RowZ = int.Parse(reader.ReadLine ());
 		
 		GameObject[] Tile = new GameObject[RowX*RowZ];
 		Txt = new string[RowZ];
@@ -43,6 +47,8 @@ public class TileBase : MonoBehaviour {
 					Tile[count].transform.position = Temp;
 					Tile[count].AddComponent("Tile");
 					Tile[count].transform.parent = this.gameObject.transform;
+					if(Txt[z][x] == 'S'){Tile[count].tag = "EnemyStart";} 
+					if(Txt[z][x] == 'E'){Tile[count].tag = "EnemyEnd";} 
 				}
 				count++;
 			}

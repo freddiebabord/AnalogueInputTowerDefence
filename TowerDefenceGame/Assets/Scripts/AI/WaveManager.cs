@@ -62,6 +62,11 @@ public class WaveManager : MonoBehaviour {
 		}
 	}
 
+    public void AddSpawnPoint(Transform newSpawnPoint)
+    {
+        spawnPoint.Add(newSpawnPoint);
+    }
+
 	IEnumerator WaveComplete()
 	{
 		waveInterimWait = true;
@@ -75,7 +80,6 @@ public class WaveManager : MonoBehaviour {
 
 	IEnumerator SpawnEnemy()
 	{
-        Debug.Log("SPAWNING");
         isSpawning = true;
         currentSpawnPoint = currentWave > 5 ? 0 : UnityEngine.Random.Range(0, spawnPoint.Count);
         GameObject obj = Instantiate(Waves[waveToSpawn].Prefab, spawnPoint[currentSpawnPoint].position, spawnPoint[currentSpawnPoint].rotation) as GameObject;
@@ -85,7 +89,15 @@ public class WaveManager : MonoBehaviour {
 		isSpawning = false;
 	}
 
+    public void StartClassic(GameManager.Difficulty difficulty_)
+    {
 
+    }
+
+    public void StartProcedural(GameManager.Difficulty difficulty_)
+    {
+
+    }
 
 }
 

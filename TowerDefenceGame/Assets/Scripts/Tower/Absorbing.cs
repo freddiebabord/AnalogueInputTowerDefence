@@ -3,8 +3,8 @@ using System.Collections;
 
 public class Absorbing : TowerClass {
 
+	RailManager rail;
 	LineRenderer line;
-	public RailManager rail;
 
 	// Use this for initialization
 	protected override void Start () {
@@ -19,20 +19,18 @@ public class Absorbing : TowerClass {
 		
 		SetGoal(GameObject.FindGameObjectWithTag("Goal"));
 
-		line = gameObject.GetComponentInChildren<LineRenderer>();
+		line = gameObject.GetComponentInChildren<LineRenderer> ();
 
 	}
 	
 	public override void Update () {
-		
+
 		if (!isFired) 
 		{
 			line.enabled = false;
 		} 
-		else 
-		{
+		else
 			line.enabled = true;
-		}
 		
 		base.Update ();
 		
@@ -44,7 +42,7 @@ public class Absorbing : TowerClass {
 		
 		lastShot = 0f;
 		
-		line.SetPosition (0, GameObject.FindGameObjectWithTag ("Absorbing").gameObject.transform.position);
+		line.SetPosition (0, gameObject.transform.position);
 		line.SetPosition (1, GetChosen().transform.position);
 		
 		if (GetChosen ().gameObject.tag == "Enemy") 
@@ -52,5 +50,8 @@ public class Absorbing : TowerClass {
 			GetChosen ().gameObject.GetComponent<AIBase> ().ApplyDamage (10);
             GetChosen().gameObject.GetComponent<AIBase>().Speed /= 2;
 		}
+
+
+
 	}
 }
