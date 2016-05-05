@@ -55,4 +55,4 @@ Material:
       data:
         first:
           name: _Range
-        second: {r: .230000004, g: .349999994, b: 0, a: 1}
+        second: {r: .230000004, g: .649999976, b: 0, a: 1}

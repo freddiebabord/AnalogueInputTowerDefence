@@ -65,7 +65,7 @@ GameObject:
   - 23: {fileID: 2378366}
   m_Layer: 0
   m_Name: TowerBase 2
-  m_TagString: Untagged
+  m_TagString: Balista
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -301,7 +301,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet: {fileID: 157974, guid: deffc2f8fcbd0ec4fba387386baede54, type: 2}
   spawnPoint: {fileID: 178372}
+  health: 100
   radius: 12
+  speed: 0
+  exp: 0
 --- !u!136 &13678360
 CapsuleCollider:
   m_ObjectHideFlags: 1

@@ -20,6 +20,8 @@ public class AIBase : MonoBehaviour {
     private bool hasDied = false;
     public GameObject shadow;
 	public GameObject explosion;
+	public AudioSource screemEffect;
+	public AudioClip altScreemEffect;
 
     public int CurrentIndex { get { return currentIndex; } set { currentIndex = value; } }
 
@@ -48,10 +50,11 @@ public class AIBase : MonoBehaviour {
 	{
 		game = GameObject.FindObjectOfType<GameManager> ();
         animations = GetComponent<Animation>();
-
-		explosion = Instantiate (explosion, transform.position, Quaternion.identity) as GameObject;
-		explosion.transform.parent = transform.parent;
-		explosion.SetActive(false);
+        if (explosion != null)
+        {
+            explosion.transform.parent = transform.parent;
+            explosion.SetActive(false);
+        }
 	}
 
 	public virtual void Update()
@@ -68,7 +71,8 @@ public class AIBase : MonoBehaviour {
         {
             if (!hasDied)
             {
-                GameObject.FindObjectOfType<RailManager>().RemoveEntity(this);
+                GameObject.FindObjectOfType<AudioManager>().PlayEnemyDeath();
+				GameObject.FindObjectOfType<RailManager>().RemoveEntity(this);
                 if (GetComponent<Animator>())
                     GetComponent<Animator>().enabled = false;
 				if (GetComponent<BoxCollider>())
@@ -99,10 +103,13 @@ public class AIBase : MonoBehaviour {
         if(goldDrop > 0)
 			game.AddGold (goldDrop);
 
-		explosion.transform.position = transform.position;
-		explosion.transform.rotation = transform.rotation;
-		explosion.SetActive(true);
-
+        if (explosion != null)
+        {
+            explosion.transform.position = transform.position;
+            explosion.transform.rotation = transform.rotation;
+            explosion.transform.parent = null;
+            explosion.SetActive(true);
+        }
 		if (animations != null)
             StartCoroutine(DieAnimDelay());
         else

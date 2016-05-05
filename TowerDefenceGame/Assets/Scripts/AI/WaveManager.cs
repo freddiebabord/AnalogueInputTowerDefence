@@ -148,7 +148,6 @@ public class WaveManager : MonoBehaviour {
 		difficulty = difficulty_;
         if (Waves.Count > 0)
         {
-            Debug.Log("Starting Classic");
             for (int i = 0; i < Waves[waveToSpawn].Count; ++i)
             {
                 currentSpawnPoint = waveToSpawn > maxWaves ? 0 : UnityEngine.Random.Range(0, spawnPoint.Count);
@@ -165,50 +164,73 @@ public class WaveManager : MonoBehaviour {
 
     public void StartProcedural(int difficulty_)
     {
-        Debug.Log("Starting pROCEDURAL");
         difficulty = difficulty_;
         maxWaves++;
 		MobWave.WaveType rand = (MobWave.WaveType)UnityEngine.Random.Range(0, 4);
 		switch (rand) {
 		case(MobWave.WaveType.Basic):
 			int basicmaxCount = proceduralWaveSetUp.basic.Count;
-			MobWave BasicbobWave = new MobWave(){
-				Prefab = proceduralWaveSetUp.basic[UnityEngine.Random.Range(0,basicmaxCount)],
-				Type = MobWave.WaveType.Basic,
-				Count = maxWaves * (25 + UnityEngine.Random.Range(0, 25)),
-				waveEndTimer = UnityEngine.Random.Range(5, 10)
-			};
-			Waves.Add(BasicbobWave);
+            if (basicmaxCount > 0)
+            {
+                MobWave BasicbobWave = new MobWave()
+                {
+                    Prefab = proceduralWaveSetUp.basic[UnityEngine.Random.Range(0, basicmaxCount)],
+                    Type = MobWave.WaveType.Basic,
+                    Count = maxWaves * (25 + UnityEngine.Random.Range(0, 25)),
+                    waveEndTimer = UnityEngine.Random.Range(5, 10)
+                };
+                Waves.Add(BasicbobWave);
+            }
+            else
+                StartProcedural(difficulty_);
 			break;
 		case(MobWave.WaveType.Medium):
 			int MediummaxCount = proceduralWaveSetUp.basic.Count;
-			MobWave MediumbobWave = new MobWave(){
-				Prefab = proceduralWaveSetUp.basic[UnityEngine.Random.Range(0,MediummaxCount)],
-				Type = MobWave.WaveType.Medium,
-				Count = maxWaves * (15 + UnityEngine.Random.Range(0, 15)),
-				waveEndTimer = UnityEngine.Random.Range(5, 10)
-			};
-			Waves.Add(MediumbobWave);
+            if (MediummaxCount > 0)
+            {
+                MobWave MediumbobWave = new MobWave()
+                {
+                    Prefab = proceduralWaveSetUp.basic[UnityEngine.Random.Range(0, MediummaxCount)],
+                    Type = MobWave.WaveType.Medium,
+                    Count = maxWaves * (15 + UnityEngine.Random.Range(0, 15)),
+                    waveEndTimer = UnityEngine.Random.Range(5, 10)
+                };
+                Waves.Add(MediumbobWave);
+            }
+            else
+                StartProcedural(difficulty_);
 			break;
 		case(MobWave.WaveType.Heavy):
 			int HeavymaxCount = proceduralWaveSetUp.basic.Count;
-			MobWave HeavybobWave = new MobWave(){
-				Prefab = proceduralWaveSetUp.basic[UnityEngine.Random.Range(0,HeavymaxCount)],
-				Type = MobWave.WaveType.Heavy,
-				Count = maxWaves * (7 + UnityEngine.Random.Range(0, 7)),
-				waveEndTimer = UnityEngine.Random.Range(5, 10)
-			};
-			Waves.Add(HeavybobWave);
+            if (HeavymaxCount > 0)
+            {
+                MobWave HeavybobWave = new MobWave()
+                {
+                    Prefab = proceduralWaveSetUp.basic[UnityEngine.Random.Range(0, HeavymaxCount)],
+                    Type = MobWave.WaveType.Heavy,
+                    Count = maxWaves * (7 + UnityEngine.Random.Range(0, 7)),
+                    waveEndTimer = UnityEngine.Random.Range(5, 10)
+                };
+                Waves.Add(HeavybobWave);
+            }
+            else
+                StartProcedural(difficulty_);
 			break;
 		case(MobWave.WaveType.Boss):
 			int BossmaxCount = proceduralWaveSetUp.basic.Count;
-			MobWave BossbobWave = new MobWave(){
-				Prefab = proceduralWaveSetUp.basic[UnityEngine.Random.Range(0,BossmaxCount)],
-				Type = MobWave.WaveType.Boss,
-				Count = maxWaves * (1 + UnityEngine.Random.Range(0, 3)),
-				waveEndTimer = UnityEngine.Random.Range(5, 10)
-			};
-			Waves.Add(BossbobWave);
+            if (BossmaxCount > 0)
+            {
+                MobWave BossbobWave = new MobWave()
+                {
+                    Prefab = proceduralWaveSetUp.basic[UnityEngine.Random.Range(0, BossmaxCount)],
+                    Type = MobWave.WaveType.Boss,
+                    Count = maxWaves * (1 + UnityEngine.Random.Range(0, 3)),
+                    waveEndTimer = UnityEngine.Random.Range(5, 10)
+                };
+                Waves.Add(BossbobWave);
+            }
+            else
+                StartProcedural(difficulty_);
 			break;
 		default:
 			break;
@@ -224,7 +246,6 @@ public class WaveManager : MonoBehaviour {
 		{
 			currentSpawnPoint = waveToSpawn > maxWaves ? 0 : UnityEngine.Random.Range(0, spawnPoint.Count);
 			GameObject obj = Instantiate(Waves[waveToSpawn].Prefab, spawnPoint[currentSpawnPoint].position, spawnPoint[currentSpawnPoint].rotation) as GameObject;
-            Debug.Log(obj.GetComponent<AIBase>().Health);
             obj.GetComponent<AIBase>().Health *= (int)difficulty;
 
 			aiNodePathing.AddEntity(obj);

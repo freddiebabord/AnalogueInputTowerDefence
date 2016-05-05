@@ -20,6 +20,14 @@ public class GameManager : MonoBehaviour {
 	public int currentWave = 0;
 	public int maxWaves = 0;
 
+    Transition death;
+    public int villageHealth = 100;
+    bool gameOver_ = false;
+
+    public bool gameOver
+    {
+        get { return gameOver_; }
+    }
     public enum GameType
     {
         Classic = 0,
@@ -29,6 +37,31 @@ public class GameManager : MonoBehaviour {
     void Start()
     {
         DontDestroyOnLoad(this);
+    }
+
+	void Update()
+	{
+		transform.position = Camera.main.transform.position;
+
+        if(enemiesPassed > villageHealth)
+        {
+            if (!gameOver_)
+                GameOver();
+        }
+	}
+
+    void GameOver()
+    {
+        death = GameObject.FindObjectOfType<Transition>();
+        if (death != null)
+            death.StartTranstion();
+        else
+            Debug.LogError("NO DEATH TRANSITION!");
+        GameObject.FindObjectOfType<WaveManager>().gameObject.SetActive(false);
+        GameObject.FindObjectOfType<RailManager>().gameObject.SetActive(false);
+        foreach (AIBase ai in GameObject.FindObjectsOfType<AIBase>())
+            Destroy(ai);
+        gameOver_ = true;
     }
 
 	public void AddEnemyInHome()
@@ -54,7 +87,6 @@ public class GameManager : MonoBehaviour {
         yield return new WaitForSeconds(5);
         waveSystem = GameObject.FindObjectOfType<WaveManager>();
         if (waveSystem)
-            Debug.Log("Starting");
         switch (gameType)
         {
             case GameType.Classic:
