@@ -16,6 +16,12 @@ public class Pointer : MonoBehaviour {
     public float pointerSpeed = 5.0f;
     public string horizontalAxis = "HorizontalLeft";
     public string verticalAxis = "VerticalLeft";
+    CameraController cameraController;
+
+    public float maxHorizontal = 18;
+    public float maxVertical = 9;
+
+    public bool invertXAxis = false, invertYAxis = false;
 
 	// Use this for initialization
 	void Start () {
@@ -25,22 +31,33 @@ public class Pointer : MonoBehaviour {
             Screen.lockCursor = true;
             Screen.showCursor = false;
         }
+        cameraController = GameObject.FindObjectOfType<CameraController>();
 	}
+
+
 	
 	// Update is called once per frame
 	void Update () {
 
-        //if (Input.GetAxis("TriggerSelect") >= 1 && Input.GetAxis("TriggerSelect2") >= 1)
-        //{
-        //    rt.position = new Vector3(0, 0, 0);
-        //}
-
-        Vector3 inputVector = new Vector3(Input.GetAxis(horizontalAxis), Input.GetAxis(verticalAxis), 0.0f);
-       // if (rt.position.x + inputVector.x < transform.parent.GetComponent<RectTransform>().sizeDelta.x / 2 && rt.position.x + inputVector.x > transform.parent.GetComponent<RectTransform>().sizeDelta.x / 2)
+        if (Input.GetAxis(horizontalAxis) >= 0.1f || Input.GetAxis(horizontalAxis) <= -0.1f)
         {
-            //if (rt.position.y + inputVector.y < transform.parent.GetComponent<RectTransform>().sizeDelta.y / 2 && rt.position.y + inputVector.y > transform.parent.GetComponent<RectTransform>().sizeDelta.y / 2)
-                rt.Translate(inputVector * pointerSpeed * Time.deltaTime);
+            if (rt.localPosition.x + Input.GetAxis(horizontalAxis) > -maxHorizontal-1 &&
+                rt.localPosition.x + Input.GetAxis(horizontalAxis) < maxHorizontal+1)
+                transform.Translate(Vector3.right * (invertXAxis ? Input.GetAxis(horizontalAxis) : -Input.GetAxis(horizontalAxis)) * pointerSpeed * Time.deltaTime);
+            else
+                cameraController.TranslatCameraHorisontal(Input.GetAxis(horizontalAxis));
         }
+
+        if (Input.GetAxis(verticalAxis) >= 0.1f || Input.GetAxis(verticalAxis) <= -0.1f)
+        {
+            if (rt.localPosition.y + Input.GetAxis(verticalAxis) > -maxVertical-1 &&
+                    rt.localPosition.y + Input.GetAxis(verticalAxis) < maxVertical+1)
+                transform.Translate(Vector3.up * (invertYAxis ? Input.GetAxis(verticalAxis) : -Input.GetAxis(verticalAxis)) * pointerSpeed * Time.deltaTime);
+            else
+                cameraController.TranslatCameraVertical(Input.GetAxis(verticalAxis));
+        }
+        
+        
         // Simulates the OnSelect event
         PointerEventData pointer = new PointerEventData(EventSystem.current);
         pointer.position = Camera.main.WorldToScreenPoint(transform.position);
@@ -92,6 +109,11 @@ public class Pointer : MonoBehaviour {
 				}
 			}
 		}
+        else if(currentTile)
+        {
+            currentTile.renderer.material.SetColor("_DiffuseColour", currentTileOriginalColour);
+            currentTile = null;
+        }
 
 
         // Simulation of click event

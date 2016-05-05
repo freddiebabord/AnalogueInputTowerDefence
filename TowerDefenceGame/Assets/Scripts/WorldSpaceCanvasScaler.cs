@@ -10,6 +10,7 @@ public class WorldSpaceCanvasScaler : UIBehaviour
 {
     float height, width;
     CanvasScaler scalar;
+    Pointer pointer;
 
     protected WorldSpaceCanvasScaler() { }
 
@@ -24,7 +25,13 @@ public class WorldSpaceCanvasScaler : UIBehaviour
         width = height * Camera.main.aspect;
 
         GetComponent<RectTransform>().sizeDelta = new Vector2(width * scalar.scaleFactor, height * scalar.scaleFactor);
-
+        if (pointer == null)
+            GameObject.FindObjectOfType<Pointer>();
+        else
+        {
+            pointer.maxHorizontal = width * scalar.scaleFactor;
+            pointer.maxVertical = height * scalar.scaleFactor;
+        }
     }
     
 }

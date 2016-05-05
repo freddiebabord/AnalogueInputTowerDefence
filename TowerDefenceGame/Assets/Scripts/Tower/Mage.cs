@@ -50,4 +50,9 @@ public class Mage : TowerClass {
 			GetChosen().gameObject.GetComponent<AIBase> ().ApplyDamage (2);
 
 	}
+
+    public override void ApplyDamage(float HPLoss)
+    {
+        base.ApplyDamage(HPLoss);
+    }
 }

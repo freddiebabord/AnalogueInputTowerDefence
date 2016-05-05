@@ -100,7 +100,7 @@ GameObject:
   - 23: {fileID: 2387910}
   m_Layer: 0
   m_Name: Magic
-  m_TagString: Untagged
+  m_TagString: Mage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -315,6 +315,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet: {fileID: 0}
   spawnPoint: {fileID: 187900}
+  health: 100
   radius: 10
   speed: 0
   exp: 0

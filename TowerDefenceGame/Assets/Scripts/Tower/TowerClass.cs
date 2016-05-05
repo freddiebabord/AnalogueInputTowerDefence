@@ -13,7 +13,8 @@ public class TowerClass : MonoBehaviour {
 
 	GameObject goal;
 
-	int health = 100;
+    [SerializeField]
+    protected float health = 100;
 
 	int damage = 5;
 
@@ -36,7 +37,7 @@ public class TowerClass : MonoBehaviour {
 
 	Vector3 direction = new Vector3(0,0,0);
 
-	int classHealth = 0;
+    protected float classHealth = 0;
 
 	public int speed = 0;
 
@@ -81,7 +82,10 @@ public class TowerClass : MonoBehaviour {
 		lastShot += Time.deltaTime;
 
         if (health <= 0)
+        {
+            Debug.Log(health);
             OnDie();
+        }
 	}
 
 	bool HasEnemyInSight(GameObject[] enemies)
@@ -144,7 +148,7 @@ public class TowerClass : MonoBehaviour {
 		return chosen;
 	}
 
-	public void SetClassHealth(int hp)
+    public void SetClassHealth(float hp)
 	{
 		classHealth = hp;
 	}
@@ -169,7 +173,7 @@ public class TowerClass : MonoBehaviour {
 		levelOfUpgrade += upgrade;
 	}
 
-	public void SetTower(int hp, int lvl, float rad)
+	public void SetTower(float hp, int lvl, float rad)
 	{
 		SetClassHealth (hp);
 		SetLevel (lvl);
@@ -182,12 +186,12 @@ public class TowerClass : MonoBehaviour {
 		goal = goal_;
 	}
 
-	public int GetClassHealth()
+    public float GetClassHealth()
 	{
 		return classHealth;
 	}
 
-	public int GetHealth()
+	public float GetHealth()
 	{
 		return health;
 	}
@@ -230,14 +234,10 @@ public class TowerClass : MonoBehaviour {
 		Gizmos.DrawWireSphere (transform.position, radius);
 	}
 
-    void ApplyDamage(int HPLoss)
+    public virtual void ApplyDamage(float HPLoss)
     {
+        Debug.Log("DAMAGE: " + HPLoss);
         health -= HPLoss;
-    }
-
-    void ApplyDamage(float HPLoss)
-    {
-        health -= Mathf.RoundToInt(HPLoss);
     }
 
     protected virtual void OnDie()
