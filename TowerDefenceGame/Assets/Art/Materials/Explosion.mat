@@ -38,7 +38,7 @@ Material:
       data:
         first:
           name: _Displacement
-        second: .160714284
+        second: .196428567
       data:
         first:
           name: _ClipRange
@@ -51,8 +51,8 @@ Material:
       data:
         first:
           name: _ChannelFactor
-        second: {r: 1.21000004, g: -.439999998, b: .689999998, a: 1}
+        second: {r: 1.21000004, g: .850000024, b: .689999998, a: 1}
       data:
         first:
           name: _Range
-        second: {r: .0199999996, g: .800000012, b: 0, a: 1}
+        second: {r: .230000004, g: .649999976, b: 0, a: 1}

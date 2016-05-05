@@ -25,20 +25,23 @@ public class AITowerSeeker : AIBase {
 
     public override void Die(float delay = 0)
     {
-        GameObject go = (GameObject)Instantiate(Resources.Load("Prefabs/VolumetricExplosion", typeof(GameObject)), transform.position, Quaternion.identity);
-        go.GetComponent<VolumetricExplosion>().explosionDamage = damage;
+        explosion.GetComponent<VolumetricExplosion>().explosionDamage = damage;
         base.Die();
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.GetComponentInChildren<TowerClass>())
+            Debug.Log(collision.collider.gameObject);
+        if (collision.collider.gameObject.tag != "Enemy" & collision.collider.gameObject.tag != "Untagged")
+        {
+            collision.collider.gameObject.BroadcastMessage("ApplyDamage", damage, SendMessageOptions.RequireReceiver);
             Die();
+        }
     }
 
 	void OnTriggerEnter(Collider other)
 	{
-        if (other.gameObject.GetComponentInChildren<TowerClass>())
+        if (other.gameObject.tag != "Enemy" & other.gameObject.tag != "Untagged")
         {
             if (!triggerList.Contains(other))
             {

@@ -11,7 +11,11 @@ GameObject:
   - 33: {fileID: 3390636}
   - 64: {fileID: 6490636}
   - 23: {fileID: 2390636}
+<<<<<<< HEAD
   - 114: {fileID: 11461064}
+=======
+  - 114: {fileID: 11429494}
+>>>>>>> origin/master
   m_Layer: 0
   m_Name: WaterTile
   m_TagString: Untagged
@@ -70,8 +74,13 @@ MeshCollider:
   serializedVersion: 2
   m_SmoothSphereCollisions: 0
   m_Convex: 0
+<<<<<<< HEAD
   m_Mesh: {fileID: 4300000, guid: f8ae5682de8d91246b9735dc91ba5b95, type: 3}
 --- !u!114 &11461064
+=======
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &11429494
+>>>>>>> origin/master
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -79,9 +88,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 190636}
   m_Enabled: 1
   m_EditorHideFlags: 0
+<<<<<<< HEAD
   m_Script: {fileID: 11500000, guid: 0d2f50a8e0bb841a5aaa90ae55db8849, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+=======
+  m_Script: {fileID: 11500000, guid: 3faae7ac11975884a8ee14733bee2f3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  posX: 0
+  posY: 0
+  pathType: 3
+>>>>>>> origin/master
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

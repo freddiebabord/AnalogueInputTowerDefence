@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using CielaSpike;
 
 public enum RailRotationMode
 {
@@ -21,25 +23,42 @@ public class Node
 }
 
 [System.Serializable]
-[RequireComponent (typeof(GameManager))]
 public class RailManager : MonoBehaviour {
 	
 	public bool activated = true;
     [HideInInspector][SerializeField]
     public List<Node> railNodes = new List<Node>();
-    public List<AIBase> objectToMove = new List<AIBase>();
+    private List<AIBase> objectToMove = new List<AIBase>();
 	public float nodeProximityDistance = 0.1f;
 	public RailRotationMode rotationMode;
 	public float slerpRotationSpeed = 1.0f;
-	public int EnemiesThisCycle = 0;
     public float initialSpeed = 15;
     private WaveManager waveManager;
+	private bool shouldClean = false;
+	private bool inRoutine = false;
+	[Range(3,80)][Tooltip("The amount of times the rail amanger updates the position of entites in the world per second")]
+	public int updateIntervalPerSecond = 20;
+	private float intervalRate;
+	private float timeSinceLastUpdate = 0.0f;
+    
+    private float threadedDeltaTime = 0.0f;
+    [SerializeField]
+    private bool multiThreadWave = false;
+    Task task;
+
+    RailSystemThread railThread = new RailSystemThread();
+
+    public int aliveEnemies { get { return objectToMove.Count; } }
 
 	//--------------------Unity Functions--------------------
-	
+
+    private bool updateingRail = false;
+
     void Start()
     {
         waveManager = GetComponent<WaveManager>();
+		intervalRate = 1 / updateIntervalPerSecond;
+        
     }
 
 	public void AddEntity(GameObject entity)
@@ -51,6 +70,23 @@ public class RailManager : MonoBehaviour {
 	{
         objectToMove.Insert(index, SpawnEntity(entity).GetComponent<AIBase>());
 	}
+
+	public void EnableEntityAtIndex(int index)
+	{
+		objectToMove [index].gameObject.SetActive (true);
+	}
+
+    public void EnableInactiveEntity()
+    {
+        foreach (AIBase entity in objectToMove)
+        {
+            if (!entity.gameObject.activeInHierarchy)
+            {
+                entity.gameObject.SetActive(true);
+                return;
+            }
+        }
+    }
 	
     private GameObject SpawnEntity(GameObject objectToSpawn)
     {
@@ -63,7 +99,6 @@ public class RailManager : MonoBehaviour {
                                                         0 + (objectToSpawn.collider.bounds.extents.magnitude) / 2,
                                                         ((Random.insideUnitSphere.z * 2) * nodeProximityDistance));
         objectToSpawn.GetComponent<AIBase>().currentNodeTarget = targetPosition + railNodes[objectToSpawn.GetComponent<AIBase>().CurrentIndex].transform.position;
-
         return objectToSpawn;
     }
 
@@ -72,90 +107,236 @@ public class RailManager : MonoBehaviour {
     {
         if (objectToMove.Contains(entity))
             objectToMove.Remove(entity);
+		shouldClean = true;
+        objectToMove.TrimExcess();
     }
 
+	public void UpdateIntervalTime()
+	{
+		intervalRate = 1 / updateIntervalPerSecond;
+		Debug.Log ("Updating rate");
+	}
 
 	void Update()
 	{
-		if(!activated) return;
+		if (Input.GetKey (KeyCode.Space))
+			UpdateIntervalTime ();
 
-		EnemiesThisCycle = 0;
+        timeSinceLastUpdate += Time.deltaTime;
+        if (multiThreadWave)
+        {
+            threadedDeltaTime += Time.deltaTime;
 
-		for (int i = 0; i < objectToMove.Count; ++i) {
-
-			if(objectToMove[i] == null)
-				continue;
-
-            
-			//Exiting if the target node is 
-			//outside of the railNodes list.
-            if (objectToMove[i].CurrentIndex >= railNodes.Count) 
-			{
-				Destroy(objectToMove[i].gameObject);
-				continue;
-			}
-			EnemiesThisCycle++;
-
-            if (objectToMove[i].currentTarget == null)
+            if (!updateingRail)
             {
+                updateingRail = true;
+                this.StartCoroutineAsync(RailCoroutine(), out task);
+            }
 
-                objectToMove[i].DirectionVector = (objectToMove[i].currentNodeTarget - objectToMove[i].transform.position ).normalized;
+            if (task.State == TaskState.Error)
+            {
+                Debug.LogException(task.Exception);
+            }
+        }
+        else
+        {
 
-                objectToMove[i].transform.Translate(objectToMove[i].DirectionVector * Time.deltaTime * objectToMove[i].Speed, Space.World);
-
-                Vector3 smudgeFactor = new Vector3(Random.Range(-2, 2), 0, Random.Range(-2, 2));
-
-                //Rotating the object to face the target node
-                //depending on the specified rotation mode.
-                switch (rotationMode)
+            objectToMove.TrimExcess();
+            timeSinceLastUpdate += Time.deltaTime;
+            if (timeSinceLastUpdate >= intervalRate)
+            {
+                for (int i = 0; i < objectToMove.Count; ++i)
                 {
-                    case RailRotationMode.Snap:
-                        objectToMove[i].transform.LookAt(objectToMove[i].currentNodeTarget + smudgeFactor);
-                        break;
-
-                    case RailRotationMode.Slerp:
-                        Quaternion targetRotation = Quaternion.LookRotation((objectToMove[i].currentNodeTarget + smudgeFactor) - objectToMove[i].transform.position);
-                        objectToMove[i].transform.rotation = Quaternion.Slerp(objectToMove[i].transform.rotation, targetRotation, Time.deltaTime * slerpRotationSpeed);
-                        break;
-
-                    default:
-                        break;
-                }
-
-                //Incrementing the target node if the object 
-                //has reached the previous target node.
-                if (ObjectIsOnNode(objectToMove[i].CurrentIndex, i))
-                {
-                    //objectToMove[i].position = railNodes [targetNodeIndex[i]].position;
-                    objectToMove[i].CurrentIndex++;
-
-                    if (objectToMove[i].CurrentIndex >= railNodes.Count)
+                    if (objectToMove[i] == null)
                     {
-                        Destroy(objectToMove[i].gameObject);
+                        objectToMove.TrimExcess();
+                        continue;
+                    }
+                    if (!objectToMove[i].gameObject.activeInHierarchy)
+                        continue;
+
+                    AIBase aiObj = objectToMove[i];
+                    //Exiting if the target node is 
+                    //outside of the railNodes list.
+                    if (aiObj.CurrentIndex >= railNodes.Count)
+                    {
+                        RemoveEntity(aiObj);
+                        Destroy(aiObj.gameObject);
+                        objectToMove.TrimExcess();
                         continue;
                     }
 
-                    
-                    Vector3 targetPosition = new Vector3(((Random.insideUnitSphere.x * 2) * nodeProximityDistance),
-                     0 + (objectToMove[i].collider.bounds.extents.magnitude) / 2 +0.5f, 
-                     ((Random.insideUnitSphere.z * 2) * nodeProximityDistance));
+                    if (aiObj.currentTarget == null)
+                    {
 
-                    objectToMove[i].currentNodeTarget = targetPosition + railNodes[objectToMove[i].CurrentIndex].transform.position;
+                        aiObj.DirectionVector = (aiObj.currentNodeTarget - aiObj.transform.position).normalized;
+
+                        aiObj.transform.Translate(aiObj.DirectionVector * Time.deltaTime * aiObj.Speed, Space.World);
+
+                        Vector3 smudgeFactor = new Vector3(Random.Range(-2, 2), 0, Random.Range(-2, 2));
+
+                        //Rotating the object to face the target node
+                        //depending on the specified rotation mode.
+                        switch (rotationMode)
+                        {
+                            case RailRotationMode.Snap:
+                                aiObj.transform.LookAt(aiObj.currentNodeTarget + smudgeFactor);
+                                break;
+
+                            case RailRotationMode.Slerp:
+                                Quaternion targetRotation = Quaternion.LookRotation((aiObj.currentNodeTarget + smudgeFactor) - aiObj.transform.position);
+                                aiObj.transform.rotation = Quaternion.Slerp(aiObj.transform.rotation, targetRotation, Time.deltaTime * slerpRotationSpeed);
+                                break;
+
+                            default:
+                                break;
+                        }
+
+                        //Incrementing the target node if the object 
+                        //has reached the previous target node.
+                        if (ObjectIsOnNode(aiObj))
+                        {
+
+                            aiObj.CurrentIndex++;
+
+                            Vector3 targetPosition = new Vector3(((Random.insideUnitSphere.x * 2) * nodeProximityDistance),
+                                                                 0 + (aiObj.collider.bounds.extents.magnitude) / 2 + 0.5f,
+                                                                 ((Random.insideUnitSphere.z * 2) * nodeProximityDistance));
+
+                            aiObj.currentNodeTarget = targetPosition + railNodes[aiObj.CurrentIndex].transform.position;
+                        }
+                    }
+                    else
+                    {
+
+                        aiObj.DirectionVector = (aiObj.currentTarget.transform.position - aiObj.transform.position).normalized;
+
+                        aiObj.transform.Translate(aiObj.DirectionVector * Time.deltaTime * aiObj.Speed, Space.World);
+
+                        Quaternion targetRotation = Quaternion.LookRotation(aiObj.currentTarget.transform.position - aiObj.transform.position);
+                        aiObj.transform.rotation = Quaternion.Slerp(aiObj.transform.rotation, targetRotation, Time.deltaTime * slerpRotationSpeed);
+                    }
+                }
+
+                if (shouldClean && !inRoutine)
+                    StartCoroutine(CleanList());
+
+                timeSinceLastUpdate = 0.0f;
+
+            }
+        }
+	}
+
+
+
+    IEnumerator RailCoroutine()
+    {
+        objectToMove.TrimExcess();
+        
+        if (timeSinceLastUpdate >= intervalRate)
+        {
+            for (int i = 0; i < objectToMove.Count; ++i)
+            {
+                if (ReferenceEquals(objectToMove[i],null))
+                {
+                    //objectToMove.TrimExcess();
+                    continue;
+                }
+                yield return Ninja.JumpToUnity;
+                if (!objectToMove[i].gameObject.activeInHierarchy)
+                    continue;
+                yield return Ninja.JumpBack;
+                AIBase aiObj = objectToMove[i];
+                //Exiting if the target node is 
+                //outside of the railNodes list.
+                if (aiObj.CurrentIndex >= railNodes.Count)
+                {
+                    RemoveEntity(aiObj);
+                    Destroy(aiObj.gameObject);
+                    objectToMove.TrimExcess();
+                    continue;
+                }
+                yield return Ninja.JumpToUnity;
+                Vector3 aiPos = aiObj.transform.position;
+                yield return Ninja.JumpBack;
+                if (ReferenceEquals(aiObj.currentTarget, null))
+                {
+
+                    aiObj.DirectionVector = (aiObj.currentNodeTarget - aiPos).normalized;
+
+                    yield return Ninja.JumpToUnity;
+                    aiObj.transform.Translate(aiObj.DirectionVector * threadedDeltaTime * aiObj.Speed, Space.World);
+                    yield return Ninja.JumpBack;
+
+                    Vector3 smudgeFactor = new Vector3(Random.Range(-2, 2), 0, Random.Range(-2, 2));
+
+                    //Rotating the object to face the target node
+                    //depending on the specified rotation mode.
+                    switch (rotationMode)
+                    {
+                        case RailRotationMode.Snap:
+                            aiObj.transform.LookAt(aiObj.currentNodeTarget + smudgeFactor);
+                            break;
+
+                        case RailRotationMode.Slerp:
+                            Quaternion targetRotation = Quaternion.LookRotation((aiObj.currentNodeTarget + smudgeFactor) - aiPos);
+                            aiObj.transform.rotation = Quaternion.Slerp(aiObj.transform.rotation, targetRotation, threadedDeltaTime * slerpRotationSpeed);
+                            break;
+
+                        default:
+                            break;
+                    }
+
+                    //Incrementing the target node if the object 
+                    //has reached the previous target node.
+                    if (ObjectIsOnNode(aiObj))
+                    {
+
+                        aiObj.CurrentIndex++;
+
+                        Vector3 targetPosition = new Vector3(((Random.insideUnitSphere.x * 2) * nodeProximityDistance),
+                                                             0 + (aiObj.collider.bounds.extents.magnitude) / 2 + 0.5f,
+                                                             ((Random.insideUnitSphere.z * 2) * nodeProximityDistance));
+
+                        aiObj.currentNodeTarget = targetPosition + railNodes[aiObj.CurrentIndex].transform.position;
+                    }
+                }
+                else
+                {
+                    yield return Ninja.JumpToUnity;
+                    Vector3 ctPos = aiObj.currentNodeTarget;
+                    yield return Ninja.JumpBack;
+
+                    aiObj.DirectionVector = (ctPos - aiPos).normalized;
+                    Quaternion targetRotation = Quaternion.LookRotation(ctPos - aiPos);
+
+                    yield return Ninja.JumpToUnity;
+                    aiObj.transform.Translate(aiObj.DirectionVector * threadedDeltaTime * aiObj.Speed, Space.World);
+                    aiObj.transform.rotation = Quaternion.Slerp(aiObj.transform.rotation, targetRotation, threadedDeltaTime * slerpRotationSpeed);
+                    yield return Ninja.JumpBack;
                 }
             }
-            else
-            {
 
-                objectToMove[i].DirectionVector = (objectToMove[i].currentTarget.transform.position - objectToMove[i].transform.position).normalized;
-               
-                objectToMove[i].transform.Translate(objectToMove[i].DirectionVector * Time.deltaTime * objectToMove[i].Speed, Space.World);
+            if (shouldClean && !inRoutine)
+                objectToMove.TrimExcess();
 
-                Quaternion targetRotation = Quaternion.LookRotation(objectToMove[i].currentTarget.transform.position - objectToMove[i].transform.position);
-                objectToMove[i].transform.rotation = Quaternion.Slerp(objectToMove[i].transform.rotation, targetRotation, Time.deltaTime * slerpRotationSpeed);
-            }
-		}
+            timeSinceLastUpdate = 0.0f;
+
+        }
+        updateingRail = false;
+        threadedDeltaTime = 0.0f;
+    }
 
 
+
+
+	IEnumerator CleanList()
+	{
+		inRoutine = true;
+		yield return new WaitForSeconds (2.5f);
+		objectToMove.TrimExcess ();
+		inRoutine = false;
+		shouldClean = false;
 	}
 	
 	void OnDrawGizmos()
@@ -191,6 +372,12 @@ public class RailManager : MonoBehaviour {
 	{
 		//Checking if the distance from the object to the target node is less than the proximity distance.
         return (Vector3.Distance(objectToMove[index].transform.position, objectToMove[index].currentNodeTarget) < nodeProximityDistance);
+	}
+
+	bool ObjectIsOnNode(AIBase obj)
+	{
+		//Checking if the distance from the object to the target node is less than the proximity distance.
+		return (Vector3.Distance(obj.transform.position, obj.currentNodeTarget) < nodeProximityDistance);
 	}
 
 	public void ResetEntities()

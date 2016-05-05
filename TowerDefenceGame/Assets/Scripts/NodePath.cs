@@ -14,4 +14,6 @@ public class NodePath : MonoBehaviour
     public int posX;
     public int posY;
     public PathType pathType;
+
+	public bool towerPlaced = false;
 }

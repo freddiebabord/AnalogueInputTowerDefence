@@ -6,15 +6,13 @@ public class VolumetricExplosion : MonoBehaviour {
     public float loopduration = 1.667f;
     public float fadeDuration = 2.5f;
     public float explosionDamage = 50;
-    
-    bool shouldFade = false;
-    float startClipRange = 0.0f;
+    Coroutine explosionRoutine;
     float radius = 5.0f;
-
+    int maxAIToInfluence = 2;
+    int aiInfluenced = 0;
 	// Use this for initialization
 	void Start () {
-        StartCoroutine(fadeOut());
-        startClipRange = renderer.material.GetFloat("_ClipRange");
+        
 	}
 	
 	// Update is called once per frame
@@ -28,31 +26,43 @@ public class VolumetricExplosion : MonoBehaviour {
         b *= correction;
         renderer.material.SetVector("_ChannelFactor", new Vector4(r, g, b, 0));
         
-        //float clipRange = shouldFade ? Mathf.Lerp(startClipRange, 0.0f, Time.time / fadeDuration) : startClipRange;
-        //renderer.material.SetFloat("_ClipRange", clipRange);
-        //Debug.Log(renderer.material.GetFloat("_ClipRange"));
 	}
 
     IEnumerator fadeOut()
     {
-        yield return new WaitForSeconds(loopduration);
-        shouldFade = true;
-        yield return new WaitForSeconds(fadeDuration + 1.5f);
+        yield return new WaitForSeconds(3);
         Destroy(gameObject);
     }
 
     void OnEnable()
     {
-        var cols = Physics.OverlapSphere(transform.position, radius);
-        foreach (var c in cols)
-        {
-            c.gameObject.SendMessage("ApplyDamage", explosionDamage, SendMessageOptions.DontRequireReceiver);
-        }
+        explosionRoutine = StartCoroutine(ExplodeAfterTime());
+        StartCoroutine(fadeOut());
+    }
+
+    void OnDisable()
+    {
+        if (explosionRoutine == null)
+            StopCoroutine(explosionRoutine);
     }
 
     void OnDrawGizmos()
     {
         Gizmos.color = Color.magenta;
         Gizmos.DrawWireSphere(transform.position, radius);
+    }
+
+    IEnumerator ExplodeAfterTime()
+    {
+        yield return new WaitForSeconds(1.5f);
+        var cols = Physics.OverlapSphere(transform.position, radius);
+        foreach (var c in cols)
+        {
+            if (c.collider.gameObject.tag != "Enemy" & c.collider.gameObject.tag != "Untagged")
+            {
+                c.collider.gameObject.BroadcastMessage("ApplyDamage", explosionDamage, SendMessageOptions.RequireReceiver);
+//                Die();
+            }
+        }
     }
 }

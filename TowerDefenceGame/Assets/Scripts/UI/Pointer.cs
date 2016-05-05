@@ -6,14 +6,22 @@ using System.Collections.Generic;
 
 public class Pointer : MonoBehaviour {
 
+	public bool placeTower = false;
+
 	RectTransform rt;
     List<AnalogueButtons> selectedButtons = new List<AnalogueButtons>();
     GameObject latSelected;
-    GameObject currentTile;
+    public GameObject currentTile;
     Color currentTileOriginalColour;
     public float pointerSpeed = 5.0f;
     public string horizontalAxis = "HorizontalLeft";
     public string verticalAxis = "VerticalLeft";
+    CameraController cameraController;
+
+    public float maxHorizontal = 18;
+    public float maxVertical = 9;
+
+    public bool invertXAxis = false, invertYAxis = false;
 
 	// Use this for initialization
 	void Start () {
@@ -23,22 +31,33 @@ public class Pointer : MonoBehaviour {
             Screen.lockCursor = true;
             Screen.showCursor = false;
         }
+        cameraController = GameObject.FindObjectOfType<CameraController>();
 	}
+
+
 	
 	// Update is called once per frame
 	void Update () {
 
-        //if (Input.GetAxis("TriggerSelect") >= 1 && Input.GetAxis("TriggerSelect2") >= 1)
-        //{
-        //    rt.position = new Vector3(0, 0, 0);
-        //}
-
-        Vector3 inputVector = new Vector3(Input.GetAxis(horizontalAxis), Input.GetAxis(verticalAxis), 0.0f);
-       // if (rt.position.x + inputVector.x < transform.parent.GetComponent<RectTransform>().sizeDelta.x / 2 && rt.position.x + inputVector.x > transform.parent.GetComponent<RectTransform>().sizeDelta.x / 2)
+        if (Input.GetAxis(horizontalAxis) >= 0.1f || Input.GetAxis(horizontalAxis) <= -0.1f)
         {
-            //if (rt.position.y + inputVector.y < transform.parent.GetComponent<RectTransform>().sizeDelta.y / 2 && rt.position.y + inputVector.y > transform.parent.GetComponent<RectTransform>().sizeDelta.y / 2)
-                rt.Translate(inputVector * pointerSpeed * Time.deltaTime);
+            if (rt.localPosition.x + Input.GetAxis(horizontalAxis) > -maxHorizontal-1 &&
+                rt.localPosition.x + Input.GetAxis(horizontalAxis) < maxHorizontal+1)
+                transform.Translate(Vector3.right * (invertXAxis ? Input.GetAxis(horizontalAxis) : -Input.GetAxis(horizontalAxis)) * pointerSpeed * Time.deltaTime);
+            else
+                cameraController.TranslatCameraHorisontal(Input.GetAxis(horizontalAxis));
         }
+
+        if (Input.GetAxis(verticalAxis) >= 0.1f || Input.GetAxis(verticalAxis) <= -0.1f)
+        {
+            if (rt.localPosition.y + Input.GetAxis(verticalAxis) > -maxVertical-1 &&
+                    rt.localPosition.y + Input.GetAxis(verticalAxis) < maxVertical+1)
+                transform.Translate(Vector3.up * (invertYAxis ? Input.GetAxis(verticalAxis) : -Input.GetAxis(verticalAxis)) * pointerSpeed * Time.deltaTime);
+            else
+                cameraController.TranslatCameraVertical(Input.GetAxis(verticalAxis));
+        }
+        
+        
         // Simulates the OnSelect event
         PointerEventData pointer = new PointerEventData(EventSystem.current);
         pointer.position = Camera.main.WorldToScreenPoint(transform.position);
@@ -59,35 +78,42 @@ public class Pointer : MonoBehaviour {
             }
         }
 
-        Ray screenToGround = new Ray(transform.position, transform.forward);
-        RaycastHit hit;
-        if(Physics.Raycast(screenToGround, out hit, 150))
+		if (placeTower) 
+		{
+			Ray screenToGround = new Ray (transform.position, transform.forward);
+			RaycastHit hit;
+			if (Physics.Raycast (screenToGround, out hit, 150)) 
+			{
+				Debug.DrawLine (transform.position, hit.transform.position, Color.yellow);
+				if (hit.collider.gameObject.GetComponent<NodePath> ()) 
+				{
+					if (currentTile != hit.collider.gameObject) 
+					{
+						if (hit.collider.gameObject.GetComponent<NodePath> ().pathType == NodePath.PathType.Grass) 
+						{
+							if (currentTile != null)
+								currentTile.renderer.material.SetColor ("_DiffuseColour", currentTileOriginalColour);
+							currentTile = hit.collider.gameObject;
+							currentTileOriginalColour = currentTile.renderer.material.GetColor ("_DiffuseColour");
+							currentTile.renderer.material.SetColor ("_DiffuseColour", new Color (0, 1, 0, 1));
+						} 
+						else 
+						{
+							if (currentTile != null)
+								currentTile.renderer.material.SetColor ("_DiffuseColour", currentTileOriginalColour);
+							currentTile = hit.collider.gameObject;
+							currentTileOriginalColour = currentTile.renderer.material.GetColor ("_DiffuseColour");
+							currentTile.renderer.material.SetColor ("_DiffuseColour", new Color (1, 0, 0, 1));
+						}
+					}
+				}
+			}
+		}
+        else if(currentTile)
         {
-            Debug.DrawLine(transform.position, hit.transform.position, Color.yellow);
-            if(hit.collider.gameObject.GetComponent<NodePath>())
-            {
-                if (currentTile != hit.collider.gameObject)
-                {
-                    if (hit.collider.gameObject.GetComponent<NodePath>().pathType == NodePath.PathType.Grass)
-                    {
-                        if (currentTile != null)
-                            currentTile.renderer.material.SetColor("_DiffuseColour", currentTileOriginalColour);
-                        currentTile = hit.collider.gameObject;
-                        currentTileOriginalColour = currentTile.renderer.material.GetColor("_DiffuseColour");
-                        currentTile.renderer.material.SetColor("_DiffuseColour", new Color(0, 1, 0, 1));
-                    }
-                    else
-                    {
-                        if (currentTile != null)
-                            currentTile.renderer.material.SetColor("_DiffuseColour", currentTileOriginalColour);
-                        currentTile = hit.collider.gameObject;
-                        currentTileOriginalColour = currentTile.renderer.material.GetColor("_DiffuseColour");
-                        currentTile.renderer.material.SetColor("_DiffuseColour", new Color(1, 0, 0, 1));
-                    }
-                }
-            }
+            currentTile.renderer.material.SetColor("_DiffuseColour", currentTileOriginalColour);
+            currentTile = null;
         }
-
 
 
         // Simulation of click event
@@ -100,7 +126,9 @@ public class Pointer : MonoBehaviour {
                     if (raycastResults[i].gameObject.GetComponent<AnalogueButtons>())
                     {
                         if (!raycastResults[i].gameObject.GetComponent<AnalogueButtons>().clicked)
+						{
                             raycastResults[i].gameObject.GetComponent<AnalogueButtons>().OnClick();
+						}
                     }
                 }
             } 

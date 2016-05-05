@@ -70,8 +70,10 @@ public class EverloopController : MonoBehaviour {
 
 	virtual public void StopAll() {
 		StopAutopilot();
-		foreach (AudioSource layer in _tracks) {
-			layer.Stop();
+		if (_tracks.Count > 0) {
+			foreach (AudioSource layer in _tracks) {
+				layer.Stop ();
+			}
 		}
 	}
 	
