@@ -23,11 +23,21 @@ public class GameManager : MonoBehaviour {
     Transition death;
     public int villageHealth = 100;
     bool gameOver_ = false;
+    bool mapReady = false;
+
+    public bool MapReady
+    {
+        get { return mapReady; }
+        set { mapReady = value; }
+    }
 
     public bool gameOver
     {
         get { return gameOver_; }
     }
+
+    public float gold { get { return goldQuantity; } }
+
     public enum GameType
     {
         Classic = 0,
@@ -52,12 +62,11 @@ public class GameManager : MonoBehaviour {
 
     void GameOver()
     {
-        death = GameObject.FindObjectOfType<Transition>();
+        death = GameObject.FindGameObjectWithTag("DeathTransition").GetComponent<Transition>();
         if (death != null)
             death.StartTranstion();
         else
             Debug.LogError("NO DEATH TRANSITION!");
-        GameObject.FindObjectOfType<WaveManager>().gameObject.SetActive(false);
         GameObject.FindObjectOfType<RailManager>().gameObject.SetActive(false);
         foreach (AIBase ai in GameObject.FindObjectsOfType<AIBase>())
             Destroy(ai);
@@ -72,6 +81,9 @@ public class GameManager : MonoBehaviour {
 	public void AddGold(float amount)
 	{
 		goldQuantity += amount;
+        if(goldQuantityText == null)
+            goldQuantityText = GameObject.FindGameObjectWithTag("MoneyText").GetComponent<Text>();
+        goldQuantityText.text = "$" + goldQuantity;
 	}
 
     void OnLevelWasLoaded(int levelID)
@@ -79,7 +91,16 @@ public class GameManager : MonoBehaviour {
         if(levelID != 0)
         {
             StartCoroutine(WaitToStart());
+            goldQuantity = 500;
         }
+    }
+
+    public void RemoveGold(float value)
+    {
+        goldQuantity -= value;
+        if (goldQuantityText == null)
+            goldQuantityText = GameObject.FindGameObjectWithTag("MoneyText").GetComponent<Text>();
+        goldQuantityText.text = "$" + goldQuantity;
     }
 
     IEnumerator WaitToStart()

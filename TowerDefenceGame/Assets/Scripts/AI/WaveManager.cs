@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 
 [Serializable]
@@ -47,11 +48,14 @@ public class WaveManager : MonoBehaviour {
 	public int maxWaves = 0;
 	public int currentWave = 0;
     private int currentSpawnPoint = 0;
-	private GameManager game;
+	public GameManager game;
 	private EverloopMasterController everloopMaster;
 	private bool hasStarted = false;
 	private int difficulty;
 	public ProceduralWaveSetUp proceduralWaveSetUp;
+
+    public Text waveNumber;
+    private bool godMode = false;
 
 	// Use this for initialization
 	void Start () {
@@ -75,6 +79,12 @@ public class WaveManager : MonoBehaviour {
 		if (!hasStarted)
 			return;
 
+        if (!game.MapReady)
+            return;
+
+        if (Input.GetKey(KeyCode.Space))
+            godMode = !godMode;
+
 		if (!isSpawning && !waveInterimWait) 
 		{
             if (spawnedEnemies < Waves[waveToSpawn].Count)
@@ -92,6 +102,23 @@ public class WaveManager : MonoBehaviour {
 		}
 	}
 
+    void OnGUI()
+    {
+        if (godMode)
+        {
+            int w = Screen.width, h = Screen.height;
+
+            GUIStyle style = new GUIStyle();
+
+            Rect rect = new Rect(0, 25, w, h * 2 / 100);
+            style.alignment = TextAnchor.UpperLeft;
+            style.fontStyle = FontStyle.Bold;
+            style.fontSize = h * 2 / 100;
+            style.normal.textColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+            GUI.Label(rect, "GOD MODE ENABLED", style);
+        }
+    }
+
     public void AddSpawnPoint(Transform newSpawnPoint)
     {
         spawnPoint.Add(newSpawnPoint);
@@ -106,7 +133,8 @@ public class WaveManager : MonoBehaviour {
 
 		yield return new WaitForSeconds (Waves[waveToSpawn].waveEndTimer);
 		waveToSpawn++;
-
+        currentWave = waveToSpawn + 1;
+        waveNumber.text = "Wave: " + currentWave;
 
         if (waveToSpawn < Waves.Count)
         {
@@ -124,7 +152,6 @@ public class WaveManager : MonoBehaviour {
                 aiNodePathing.AddEntity(obj);
                 obj.SetActive(false);
             }
-            
         }
         else
         {
@@ -157,6 +184,7 @@ public class WaveManager : MonoBehaviour {
                 obj.SetActive(false);
             }
             hasStarted = true;
+            waveNumber.text = "Wave: " + (waveToSpawn + 1);
         }
         else
             StartProcedural(difficulty_);
@@ -236,6 +264,9 @@ public class WaveManager : MonoBehaviour {
 			break;
 		}
 
+        currentWave = waveToSpawn + 1;
+        waveNumber.text = "Wave: " + currentWave;
+
         if (Waves[waveToSpawn].Type == MobWave.WaveType.Boss)
             everloopMaster.ChangeLoopBasedOnTheme(EverloopTheme.Theme.Tense);
         else
@@ -246,7 +277,10 @@ public class WaveManager : MonoBehaviour {
 		{
 			currentSpawnPoint = waveToSpawn > maxWaves ? 0 : UnityEngine.Random.Range(0, spawnPoint.Count);
 			GameObject obj = Instantiate(Waves[waveToSpawn].Prefab, spawnPoint[currentSpawnPoint].position, spawnPoint[currentSpawnPoint].rotation) as GameObject;
-            obj.GetComponent<AIBase>().Health *= (int)difficulty;
+            if (!godMode)
+                obj.GetComponent<AIBase>().Health *= (int)difficulty;
+            else
+                obj.GetComponent<AIBase>().Health = float.MaxValue;
 
 			aiNodePathing.AddEntity(obj);
 			obj.SetActive(false);

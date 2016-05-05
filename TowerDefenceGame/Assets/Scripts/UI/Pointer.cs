@@ -21,7 +21,16 @@ public class Pointer : MonoBehaviour {
     public float maxHorizontal = 18;
     public float maxVertical = 9;
 
+    public GameObject towerInfo;
+    public Text towerName;
+    public Text towerLevel;
+    public Text towerDamage;
+
     public bool invertXAxis = false, invertYAxis = false;
+
+    private bool overUI = false;
+    public bool OverUI { get { return overUI; } }
+
 
 	// Use this for initialization
 	void Start () {
@@ -38,6 +47,8 @@ public class Pointer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        
+        overUI = false;
 
         if (Input.GetAxis(horizontalAxis) >= 0.1f || Input.GetAxis(horizontalAxis) <= -0.1f)
         {
@@ -69,6 +80,7 @@ public class Pointer : MonoBehaviour {
             {
                 if (raycastResults[i].gameObject.GetComponent<AnalogueButtons>())
                 {
+                    overUI = true;
                     if (!raycastResults[i].gameObject.GetComponent<AnalogueButtons>().isSelected)
                     {
                         selectedButtons.Add(raycastResults[i].gameObject.GetComponent<AnalogueButtons>());
@@ -76,43 +88,59 @@ public class Pointer : MonoBehaviour {
                     }
                 }
             }
+            if (selectedButtons.Count > 0)
+                overUI = false;
         }
 
 		if (placeTower) 
 		{
-			Ray screenToGround = new Ray (transform.position, transform.forward);
-			RaycastHit hit;
-			if (Physics.Raycast (screenToGround, out hit, 150)) 
-			{
-				Debug.DrawLine (transform.position, hit.transform.position, Color.yellow);
-				if (hit.collider.gameObject.GetComponent<NodePath> ()) 
-				{
-					if (currentTile != hit.collider.gameObject) 
-					{
-						if (hit.collider.gameObject.GetComponent<NodePath> ().pathType == NodePath.PathType.Grass) 
-						{
-							if (currentTile != null)
-								currentTile.renderer.material.SetColor ("_DiffuseColour", currentTileOriginalColour);
-							currentTile = hit.collider.gameObject;
-							currentTileOriginalColour = currentTile.renderer.material.GetColor ("_DiffuseColour");
-							currentTile.renderer.material.SetColor ("_DiffuseColour", new Color (0, 1, 0, 1));
-						} 
-						else 
-						{
-							if (currentTile != null)
-								currentTile.renderer.material.SetColor ("_DiffuseColour", currentTileOriginalColour);
-							currentTile = hit.collider.gameObject;
-							currentTileOriginalColour = currentTile.renderer.material.GetColor ("_DiffuseColour");
-							currentTile.renderer.material.SetColor ("_DiffuseColour", new Color (1, 0, 0, 1));
-						}
-					}
-				}
-			}
+            if (!overUI)
+            {
+                Ray screenToGround = new Ray(transform.position, transform.forward);
+                RaycastHit hit;
+                if (Physics.Raycast(screenToGround, out hit, 150))
+                {
+                    Debug.DrawLine(transform.position, hit.transform.position, Color.yellow);
+                    if (hit.collider.gameObject.GetComponent<TowerClass>())
+                    {
+                        TowerClass tc = hit.collider.gameObject.GetComponent<TowerClass>();
+                        towerInfo.SetActive(true);
+                        towerName.text = tc.name;
+                        towerLevel.text = "Level: " + tc.GetLevel();
+                        towerDamage.text = "Health: " + Mathf.RoundToInt(tc.GetHealth());
+                    } 
+                    else if (hit.collider.gameObject.GetComponent<NodePath>())
+                    {
+                        if (currentTile != hit.collider.gameObject)
+                        {
+                            if (hit.collider.gameObject.GetComponent<NodePath>().pathType == NodePath.PathType.Grass)
+                            {
+                                if (currentTile != null)
+                                    currentTile.renderer.material.SetColor("_DiffuseColour", currentTileOriginalColour);
+                                currentTile = hit.collider.gameObject;
+                                currentTileOriginalColour = currentTile.renderer.material.GetColor("_DiffuseColour");
+                                currentTile.renderer.material.SetColor("_DiffuseColour", new Color(0, 1, 0, 1));
+                            }
+                            else
+                            {
+                                if (currentTile != null)
+                                    currentTile.renderer.material.SetColor("_DiffuseColour", currentTileOriginalColour);
+                                currentTile = hit.collider.gameObject;
+                                currentTileOriginalColour = currentTile.renderer.material.GetColor("_DiffuseColour");
+                                currentTile.renderer.material.SetColor("_DiffuseColour", new Color(1, 0, 0, 1));
+
+                                
+                            }
+                        }
+                    }
+                }
+            }
 		}
         else if(currentTile)
         {
             currentTile.renderer.material.SetColor("_DiffuseColour", currentTileOriginalColour);
             currentTile = null;
+            towerInfo.SetActive(false);
         }
 
 

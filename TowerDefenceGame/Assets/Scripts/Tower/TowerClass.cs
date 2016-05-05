@@ -43,6 +43,8 @@ public class TowerClass : MonoBehaviour {
 
 	[SerializeField]
 	int exp = 0;
+
+    public float cost = 100;
 	 
 	protected virtual void Start()
 	{
@@ -120,6 +122,7 @@ public class TowerClass : MonoBehaviour {
 		Vector3 position = gameObject.transform.position;
 		GameObject go = Instantiate (bullet, spawnPoint.transform.position, spawnPoint.transform.rotation) as GameObject;
 		go.transform.localScale = new Vector3 (1, 1, 1);
+        go.transform.Rotate(0, 90, 0);
 		go.GetComponent<Rigidbody> ().velocity = direction * speed;
 
 	}

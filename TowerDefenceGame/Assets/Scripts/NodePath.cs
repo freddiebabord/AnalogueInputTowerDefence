@@ -8,7 +8,9 @@ public class NodePath : MonoBehaviour
         EnemyPath,
         FriendlyPath,
         Grass,
-        Water
+        Water,
+        Rock,
+        Tree
     }
 
     public int posX;
@@ -16,4 +18,6 @@ public class NodePath : MonoBehaviour
     public PathType pathType;
 
 	public bool towerPlaced = false;
+
+    public TowerClass placedTower;
 }

@@ -8,6 +8,15 @@ public class CameraController : MonoBehaviour {
     public float movementSpeed = 15;
 
     public bool shouldBeActive = true;
+    public Transition levelFader;
+    GameManager game;
+
+    void Start()
+    {
+        game = GameObject.FindObjectOfType<GameManager>();
+        GameObject.FindObjectOfType<WorldSpaceCanvasScaler>().UpdateSize();
+        StartCoroutine(WaitForMapReady());
+    }
 
 	// Update is called once per frame
 	void Update () {
@@ -30,5 +39,17 @@ public class CameraController : MonoBehaviour {
     {
         if(shouldBeActive)
             transform.Translate(Vector3.Normalize(Vector3.up + Vector3.forward) * (invertYAxis ? mag : -mag) * movementSpeed * Time.deltaTime);
+    }
+    IEnumerator WaitForMapReady()
+    {
+        while (!game.MapReady)
+        {
+            Debug.Log("Not ready");
+            yield return 0;
+        }
+
+        Debug.Log("Ready");
+        levelFader.StartTranstion(true);
+        
     }
 }

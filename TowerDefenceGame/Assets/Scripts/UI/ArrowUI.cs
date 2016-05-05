@@ -10,7 +10,7 @@ public class ArrowUI : MonoBehaviour {
 	GameObject tile;
 
 	bool arrow = false;
-	
+    public float cost = 100;
 	// Use this for initialization
 	void Start () {
 		
@@ -41,13 +41,25 @@ public class ArrowUI : MonoBehaviour {
 		
 		if (arrow && point.placeTower && Input.GetAxis ("TriggerSelectRight") >= 1) 
 		{
-			
-			if(tile.GetComponent<NodePath>().pathType == NodePath.PathType.Grass && !tile.GetComponent<NodePath>().towerPlaced)
-			{
-				Instantiate (Resources.Load("Prefabs/Towers/ArrowTower"), tile.transform.position, tile.transform.rotation);
-				tile.GetComponent<NodePath>().towerPlaced = true;
-			}
+            if (tile != null)
+            {
+                if (tile.GetComponent<NodePath>().pathType == NodePath.PathType.Grass && !tile.GetComponent<NodePath>().towerPlaced)
+                {
+                    if (GameObject.FindObjectOfType<GameManager>().gold - cost > 0)
+                    {
+                        Instantiate(Resources.Load("Prefabs/Towers/ArrowTower"), tile.transform.position, tile.transform.rotation);
+                        tile.GetComponent<NodePath>().towerPlaced = true;
+                        GameObject.FindObjectOfType<GameManager>().RemoveGold(cost);
+                    }
+                }
+            }
 		}
+
+        if (Input.GetAxis("TriggerSelectLeft") >= 1)
+        {
+            arrow = false;
+            point.placeTower = false;
+        }
 	}
 	
 	public void PlaceArrow()

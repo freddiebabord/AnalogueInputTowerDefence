@@ -19,7 +19,7 @@ public class WorldSpaceCanvasScaler : UIBehaviour
         base.OnEnable();
         scalar = GetComponent<CanvasScaler>();
     }
-    protected virtual void Update()
+    public virtual void UpdateSize()
     {
         height = 2f * Camera.main.orthographicSize;
         width = height * Camera.main.aspect;
