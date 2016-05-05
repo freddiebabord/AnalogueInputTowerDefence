@@ -3,13 +3,14 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class Pointer : MonoBehaviour {
 
 	public bool placeTower = false;
 
 	RectTransform rt;
-    List<AnalogueButtons> selectedButtons = new List<AnalogueButtons>();
+    List<AnalogueUIElement> selectedUI = new List<AnalogueUIElement>();
     GameObject latSelected;
     public GameObject currentTile;
     Color currentTileOriginalColour;
@@ -57,6 +58,9 @@ public class Pointer : MonoBehaviour {
                 cameraController.TranslatCameraVertical(Input.GetAxis(verticalAxis));
         }
         
+
+		// TODO: FREDDIE - Rest pointer pos if greater than bounds
+
         
         // Simulates the OnSelect event
         PointerEventData pointer = new PointerEventData(EventSystem.current);
@@ -67,12 +71,14 @@ public class Pointer : MonoBehaviour {
         {
             for (int i = 0; i < raycastResults.Count; i++)
             {
-                if (raycastResults[i].gameObject.GetComponent<AnalogueButtons>())
+                if (raycastResults[i].gameObject.GetComponent<AnalogueUIElement>())
                 {
-                    if (!raycastResults[i].gameObject.GetComponent<AnalogueButtons>().isSelected)
+                    Debug.Log(raycastResults[i].gameObject.GetComponent<AnalogueUIElement>().gameObject);
+                    if (!raycastResults[i].gameObject.GetComponent<AnalogueUIElement>().isSelected)
                     {
-                        selectedButtons.Add(raycastResults[i].gameObject.GetComponent<AnalogueButtons>());
-                        raycastResults[i].gameObject.GetComponent<AnalogueButtons>().OnSelect();
+
+                        selectedUI.Add(raycastResults[i].gameObject.GetComponent<AnalogueUIElement>());
+                        raycastResults[i].gameObject.GetComponent<AnalogueUIElement>().OnSelect();
                     }
                 }
             }
@@ -123,30 +129,30 @@ public class Pointer : MonoBehaviour {
             {
                 for (int i = 0; i < raycastResults.Count; i++)
                 {
-                    if (raycastResults[i].gameObject.GetComponent<AnalogueButtons>())
+                    if (raycastResults[i].gameObject.GetComponent<AnalogueUIElement>())
                     {
-                        if (!raycastResults[i].gameObject.GetComponent<AnalogueButtons>().clicked)
+                        if (!raycastResults[i].gameObject.GetComponent<AnalogueUIElement>().clicked)
 						{
-                            raycastResults[i].gameObject.GetComponent<AnalogueButtons>().OnClick();
+                            raycastResults[i].gameObject.GetComponent<AnalogueUIElement>().OnClick();
 						}
                     }
                 }
             } 
         }
 
-        foreach (AnalogueButtons button in selectedButtons)
+        foreach (AnalogueUIElement button in selectedUI)
         {
             if (!button.clicked)
                 button.OnDeselect();
         }
 
-        selectedButtons.Clear();
+        selectedUI.Clear();
 
-        // Hack to prevent mouse clicks
-        if (EventSystem.current.currentSelectedGameObject == null)
-            EventSystem.current.SetSelectedGameObject(latSelected);
-        else
-            latSelected = EventSystem.current.currentSelectedGameObject;
+        //// Hack to prevent mouse clicks
+        //if (EventSystem.current.currentSelectedGameObject == null)
+        //    EventSystem.current.SetSelectedGameObject(latSelected);
+        //else
+        //    latSelected = EventSystem.current.currentSelectedGameObject;
 
 	}
 }

@@ -14,6 +14,7 @@ public class MainMenu : MonoBehaviour {
 
     public Transition eoltransition;
     public Transition difficultyTransition;
+	AsyncOperation level;
 
     public void Start()
     {
@@ -24,18 +25,18 @@ public class MainMenu : MonoBehaviour {
     public void LoadClassicGame()
     {
         gameManager.gameType = GameManager.GameType.Classic;
-        difficultyTransition.StartTranstion();
+		StartCoroutine (ToggleDifficultyPanel ());
     }
 
     public void LoadSurvivalGame()
     {
         gameManager.gameType = GameManager.GameType.Infinite;
-        difficultyTransition.StartTranstion();
+		StartCoroutine (ToggleDifficultyPanel ());
     }
 
     public void HideCanvas()
     {
-        difficultyTransition.StartTranstion(true);
+		StartCoroutine (ToggleDifficultyPanel (true));
     }
 
     public void Dificulty(int difficulty)
@@ -47,14 +48,29 @@ public class MainMenu : MonoBehaviour {
             StartCoroutine(Load(2));
     }
 
+	IEnumerator ToggleDifficultyPanel(bool reverse = false)
+	{
+		difficultyTransition.StartTranstion(reverse);
+
+		while(!difficultyTransition.TransitionComplete)
+			yield return StartCoroutine (difficultyTransition.Wait ());
+
+		difficultyTransition.transitionCanvas.interactable = !difficultyTransition.transitionCanvas.interactable;
+		difficultyTransition.transitionCanvas.blocksRaycasts = !difficultyTransition.transitionCanvas.blocksRaycasts;
+	}
+
+
     IEnumerator Load(int index)
     {
         eoltransition.StartTranstion();
-        AsyncOperation async = Application.LoadLevelAsync(index);
-        while (!eoltransition.TransitionComplete)
-        {
-            int i = 0; ++i;
-        }
-        yield return async;
+		level = Application.LoadLevelAsync(index);
+
+
+		while(!level.isDone)
+			yield return StartCoroutine (eoltransition.Wait ());
+
+		yield return new WaitForSeconds (3);
+
+        yield return level;
     }
 }

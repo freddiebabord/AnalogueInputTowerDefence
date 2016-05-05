@@ -29,7 +29,7 @@ public class Transition : MonoBehaviour {
         {
             if (reverse_)
             {
-                if (transitionCanvas.alpha > 0.05f)
+                if (transitionCanvas.alpha > 0.0f)
                     transitionCanvas.alpha = Mathf.Lerp(1, 0, Mathf.Tan(Time.time / transtionTimeEnd));
                 else
                 {
@@ -39,7 +39,7 @@ public class Transition : MonoBehaviour {
             }
             else
             {
-                if (transitionCanvas.alpha < 0.95f)
+                if (transitionCanvas.alpha < 1.0f)
                     transitionCanvas.alpha = Mathf.Lerp(0, 1, Mathf.Tan(Time.time / transitionDuration));
                 else
                 {
@@ -71,4 +71,10 @@ public class Transition : MonoBehaviour {
         transitionCanvas.interactable = val;
         transitionCanvas.blocksRaycasts = val;
     }
+
+	public IEnumerator Wait()
+	{
+		while (transition)
+			yield return null;
+	}
 }
