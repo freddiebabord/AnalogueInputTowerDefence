@@ -9,15 +9,22 @@ TagManager:
   - Goal
   - Mage
   - Absorbing
+<<<<<<< HEAD
+  - Freeze
+  - Piston
+  - Balista
+  - Upgrade
+  - TowerSelect
+=======
   - Path
   - Empty
   - Grass
   - Rock
-  - Water  - Freeze
-  - Piston
-  - Balista
-  - Upgrade
-  - TowerSelect  - 
+  - Water
+  - Tree
+  - Node
+>>>>>>> d13a5fb2881a4833736b8dee0da6088bb3680889
+  - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX
   Builtin Layer 2: Ignore Raycast
