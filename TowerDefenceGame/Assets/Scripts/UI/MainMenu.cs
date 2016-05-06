@@ -47,6 +47,11 @@ public class MainMenu : MonoBehaviour {
             StartCoroutine(Load(2));
     }
 
+	public void MapMaker()
+	{
+		Application.LoadLevelAsync("MapMaker");
+	}
+
     IEnumerator Load(int index)
     {
         AsyncOperation async = Application.LoadLevelAsync(index);
