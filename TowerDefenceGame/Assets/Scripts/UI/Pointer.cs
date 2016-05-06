@@ -7,6 +7,7 @@ using System.Collections.Generic;
 public class Pointer : MonoBehaviour {
 
 	public bool placeTower = false;
+	public bool placeTile = false;
 
 	RectTransform rt;
     List<AnalogueButtons> selectedButtons = new List<AnalogueButtons>();
