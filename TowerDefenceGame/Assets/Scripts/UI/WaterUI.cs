@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GrassUi : MonoBehaviour {
+public class WaterUI : MonoBehaviour {
 
 	Pointer point;
 	
@@ -9,7 +9,7 @@ public class GrassUi : MonoBehaviour {
 	
 	GameObject tile;
 	
-	bool grass = false;
+	bool water = false;
 
 	// Use this for initialization
 	void Start () {
@@ -21,13 +21,13 @@ public class GrassUi : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
-		if (grass && !tiles.isTrue)
+		if (water && !tiles.isTrue)
 			point.placeTile = false;
 		
 		if (point.placeTile) 
 		{
 			tile = point.currentTile;
-			//GameObject go = Instantiate (Resources.Load ("Prefabs/tiles/" + index.ToString ()), tile.transform.position, tile.transform.rotation) as GameObject;
+			//GameObject go = Instantiate (Resources.Load ("Prefabs/Towers/" + index.ToString ()), tile.transform.position, tile.transform.rotation) as GameObject;
 			
 			if (Input.GetAxis ("TriggerSelectRight") < 1) 
 			{
@@ -39,33 +39,33 @@ public class GrassUi : MonoBehaviour {
 			tile = null;
 		}
 		
-		if (grass && point.placeTile && Input.GetAxis ("TriggerSelectRight") >= 1) 
+		if (water && point.placeTile && Input.GetAxis ("TriggerSelectRight") >= 1) 
 		{
 			if (tile != null)
 			{
-				if (tile.GetComponent<NodePath>().pathType != NodePath.PathType.Grass)
+				if (tile.GetComponent<NodePath>().pathType != NodePath.PathType.Water)
 				{
 					Vector3 pos = tile.transform.position;
 					Quaternion rot = tile.transform.rotation;
-
+					
 					Destroy(tile.gameObject);
-
-					Instantiate(Resources.Load("Prefabs/Tiles/GrassTile"), pos, rot);
-
+					
+					Instantiate(Resources.Load("Prefabs/Tiles/WaterTile"), pos, rot);
+					
 				}
 			}
 		}
 		
 		if(Input.GetAxis ("TriggerSelectLeft") >= 1)
 		{
-			grass = false;
+			water = false;
 			point.placeTile = false;
 		}
 	}
 	
-	public void PlaceGrass()
+	public void Placewater()
 	{
 		point.placeTile = !point.placeTile;
-		grass = !grass;
+		water = !water;
 	}
 }

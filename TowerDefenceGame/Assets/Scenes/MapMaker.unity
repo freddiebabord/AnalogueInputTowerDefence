@@ -605,6 +605,72 @@ MonoBehaviour:
   m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 5
+--- !u!1 &242968440
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 242968441}
+  - 114: {fileID: 242968442}
+  m_Layer: 0
+  m_Name: TreeUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &242968441
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 242968440}
+  m_LocalRotation: {x: -.176703557, y: .819491148, z: -.339444399, w: .426600069}
+  m_LocalPosition: {x: -14.2484312, y: 11.5970774, z: 3.1382618}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1226354332}
+  m_RootOrder: 6
+--- !u!114 &242968442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 242968440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95e6ff22ec4d8d44fbd4c56c0af15a11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &296381680
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 296381681}
+  m_Layer: 0
+  m_Name: StartUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &296381681
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 296381680}
+  m_LocalRotation: {x: -.176703557, y: .819491148, z: -.339444399, w: .426600069}
+  m_LocalPosition: {x: -14.2484312, y: 11.5970774, z: 3.1382618}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1226354332}
+  m_RootOrder: 8
 --- !u!1 &310600562
 GameObject:
   m_ObjectHideFlags: 0
@@ -798,7 +864,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 324000259}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1744200071}
+        m_MethodName: PlaceRock
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   isSelected: 0
@@ -1034,7 +1112,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 418767112}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1701190111}
+        m_MethodName: Placewater
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   isSelected: 0
@@ -1495,7 +1585,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 800492998}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1692403124}
+        m_MethodName: PlacePath
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   isSelected: 0
@@ -1635,6 +1737,33 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 826314070}
+--- !u!1 &845388452
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 845388453}
+  m_Layer: 0
+  m_Name: EndUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &845388453
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 845388452}
+  m_LocalRotation: {x: -.176703557, y: .819491148, z: -.339444399, w: .426600069}
+  m_LocalPosition: {x: -14.2484312, y: 11.5970774, z: 3.1382618}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1226354332}
+  m_RootOrder: 9
 --- !u!1 &846937438
 GameObject:
   m_ObjectHideFlags: 0
@@ -2067,7 +2196,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1120067656}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 242968442}
+        m_MethodName: PlaceTree
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   isSelected: 0
@@ -2420,6 +2561,12 @@ Transform:
   - {fileID: 237446830}
   - {fileID: 2032004789}
   - {fileID: 1825549721}
+  - {fileID: 1701190110}
+  - {fileID: 1744200070}
+  - {fileID: 242968441}
+  - {fileID: 1692403123}
+  - {fileID: 296381681}
+  - {fileID: 845388453}
   m_Father: {fileID: 0}
   m_RootOrder: 2
 --- !u!114 &1226354333
@@ -3554,7 +3701,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UI:
-  - {fileID: 96384725}
   - {fileID: 866833521}
 --- !u!1 &1675934916
 GameObject:
@@ -3679,6 +3825,84 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 316956410}
   m_GameObject: {fileID: 1675934916}
+--- !u!1 &1692403122
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1692403123}
+  - 114: {fileID: 1692403124}
+  m_Layer: 0
+  m_Name: PathUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1692403123
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1692403122}
+  m_LocalRotation: {x: -.176703557, y: .819491148, z: -.339444399, w: .426600069}
+  m_LocalPosition: {x: -14.2484312, y: 11.5970774, z: 3.1382618}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1226354332}
+  m_RootOrder: 7
+--- !u!114 &1692403124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1692403122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 782dac7c938584e4c8738059ede24047, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1701190109
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1701190110}
+  - 114: {fileID: 1701190111}
+  m_Layer: 0
+  m_Name: WaterUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1701190110
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1701190109}
+  m_LocalRotation: {x: -.176703557, y: .819491148, z: -.339444399, w: .426600069}
+  m_LocalPosition: {x: -14.2484312, y: 11.5970774, z: 3.1382618}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1226354332}
+  m_RootOrder: 4
+--- !u!114 &1701190111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1701190109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1098d48bd7bb93488b15ea07b0752a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1730901456
 GameObject:
   m_ObjectHideFlags: 0
@@ -3853,6 +4077,45 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1743659317}
+--- !u!1 &1744200069
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1744200070}
+  - 114: {fileID: 1744200071}
+  m_Layer: 0
+  m_Name: RockUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1744200070
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1744200069}
+  m_LocalRotation: {x: -.176703557, y: .819491148, z: -.339444399, w: .426600069}
+  m_LocalPosition: {x: -14.2484312, y: 11.5970774, z: 3.1382618}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1226354332}
+  m_RootOrder: 5
+--- !u!114 &1744200071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1744200069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa2ff9d0a0db38b4088e35a1220a3d80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1762930049
 GameObject:
   m_ObjectHideFlags: 0
@@ -4069,7 +4332,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7fbcfa0fe963984dac600be06082869, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cost: 100
 --- !u!1 &1858398961
 GameObject:
   m_ObjectHideFlags: 0
