@@ -9,13 +9,16 @@ public class WaterUI : MonoBehaviour {
 	
 	GameObject tile;
 	
+	Mapping maps;
+	
 	bool water = false;
-
+	
 	// Use this for initialization
 	void Start () {
 		
 		tiles = GameObject.FindObjectOfType<TilePlacement> ();
 		point = GameObject.FindObjectOfType<Pointer> ();
+		maps = GameObject.FindObjectOfType<Mapping> ();
 	}
 	
 	// Update is called once per frame
@@ -27,7 +30,7 @@ public class WaterUI : MonoBehaviour {
 		if (point.placeTile) 
 		{
 			tile = point.currentTile;
-			//GameObject go = Instantiate (Resources.Load ("Prefabs/Towers/" + index.ToString ()), tile.transform.position, tile.transform.rotation) as GameObject;
+			//GameObject go = Instantiate (Resources.Load ("Prefabs/tiles/" + index.ToString ()), tile.transform.position, tile.transform.rotation) as GameObject;
 			
 			if (Input.GetAxis ("TriggerSelectRight") < 1) 
 			{
@@ -48,10 +51,14 @@ public class WaterUI : MonoBehaviour {
 					Vector3 pos = tile.transform.position;
 					Quaternion rot = tile.transform.rotation;
 					
+					int x = (int)pos.x/4;
+					int y = (int)pos.z/4;
+					
+					int index = x + (y * maps.width);
+					
+					maps.map[index] = Instantiate(Resources.Load("Prefabs/Tiles/WaterTile"), pos, rot) as GameObject;
+					
 					Destroy(tile.gameObject);
-					
-					Instantiate(Resources.Load("Prefabs/Tiles/WaterTile"), pos, rot);
-					
 				}
 			}
 		}
@@ -63,7 +70,7 @@ public class WaterUI : MonoBehaviour {
 		}
 	}
 	
-	public void Placewater()
+	public void PlaceWater()
 	{
 		point.placeTile = !point.placeTile;
 		water = !water;
