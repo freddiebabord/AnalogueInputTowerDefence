@@ -148,6 +148,10 @@ public class Pointer : MonoBehaviour {
         // Simulation of click event
         if(Input.GetAxis("TriggerSelectRight") >= 1)
         {
+            if (Input.GetAxis("TriggerSelectLeft") >= 1)
+            {
+                transform.localPosition = new Vector3(0, 0, 0);
+            }
             if (raycastResults.Count > 0)
             {
                 for (int i = 0; i < raycastResults.Count; i++)
