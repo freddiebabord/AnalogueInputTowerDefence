@@ -430,6 +430,8 @@ public class RailManager : MonoBehaviour {
 
     public void Addspawn(Transform point)
     {
+        if(waveManager == null)
+            waveManager = GetComponent<WaveManager>();
         waveManager.AddSpawnPoint(point);
     }
 
@@ -446,7 +448,7 @@ public class RailManager : MonoBehaviour {
             spawnNode.transform.parent = transform;
             spawnNode.transform.position = newPos;
             spawnNode.transform.Rotate(0, 0, 90);
-            waveManager.AddSpawnPoint(spawnNode.transform);
+            Addspawn(spawnNode.transform);
             Instantiate(Resources.Load("Prefabs/Portal"), newPos, spawnNode.transform.rotation);
         }
 

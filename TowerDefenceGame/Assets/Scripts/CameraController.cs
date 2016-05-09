@@ -44,11 +44,9 @@ public class CameraController : MonoBehaviour {
     {
         while (!game.MapReady)
         {
-            Debug.Log("Not ready");
-            yield return 0;
+            yield return null;
         }
 
-        Debug.Log("Ready");
         levelFader.StartTranstion(true);
         
     }

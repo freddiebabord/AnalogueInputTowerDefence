@@ -3,8 +3,6 @@ using UnityEditor;
 using UnityEditorInternal;
 using System.IO;
 
-
-
 [CanEditMultipleObjects]
 [CustomEditor(typeof(RailManager))]
 public class RailManagerEditor : Editor {

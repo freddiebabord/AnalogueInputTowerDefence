@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEditor;
 using System.Collections;
 using System.IO;
 
@@ -14,18 +13,17 @@ public class TileBase : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         railManager = GameObject.FindObjectOfType<RailManager>();
-        CreateMap ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	}
 
-	void CreateMap()
+	public void CreateMap(string path)
 	{
-		string file = EditorUtility.OpenFilePanel ("Select Map", Application.dataPath, "txt" );
-		
-		StreamReader reader =new  StreamReader(file);
+		//string file = EditorUtility.OpenFilePanel ("Select Map", Application.dataPath, "txt" );
+
+        StreamReader reader = new StreamReader(path);
 		
 		RowX = int.Parse(reader.ReadLine ());
 		RowZ = int.Parse(reader.ReadLine ());

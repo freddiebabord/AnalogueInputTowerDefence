@@ -4,6 +4,23 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour {
 
+    public static GameManager Instance {
+        get
+        {
+            if(instance == null)
+            {
+                instance = GameObject.FindObjectOfType<GameManager>();
+                if(instance == null)
+                {
+                    GameObject go = new GameObject();
+                    instance = go.AddComponent<GameManager>();
+                }
+            }
+            return instance;
+        }
+    }
+    private static GameManager instance;
+
 	[SerializeField] private int enemiesPassed = 0;
 	[SerializeField] private float goldQuantity = 0;
 
@@ -24,6 +41,8 @@ public class GameManager : MonoBehaviour {
     public int villageHealth = 100;
     bool gameOver_ = false;
     bool mapReady = false;
+
+    public string map = "";
 
     public bool MapReady
     {
@@ -91,6 +110,8 @@ public class GameManager : MonoBehaviour {
         if(levelID != 0)
         {
             StartCoroutine(WaitToStart());
+            TileBase tb = FindObjectOfType<TileBase>();
+            tb.CreateMap(Application.dataPath + @"\Levels\" + map + ".txt");
             goldQuantity = 500;
         }
     }
