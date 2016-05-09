@@ -12,10 +12,23 @@ public class CreateTileMap : MonoBehaviour {
 	public int row = 20;
 	Vector3 Temp;
 	int index = 0;
+	bool isMade = false;
+	GameObject panel;
+	TurnOff off;
 
 	// Use this for initialization
 	void Start () {
+		panel = GameObject.FindGameObjectWithTag ("Panel");
+		
+		off = GameObject.FindObjectOfType<TurnOff> ();
+	}
 
+	public void CreateMap()
+	{
+		foreach (GameObject ui in off.towers())
+			ui.SetActive (true);
+		
+		panel.SetActive (false);
 		TileType = new GameObject[Column*row];
 		Text = new string[row];
 		pointer = Instantiate (Resources.Load("Prefabs/Towers/TowerBase 2")) as GameObject;
@@ -28,28 +41,35 @@ public class CreateTileMap : MonoBehaviour {
 				TileType[(z*Column)+x].transform.position = Temp;
 				TileType[(z*Column)+x].AddComponent("Tile");
 				TileType[(z*Column)+x].transform.parent = this.gameObject.transform;
+
 			}
 		}
+		isMade = true;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		getIndex ();
-		pointer.transform.position = TileType [index].transform.position;
-
-		if (Input.GetKeyDown ("1")) {changeTile("GrassTile");}
-		if (Input.GetKeyDown ("2")) {changeTile("PathTile");}
-		if (Input.GetKeyDown ("3")) {changeTile("RockTile");}
-		if (Input.GetKeyDown ("4")) {changeTile("TreeTile");}
-		if (Input.GetKeyDown ("5")) {changeTile("WaterTile");}
-		if (Input.GetKeyDown ("6")) {changeTile("EmptyTile");}
-		if (Input.GetKeyDown ("space")) {getTextFile();}
-		if (Input.GetKeyDown ("s")) {changeTile("StartTile");}
-		if (Input.GetKeyDown ("e")) {changeTile("EndTile");}
+		if (isMade) 
+		{
+			getIndex ();
+			pointer.transform.position = TileType [index].transform.position;
+			/*
+			if (Input.GetKeyDown ("1")) {changeTile ("GrassTile");}
+			if (Input.GetKeyDown ("2")) {changeTile ("PathTile");}
+			if (Input.GetKeyDown ("3")) {changeTile ("RockTile");}
+			if (Input.GetKeyDown ("4")) {changeTile ("TreeTile");}
+			if (Input.GetKeyDown ("5")) {changeTile ("WaterTile");}
+			if (Input.GetKeyDown ("6")) {changeTile ("EmptyTile");}
+			if (Input.GetKeyDown ("space")) {getTextFile ();}
+			if (Input.GetKeyDown ("s")) {changeTile ("StartTile");}
+			if (Input.GetKeyDown ("e")) {changeTile ("EndTile");}*/
+		}
 	}
 
-	void changeTile(string tile)
+	public void changeTile(string tile, GameObject Tile)
 	{
+		index = 0;
+		while (TileType[index] != Tile) {index++;}
 		if(tile == "EndTile")
 		{
 			for(int t = 0; t < TileType.Length; t++)
@@ -66,25 +86,25 @@ public class CreateTileMap : MonoBehaviour {
 
 	void getIndex()
 	{
-		if (Input.GetKeyDown ("down")) 
+		if (Input.GetKeyDown ("up")) 
 		{
 			if(index != 0){index--;}
 			else{index = (Column)*(row)-1;}
 		}
 
-		if (Input.GetKeyDown ("up")) 
+		if (Input.GetKeyDown ("down")) 
 		{
 			if(index != (Column*row)-1){index++;}
 			else{index = 0;}
 		}
 
-		if (Input.GetKeyDown ("right")) 
+		if (Input.GetKeyDown ("left")) 
 		{
 			if(index >= Column){index -= Column;}
 			else{index = (Column*row)- (Column -index);}
 		}
 
-		if (Input.GetKeyDown ("left")) 
+		if (Input.GetKeyDown ("right")) 
 		{
 			if(index <= ((Column*row)-Column)-1){index+= Column;}
 			else{index = Column-((Column*row)- index)-1;}

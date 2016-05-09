@@ -10,9 +10,11 @@ public class TileBase : MonoBehaviour {
 	int RowZ;
     RailManager railManager;
 
+
 	// Use this for initialization
 	void Start () {
         railManager = GameObject.FindObjectOfType<RailManager>();
+
 	}
 	
 	// Update is called once per frame
