@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GrassUi : MonoBehaviour {
+public class TreeUI : MonoBehaviour {
 
 	Pointer point;
 	
@@ -9,8 +9,8 @@ public class GrassUi : MonoBehaviour {
 	
 	GameObject tile;
 	
-	bool grass = false;
-
+	bool tree = false;
+	
 	// Use this for initialization
 	void Start () {
 		
@@ -21,7 +21,7 @@ public class GrassUi : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
-		if (grass && !tiles.isTrue)
+		if (tree && !tiles.isTrue)
 			point.placeTile = false;
 		
 		if (point.placeTile) 
@@ -39,33 +39,33 @@ public class GrassUi : MonoBehaviour {
 			tile = null;
 		}
 		
-		if (grass && point.placeTile && Input.GetAxis ("TriggerSelectRight") >= 1) 
+		if (tree && point.placeTile && Input.GetAxis ("TriggerSelectRight") >= 1) 
 		{
 			if (tile != null)
 			{
-				if (tile.GetComponent<NodePath>().pathType != NodePath.PathType.Grass)
+				if (tile.GetComponent<NodePath>().pathType != NodePath.PathType.Tree)
 				{
 					Vector3 pos = tile.transform.position;
 					Quaternion rot = tile.transform.rotation;
-
+					
 					Destroy(tile.gameObject);
-
-					Instantiate(Resources.Load("Prefabs/Tiles/GrassTile"), pos, rot);
-
+					
+					Instantiate(Resources.Load("Prefabs/Tiles/TreeTile"), pos, rot);
+					
 				}
 			}
 		}
 		
 		if(Input.GetAxis ("TriggerSelectLeft") >= 1)
 		{
-			grass = false;
+			tree = false;
 			point.placeTile = false;
 		}
 	}
 	
-	public void PlaceGrass()
+	public void PlaceTree()
 	{
 		point.placeTile = !point.placeTile;
-		grass = !grass;
+		tree = !tree;
 	}
 }

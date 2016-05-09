@@ -93,7 +93,7 @@ public class Pointer : MonoBehaviour {
                 overUI = false;
         }
 
-		if (placeTower) 
+		if (placeTower || placeTile) 
 		{
             if (!overUI)
             {
