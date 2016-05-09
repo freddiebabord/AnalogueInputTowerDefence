@@ -2,6 +2,9 @@
 using UnityEditor;
 using System.Collections;
 using System.IO;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using System.Collections.Generic;
 
 public class CreateTileMap : MonoBehaviour {
 	
@@ -11,16 +14,18 @@ public class CreateTileMap : MonoBehaviour {
 	public int Column = 20;
 	public int row = 20;
 	Vector3 Temp;
-	int index = 0;
+	public int index = 0;
 	bool isMade = false;
 	GameObject panel;
 	TurnOff off;
+	public string TileIndex;
 
 	// Use this for initialization
 	void Start () {
 		panel = GameObject.FindGameObjectWithTag ("Panel");
 		
 		off = GameObject.FindObjectOfType<TurnOff> ();
+		TileIndex = "GrassTile";
 	}
 
 	public void CreateMap()
@@ -31,7 +36,6 @@ public class CreateTileMap : MonoBehaviour {
 		panel.SetActive (false);
 		TileType = new GameObject[Column*row];
 		Text = new string[row];
-		pointer = Instantiate (Resources.Load("Prefabs/Towers/TowerBase 2")) as GameObject;
 		for (int z = 0; z < row; z++)
 		{
 			for (int x = 0; x < Column; x++)
@@ -39,7 +43,6 @@ public class CreateTileMap : MonoBehaviour {
 				TileType[(z*Column)+x] = Instantiate(Resources.Load("Prefabs/Tiles/GrassTile")) as GameObject; 
 				Temp.Set(x*4 , 0, z*4);
 				TileType[(z*Column)+x].transform.position = Temp;
-				TileType[(z*Column)+x].AddComponent("Tile");
 				TileType[(z*Column)+x].transform.parent = this.gameObject.transform;
 
 			}
@@ -52,25 +55,27 @@ public class CreateTileMap : MonoBehaviour {
 		if (isMade) 
 		{
 			getIndex ();
-			pointer.transform.position = TileType [index].transform.position;
-			/*
-			if (Input.GetKeyDown ("1")) {changeTile ("GrassTile");}
-			if (Input.GetKeyDown ("2")) {changeTile ("PathTile");}
-			if (Input.GetKeyDown ("3")) {changeTile ("RockTile");}
-			if (Input.GetKeyDown ("4")) {changeTile ("TreeTile");}
-			if (Input.GetKeyDown ("5")) {changeTile ("WaterTile");}
-			if (Input.GetKeyDown ("6")) {changeTile ("EmptyTile");}
-			if (Input.GetKeyDown ("space")) {getTextFile ();}
-			if (Input.GetKeyDown ("s")) {changeTile ("StartTile");}
-			if (Input.GetKeyDown ("e")) {changeTile ("EndTile");}*/
 		}
 	}
 
-	public void changeTile(string tile, GameObject Tile)
+	public void SetGrass(){TileIndex = "GrassTile";}
+
+	public void SetPath(){TileIndex = "PathTile";}
+
+	public void SetRock(){TileIndex = "RockTile";}
+
+	public void SetTree(){TileIndex = "TreeTile";}
+
+	public void SetWater(){TileIndex = "WaterTile";}
+
+	public void SetEmpty(){TileIndex = "EmptyTile";}
+
+
+	public void changeTile(GameObject raycastResults)
 	{
 		index = 0;
-		while (TileType[index] != Tile) {index++;}
-		if(tile == "EndTile")
+		while (TileType[index].transform != raycastResults.gameObject.transform) {index++;}
+		if(TileIndex == "EndTile")
 		{
 			for(int t = 0; t < TileType.Length; t++)
 			{
@@ -79,7 +84,7 @@ public class CreateTileMap : MonoBehaviour {
 		}
 		Temp = TileType[index].transform.position;
 		Destroy(TileType[index]);
-		TileType[index] = Instantiate(Resources.Load("Prefabs/Tiles/" + tile)) as GameObject;
+		TileType[index] = Instantiate(Resources.Load("Prefabs/Tiles/" + TileIndex)) as GameObject;
 		TileType[index].transform.position = Temp;
 		TileType[index].transform.parent = this.gameObject.transform;
 	}
@@ -111,18 +116,18 @@ public class CreateTileMap : MonoBehaviour {
 		}
 	}
 
-	void getTextFile()
+	public void save()
 	{
 		for (int z = 0; z < row; z++)
 		{
 			for (int x = 0; x < Column; x++)
 			{
-				char TileLetter = GetTileLetter(TileType[(z*Column)+x].tag);
+				char TileLetter = GetTileLetter(TileType[(z*Column)+x].name);
 				Text[z] += TileLetter;
 			}
 		}
 
-		string file = EditorUtility.SaveFilePanel ("Save File location", "U:\\GameJam\\", "TDMap.txt", ".txt");
+		string file = EditorUtility.SaveFilePanel ("Save File location", Application.dataPath + @"/Levels/", "TDMap.txt", ".txt");
 		if (file != "") 
 		{
 			StreamWriter writer = new StreamWriter(file);
@@ -134,16 +139,16 @@ public class CreateTileMap : MonoBehaviour {
 		}
 	}
 
-	char GetTileLetter(string tag)
+	char GetTileLetter(string name)
 	{
-		if (tag == "Grass"){return (char)'G';}
-		if (tag == "Water"){return (char)'W';}
-		if (tag == "Tree"){return (char)'T';}
-		if (tag == "Rock"){return (char)'R';}
-		if (tag == "Path"){return (char)'P';}
-		if (tag == "Null"){return (char)'N';}
-		if (tag == "Start"){return (char)'S';}
-		if (tag == "End"){return (char)'E';}
+		if (name == "GrassTile(Clone)"){return (char)'G';}
+		if (name == "WaterTile(Clone)"){return (char)'W';}
+		if (name == "TreeTile(Clone)"){return (char)'T';}
+		if (name == "RockTile(Clone)"){return (char)'R';}
+		if (name == "PathTile(Clone)"){return (char)'P';}
+		if (name == "EmptyTile(Clone)"){return (char)'N';}
+		if (name == "StartTile(Clone)"){return (char)'S';}
+		if (name == "EndTile(Clone)"){return (char)'E';}
 		return (char)'_';
 	}
 }

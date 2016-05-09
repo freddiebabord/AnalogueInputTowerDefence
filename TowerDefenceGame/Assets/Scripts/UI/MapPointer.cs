@@ -8,7 +8,7 @@ public class MapPointer : MonoBehaviour {
 
 	public bool placeTower = false;
 	public bool placeTile = false;
-	CreateTileMap Map;
+	public CreateTileMap Map;
 	
 	RectTransform rt;
 	List<AnalogueButtons> selectedButtons = new List<AnalogueButtons>();
@@ -43,7 +43,7 @@ public class MapPointer : MonoBehaviour {
 			Screen.showCursor = false;
 		}
 		cameraController = GameObject.FindObjectOfType<CameraController>();
-		Map = GameObject.FindObjectOfType<CreateTileMap>();
+
 	}
 	
 	
@@ -113,6 +113,11 @@ public class MapPointer : MonoBehaviour {
 								currentTile = hit.collider.gameObject;
 								currentTileOriginalColour = currentTile.renderer.material.GetColor("_DiffuseColour");
 								currentTile.renderer.material.SetColor("_DiffuseColour", new Color(0, 1, 0, 1));
+
+						}
+						if (Input.GetAxis("TriggerSelectRight") >= 1)
+						{
+							Map.changeTile(currentTile);
 						}
 					}
 				}
@@ -131,6 +136,7 @@ public class MapPointer : MonoBehaviour {
 		{
 			if (raycastResults.Count > 0)
 			{
+
 				for (int i = 0; i < raycastResults.Count; i++)
 				{
 					if (raycastResults[i].gameObject.GetComponent<AnalogueButtons>())
@@ -140,6 +146,7 @@ public class MapPointer : MonoBehaviour {
 							raycastResults[i].gameObject.GetComponent<AnalogueButtons>().OnClick();
 						}
 					}
+
 				}
 			} 
 		}
