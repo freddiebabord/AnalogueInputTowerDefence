@@ -1,18 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GrassUi : MonoBehaviour {
+public class PathUI : MonoBehaviour {
 
 	Pointer point;
 	
 	TilePlacement tiles;
 	
 	GameObject tile;
-
+	
 	Mapping maps;
 	
-	bool grass = false;
-
+	bool path = false;
+	
 	// Use this for initialization
 	void Start () {
 		
@@ -24,7 +24,7 @@ public class GrassUi : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
-		if (grass && !tiles.isTrue)
+		if (path && !tiles.isTrue)
 			point.placeTile = false;
 		
 		if (point.placeTile) 
@@ -42,22 +42,22 @@ public class GrassUi : MonoBehaviour {
 			tile = null;
 		}
 		
-		if (grass && point.placeTile && Input.GetAxis ("TriggerSelectRight") >= 1) 
+		if (path && point.placeTile && Input.GetAxis ("TriggerSelectRight") >= 1) 
 		{
 			if (tile != null)
 			{
-				if (tile.GetComponent<NodePath>().pathType != NodePath.PathType.Grass)
+				if (tile.GetComponent<NodePath>().pathType != NodePath.PathType.EnemyPath)
 				{
 					Vector3 pos = tile.transform.position;
 					Quaternion rot = tile.transform.rotation;
-
+					
 					int x = (int)pos.x/4;
 					int y = (int)pos.z/4;
-
+					
 					int index = x + (y * maps.width);
-
-					maps.map[index] = Instantiate(Resources.Load("Prefabs/Tiles/GrassTile"), pos, rot) as GameObject;
-
+					
+					maps.map[index] = Instantiate(Resources.Load("Prefabs/Tiles/PathTile"), pos, rot) as GameObject;
+					
 					Destroy(tile.gameObject);
 				}
 			}
@@ -65,14 +65,14 @@ public class GrassUi : MonoBehaviour {
 		
 		if(Input.GetAxis ("TriggerSelectLeft") >= 1)
 		{
-			grass = false;
+			path = false;
 			point.placeTile = false;
 		}
 	}
 	
-	public void PlaceGrass()
+	public void PlacePath()
 	{
 		point.placeTile = !point.placeTile;
-		grass = !grass;
+		path = !path;
 	}
 }
