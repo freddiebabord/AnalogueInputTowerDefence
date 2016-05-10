@@ -146,9 +146,9 @@ public class Pointer : MonoBehaviour {
 
 
         // Simulation of click event
-        if(Input.GetAxis("TriggerSelectRight") >= 1)
+        if(AnalogueInput.GetRightTrigger() >= 1)
         {
-            if (Input.GetAxis("TriggerSelectLeft") >= 1)
+            if (AnalogueInput.GetLeftTrigger() >= 1)
             {
                 transform.localPosition = new Vector3(0, 0, 0);
             }
@@ -176,10 +176,10 @@ public class Pointer : MonoBehaviour {
         selectedButtons.Clear();
 
         // Hack to prevent mouse clicks
-        if (EventSystem.current.currentSelectedGameObject == null)
-            EventSystem.current.SetSelectedGameObject(latSelected);
-        else
-            latSelected = EventSystem.current.currentSelectedGameObject;
+        //if (EventSystem.current.currentSelectedGameObject == null)
+        //    EventSystem.current.SetSelectedGameObject(latSelected);
+        //else
+        //    latSelected = EventSystem.current.currentSelectedGameObject;
 
 	}
 }

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEditor;
 using System.Collections;
 using System.IO;
 using UnityEngine.UI;
@@ -21,6 +20,10 @@ public class CreateTileMap : MonoBehaviour {
 	bool chooseSize = true;
 	public Text Width;
 	public Text Height;
+    public Word saveWord;
+    public RailManager rails;
+    public Text errorText;
+    private bool showError = false;
 
 	// Use this for initialization
 	void Start () {
@@ -103,17 +106,26 @@ public class CreateTileMap : MonoBehaviour {
 
 	public void save()
 	{
-		for (int z = 0; z < row; z++)
+		saveWord.gameObject.SetActive(false);
+        GameObject[,] map = new GameObject[Column, row];
+
+        for (int z = 0; z < row; z++)
 		{
 			for (int x = 0; x < Column; x++)
 			{
 				char TileLetter = GetTileLetter(TileType[(z*Column)+x].name);
 				Text[z] += TileLetter;
+                map[x, z] = TileType[(z * Column) + x];
+                map[x, z].GetComponent<NodePath>().posX = x;
+                map[x, z].GetComponent<NodePath>().posY = z;
 			}
 		}
+        
+		string file = Application.dataPath + @"/Levels/" + saveWord.GetWord() + ".txt";
+        
 
-		string file = EditorUtility.SaveFilePanel ("Save File location", Application.dataPath + @"/Levels/", "TDMap.txt", ".txt");
-		if (file != "") 
+
+        if (file != "" && rails.BuildNavigationMap(map, Column, row)) 
 		{
 			StreamWriter writer = new StreamWriter(file);
 			writer.WriteLine(Column);
@@ -122,7 +134,19 @@ public class CreateTileMap : MonoBehaviour {
 			for (int z = 0; z < row; z++) {	writer.WriteLine(Text[z]);}
 			writer.Close();
 		}
+        else
+        {
+            errorText.gameObject.SetActive(true);
+            errorText.text = "ERROR: AI tiles invalid. Fix before saving!";
+            if (!showError)
+                StartCoroutine(HideError());
+        }
 	}
+
+    public void ShowSave()
+    {
+        saveWord.gameObject.SetActive(true);
+    }
 
 	char GetTileLetter(string name)
 	{
@@ -136,4 +160,17 @@ public class CreateTileMap : MonoBehaviour {
 		if (name == "EndTile(Clone)"){return (char)'E';}
 		return (char)'_';
 	}
+
+    IEnumerator HideError()
+    {
+        showError = true;
+        yield return new WaitForSeconds(5.0f);
+        errorText.gameObject.SetActive(false);
+        showError = false;
+    }
+
+    public void ReturnToMenu()
+    {
+        Application.LoadLevel(0);
+    }
 }

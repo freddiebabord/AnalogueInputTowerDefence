@@ -58,7 +58,7 @@ public class Word : MonoBehaviour {
             word[i] = characters[i].Char;
         }
 
-        return word.ToString();
+        return new string(word);
     }
 
     IEnumerator SelectNextCharacter(bool increment)

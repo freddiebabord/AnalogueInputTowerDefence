@@ -412,9 +412,7 @@ public class RailManager : MonoBehaviour {
     private void ClearNodes()
     {
         foreach (var node in railNodes)
-        {
             Destroy(node.transform.gameObject);
-        }
 
         railNodes.Clear();
     }
@@ -430,9 +428,12 @@ public class RailManager : MonoBehaviour {
 
     public void Addspawn(Transform point)
     {
-        if(waveManager == null)
+        if (waveManager == null)
+        {
             waveManager = GetComponent<WaveManager>();
-        waveManager.AddSpawnPoint(point);
+            if (waveManager)
+                waveManager.AddSpawnPoint(point);
+        }
     }
 
     public bool BuildNavigationMap(GameObject[,] tiles, int sizeX_, int sizeY_)
@@ -453,45 +454,57 @@ public class RailManager : MonoBehaviour {
         }
 
         Map map_ = new Map() { map = tiles, sizeX = sizeX_, sizeY = sizeY_ };
-        FindNextPoint(map_, startNodes[0], startNodes[0]);
+        bool valid = true;
+
+        if (startNodes.Length <= 0)
+            return false;
+        
+        valid = FindNextPoint(map_, startNodes[0], startNodes[0]);
+
+
+        if (!valid)
+            return false;
+
         if(gameManager == null)gameManager = GameObject.FindObjectOfType<GameManager>();
-        gameManager.MapReady = true;
+        if (gameManager != null) gameManager.MapReady = true;
         return true;
     }
 
-    private void FindNextPoint(Map map_, GameObject currentPoint, GameObject previousNode)
+    private bool FindNextPoint(Map map_, GameObject currentPoint, GameObject previousNode)
     {
         NodePath path_ = currentPoint.GetComponent<NodePath>();
         if (currentPoint.gameObject.tag == "EnemyEnd")
-            return;
-
-
+            return true;
+        
         if (path_.posX + 1 < map_.sizeX && previousNode != map_.map[path_.posX + 1, path_.posY].gameObject && IsEnemyPathTile(map_.map[path_.posX + 1, path_.posY]))
         {
             AddNode((map_.map[path_.posX + 1, path_.posY]).transform);
             FindNextPoint(map_, (map_.map[path_.posX + 1, path_.posY]), currentPoint);
+            return true;
         }
 
         else if (path_.posX - 1 >= 0 && previousNode != map_.map[path_.posX - 1, path_.posY].gameObject && IsEnemyPathTile(map_.map[path_.posX - 1, path_.posY]))
         {
             AddNode((map_.map[path_.posX - 1, path_.posY]).transform);
             FindNextPoint(map_, (map_.map[path_.posX - 1, path_.posY]), currentPoint);
-
+            return true;
         }
 
         else if (path_.posY + 1 < map_.sizeY && previousNode != map_.map[path_.posX, path_.posY + 1].gameObject && IsEnemyPathTile(map_.map[path_.posX, path_.posY + 1]))
         {
             AddNode((map_.map[path_.posX, path_.posY + 1]).transform);
             FindNextPoint(map_, (map_.map[path_.posX, path_.posY + 1]), currentPoint);
-
+            return true;
         }
 
         else if (path_.posY - 1 >= 0 && previousNode != map_.map[path_.posX, path_.posY - 1].gameObject && IsEnemyPathTile(map_.map[path_.posX, path_.posY - 1]))
         {
             AddNode((map_.map[path_.posX, path_.posY - 1]).transform);
             FindNextPoint(map_, (map_.map[path_.posX, path_.posY - 1]), currentPoint);
-
+            return true;
         }
+
+        return false;
     }
 
     private bool IsEnemyPathTile(GameObject tileToCheck)
