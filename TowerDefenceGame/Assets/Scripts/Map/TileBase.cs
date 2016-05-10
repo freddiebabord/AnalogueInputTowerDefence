@@ -9,7 +9,8 @@ public class TileBase : MonoBehaviour {
 	int RowX;
 	int RowZ;
     RailManager railManager;
-
+	bool hasStart = false;
+	bool hasEnd = false;
 
 	// Use this for initialization
 	void Start () {
@@ -63,10 +64,26 @@ public class TileBase : MonoBehaviour {
                     map[x, z].GetComponent<NodePath>().posX = x ;
                     map[x, z].GetComponent<NodePath>().posY = z ;
                     map[x, z].transform.parent = this.gameObject.transform;
-                    if (Txt[z][x] == 'S') { 
+
+                    if (Txt[z][x] == 'S' && !hasStart) 
+					{ 
                         map[x, z].tag = "EnemyStart";
+						hasStart = true;
                     }
-                    if (Txt[z][x] == 'E') { map[x, z].tag = "EnemyEnd"; } 
+					else if(Txt[z][x] == 'S' && hasStart)
+					{
+						map[x,z].GetComponent<NodePath>().pathType = NodePath.PathType.Water;
+					}
+
+                    if (Txt[z][x] == 'E' && !hasEnd) 
+					{
+						map[x, z].tag = "EnemyEnd"; 
+						hasEnd = true;
+					}
+					else if(Txt[z][x] == 'E' && hasEnd)
+					{
+						map[x,z].GetComponent<NodePath>().pathType = NodePath.PathType.Water;
+					}
 				}
 				count++;
 			}

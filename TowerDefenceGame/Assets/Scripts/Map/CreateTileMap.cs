@@ -14,10 +14,10 @@ public class CreateTileMap : MonoBehaviour {
 	public int Column = 20;
 	public int row = 20;
 	Vector3 Temp;
-	 int index = 0;
+	int index = 0;
 	GameObject panel;
 	TurnOff off;
-	 string TileIndex;
+	string TileIndex;
 	bool chooseSize = true;
 	public Text Width;
 	public Text Height;

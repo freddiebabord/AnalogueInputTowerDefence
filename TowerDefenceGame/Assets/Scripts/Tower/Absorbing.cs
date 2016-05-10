@@ -7,6 +7,8 @@ public class Absorbing : TowerClass {
 	//LineRenderer line;
 	PlayFireAnim bomb;
 
+	Ice icy;
+
 	// Use this for initialization
 	protected override void Start () {
 
@@ -20,12 +22,24 @@ public class Absorbing : TowerClass {
 		
 		SetGoal(GameObject.FindGameObjectWithTag("Goal"));
 
-		//line = gameObject.GetComponentInChildren<LineRenderer> ();
+		icy = GameObject.FindObjectOfType<Ice> ();
 		bomb = gameObject.GetComponentInChildren<PlayFireAnim> ();
 
 	}
 	
 	public override void Update () {
+
+		if (!icy.hologram) 
+		{
+			Transform[] t = gameObject.GetComponentsInChildren<Transform>();
+			Debug.Log (t.Length);
+			foreach(Transform transform in t)
+			{
+				Debug.Log (t);
+				if(transform.renderer != null)
+					transform.renderer.material = Resources.Load("Prefabs/Materials/Holo") as Material;
+			}
+		}
 
 		base.Update ();
 		
