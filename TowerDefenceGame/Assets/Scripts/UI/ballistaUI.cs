@@ -9,6 +9,12 @@ public class ballistaUI : MonoBehaviour {
 	
 	GameObject tile;
 
+	GameObject current;
+
+	GameObject go;
+
+	bool hologram = false;
+
 	bool ballista = false;
     public float cost = 150;
 	// Use this for initialization
@@ -24,19 +30,32 @@ public class ballistaUI : MonoBehaviour {
 		if (ballista && !towers.isTrue)
 			point.placeTower = false;
 		
-		if (point.placeTower) 
+		if (ballista && point.placeTower && point.currentTile.GetComponent<NodePath>().pathType == NodePath.PathType.Grass && !point.currentTile.GetComponent<NodePath>().towerPlaced) 
 		{
 			tile = point.currentTile;
-			//GameObject go = Instantiate (Resources.Load ("Prefabs/Towers/" + index.ToString ()), tile.transform.position, tile.transform.rotation) as GameObject;
-			
-			if (Input.GetAxis ("TriggerSelectRight") < 1) 
+
+			if(!hologram)
 			{
-				//Destroy(go);
+				go = Instantiate (Resources.Load ("Prefabs/Towers/Ballistics"), tile.transform.position, tile.transform.rotation) as GameObject;
+
+				Ballistics bal = go.GetComponentInChildren<Ballistics>();
+				bal.enabled = false;
+				hologram = true;
+
 			}
+
+			if (tile != current && hologram) 
+			{
+				go.gameObject.transform.position = tile.transform.position;
+				go.gameObject.transform.rotation = tile.transform.rotation;
+			}
+
+			current = tile;
 		} 
 		else 
 		{
 			tile = null;
+			current = null;
 		}
 		
 		if (ballista && point.placeTower && Input.GetAxis ("TriggerSelectRight") >= 1) 
@@ -64,5 +83,6 @@ public class ballistaUI : MonoBehaviour {
 	{
 		point.placeTower = !point.placeTower;
 		ballista = !ballista;
+		hologram = false;
 	}
 }

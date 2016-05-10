@@ -27,7 +27,7 @@ GameObject:
   - 23: {fileID: 2317056}
   m_Layer: 0
   m_Name: ArrowTower
-  m_TagString: Balista
+  m_TagString: Arrow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

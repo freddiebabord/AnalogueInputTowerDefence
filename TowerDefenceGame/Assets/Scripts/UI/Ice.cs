@@ -9,6 +9,12 @@ public class Ice : MonoBehaviour {
 	
 	GameObject tile;
 
+	GameObject current;
+
+	GameObject go;
+	
+	bool hologram = false;
+
 	bool ice = false;
     public float cost = 200;
 	// Use this for initialization
@@ -24,19 +30,31 @@ public class Ice : MonoBehaviour {
 		if (ice && !towers.isTrue)
 			point.placeTower = false;
 		
-		if (point.placeTower) 
+		if (ice && point.placeTower && point.currentTile.GetComponent<NodePath>().pathType == NodePath.PathType.Grass && !point.currentTile.GetComponent<NodePath>().towerPlaced) 
 		{
 			tile = point.currentTile;
-			//GameObject go = Instantiate (Resources.Load ("Prefabs/Towers/" + index.ToString ()), tile.transform.position, tile.transform.rotation) as GameObject;
-			
-			if (Input.GetAxis ("TriggerSelectRight") < 1) 
+
+			if(!hologram)
 			{
-				//Destroy(go);
+				go = Instantiate (Resources.Load ("Prefabs/Towers/IceTower"), tile.transform.position, tile.transform.rotation) as GameObject;
+
+				Ice icy = go.GetComponentInChildren<Ice>();
+				icy.enabled = false;
+				hologram = true;
 			}
+
+			if (tile != current && hologram) 
+			{
+				go.gameObject.transform.position = tile.transform.position;
+				go.gameObject.transform.rotation = tile.transform.rotation;
+			}
+			
+			current = tile;
 		} 
 		else 
 		{
 			tile = null;
+			current = null;
 		}
 		
 		if (ice && point.placeTower && Input.GetAxis ("TriggerSelectRight") >= 1) 
@@ -64,5 +82,7 @@ public class Ice : MonoBehaviour {
 	{
 		point.placeTower = !point.placeTower;
 		ice = !ice;
+		hologram = false;
+
 	}
 }
