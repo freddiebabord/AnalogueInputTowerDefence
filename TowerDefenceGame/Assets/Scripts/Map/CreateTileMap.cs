@@ -14,11 +14,13 @@ public class CreateTileMap : MonoBehaviour {
 	public int Column = 20;
 	public int row = 20;
 	Vector3 Temp;
-	public int index = 0;
-	bool isMade = false;
+	 int index = 0;
 	GameObject panel;
 	TurnOff off;
-	public string TileIndex;
+	 string TileIndex;
+	bool chooseSize = true;
+	public Text Width;
+	public Text Height;
 
 	// Use this for initialization
 	void Start () {
@@ -30,6 +32,7 @@ public class CreateTileMap : MonoBehaviour {
 
 	public void CreateMap()
 	{
+		chooseSize = false;
 		foreach (GameObject ui in off.towers())
 			ui.SetActive (true);
 		
@@ -47,14 +50,14 @@ public class CreateTileMap : MonoBehaviour {
 
 			}
 		}
-		isMade = true;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (isMade) 
+		if(chooseSize == true)
 		{
-			getIndex ();
+			Width.text = Column.ToString();
+			Height.text = row.ToString();
 		}
 	}
 
@@ -70,6 +73,15 @@ public class CreateTileMap : MonoBehaviour {
 
 	public void SetEmpty(){TileIndex = "EmptyTile";}
 
+	public void SetSpawn(){TileIndex = "SpawnTile";}
+
+	public void SetEnd(){TileIndex = "EndTile";}
+
+	public void increaseX() {if (Column < 30) {Column ++;}}
+	public void decreaseX() {if (Column > 10) {Column --;}}
+	public void increaseZ() {if (row < 30) {row ++;}}
+	public void decreaseZ() {if (row > 10) {row --;}}
+
 
 	public void changeTile(GameObject raycastResults)
 	{
@@ -79,7 +91,7 @@ public class CreateTileMap : MonoBehaviour {
 		{
 			for(int t = 0; t < TileType.Length; t++)
 			{
-				if (TileType[t].tag == "End") {return;}
+				if (TileType[t].name == "EndTile(Clone)") {return;}
 			}
 		}
 		Temp = TileType[index].transform.position;
@@ -87,33 +99,6 @@ public class CreateTileMap : MonoBehaviour {
 		TileType[index] = Instantiate(Resources.Load("Prefabs/Tiles/" + TileIndex)) as GameObject;
 		TileType[index].transform.position = Temp;
 		TileType[index].transform.parent = this.gameObject.transform;
-	}
-
-	void getIndex()
-	{
-		if (Input.GetKeyDown ("up")) 
-		{
-			if(index != 0){index--;}
-			else{index = (Column)*(row)-1;}
-		}
-
-		if (Input.GetKeyDown ("down")) 
-		{
-			if(index != (Column*row)-1){index++;}
-			else{index = 0;}
-		}
-
-		if (Input.GetKeyDown ("left")) 
-		{
-			if(index >= Column){index -= Column;}
-			else{index = (Column*row)- (Column -index);}
-		}
-
-		if (Input.GetKeyDown ("right")) 
-		{
-			if(index <= ((Column*row)-Column)-1){index+= Column;}
-			else{index = Column-((Column*row)- index)-1;}
-		}
 	}
 
 	public void save()
@@ -147,7 +132,7 @@ public class CreateTileMap : MonoBehaviour {
 		if (name == "RockTile(Clone)"){return (char)'R';}
 		if (name == "PathTile(Clone)"){return (char)'P';}
 		if (name == "EmptyTile(Clone)"){return (char)'N';}
-		if (name == "StartTile(Clone)"){return (char)'S';}
+		if (name == "SpawnTile(Clone)"){return (char)'S';}
 		if (name == "EndTile(Clone)"){return (char)'E';}
 		return (char)'_';
 	}
