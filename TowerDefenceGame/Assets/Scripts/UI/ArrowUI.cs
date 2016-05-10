@@ -9,6 +9,12 @@ public class ArrowUI : MonoBehaviour {
 	
 	GameObject tile;
 
+	GameObject current;
+
+	GameObject go;
+
+	bool hologram = false;
+
 	bool arrow = false;
     public float cost = 100;
 	// Use this for initialization
@@ -24,19 +30,32 @@ public class ArrowUI : MonoBehaviour {
 		if (arrow && !towers.isTrue)
 			point.placeTower = false;
 		
-		if (point.placeTower) 
+		if (arrow && point.placeTower && point.currentTile.GetComponent<NodePath>().pathType == NodePath.PathType.Grass && !point.currentTile.GetComponent<NodePath>().towerPlaced) 
 		{
 			tile = point.currentTile;
-			//GameObject go = Instantiate (Resources.Load ("Prefabs/Towers/" + index.ToString ()), tile.transform.position, tile.transform.rotation) as GameObject;
-			
-			if (Input.GetAxis ("TriggerSelectRight") < 1) 
+
+			if(!hologram)
 			{
-				//Destroy(go);
+				go = Instantiate (Resources.Load ("Prefabs/Towers/ArrowTower"), tile.transform.position, tile.transform.rotation) as GameObject;
+
+				Arrow arr = go.GetComponentInChildren<Arrow>();
+				arr.enabled = false;
+				hologram = true;
+
 			}
+
+			if (tile != current && hologram) 
+			{
+				go.gameObject.transform.position = tile.transform.position;
+				go.gameObject.transform.rotation = tile.transform.rotation;
+			}
+			
+			current = tile;
 		} 
 		else 
 		{
 			tile = null;
+			current = null;
 		}
 		
 		if (arrow && point.placeTower && Input.GetAxis ("TriggerSelectRight") >= 1) 
@@ -66,5 +85,7 @@ public class ArrowUI : MonoBehaviour {
 	{
 		point.placeTower = !point.placeTower;
 		arrow = !arrow;
+		hologram = false;
+
 	}
 }
