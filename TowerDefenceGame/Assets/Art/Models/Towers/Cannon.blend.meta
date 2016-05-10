@@ -4,10 +4,19 @@ ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
     100000: //RootNode
+    100002: Circle
+    100004: Cube
     400000: //RootNode
+    400002: Circle
+    400004: Cube
     2300000: //RootNode
+    2300002: Circle
+    2300004: Cube
     3300000: //RootNode
+    3300002: Circle
+    3300004: Cube
     4300000: Circle
+    4300002: Cube
     7400000: Default Take
     9500000: //RootNode
   materials:
@@ -61,6 +70,6 @@ ModelImporter:
     feetSpacing: 0
     rootMotionBoneName: 
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   additionalBone: 0
   userData: 
