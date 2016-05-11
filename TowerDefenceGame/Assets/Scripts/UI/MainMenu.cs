@@ -6,11 +6,9 @@ public class MainMenu : MonoBehaviour {
     public GameObject menuRoot;
     public GameManager gameManager;
     public CanvasGroup canvasGroup;
-    
 
-    bool classic = false;
-    bool showCanvas = false;
-    bool hideCanvas = false;
+	private bool showDifficultyPanel = false;
+	public bool ShowingDifficultyPanel{ get { return showDifficultyPanel; } }
 
     public Transition eoltransition;
     public Transition difficultyTransition;
@@ -21,21 +19,36 @@ public class MainMenu : MonoBehaviour {
         GameObject.FindObjectOfType<CameraController>().shouldBeActive = false;
     }
 
+	void Update()
+	{
+		if (AnalogueInput.GetLeftTrigger () >= 1) 
+		{
+			if(ShowingDifficultyPanel)
+				HideCanvas();
+		}
+	}
+
     public void LoadClassicGame()
     {
         gameManager.gameType = GameManager.GameType.Classic;
         difficultyTransition.StartTranstion();
+		showDifficultyPanel = true;
+		GetComponent<Levels> ().DisableButtons ();
     }
 
     public void LoadSurvivalGame()
     {
         gameManager.gameType = GameManager.GameType.Infinite;
         difficultyTransition.StartTranstion();
+		showDifficultyPanel = true;
+		GetComponent<Levels> ().DisableButtons ();
     }
 
     public void HideCanvas()
     {
         difficultyTransition.StartTranstion(true);
+		showDifficultyPanel = false;
+		GetComponent<Levels> ().EnableButtons ();
     }
 
     public void Dificulty(int difficulty)

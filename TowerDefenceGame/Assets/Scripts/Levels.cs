@@ -14,7 +14,10 @@ public class Levels : MonoBehaviour {
     public GameObject buttonPrefab;
     public Text currentLevelText;
     public GameObject panel;
+	List<GameObject> buttons = new List<GameObject> ();
+	public List<GameObject> mainButtons = new List<GameObject> ();
 
+	MainMenu mainMenu;
     void Start()
     {
         levelsPath = Application.dataPath + @"/Levels/";
@@ -38,18 +41,23 @@ public class Levels : MonoBehaviour {
             button.transform.localRotation = Quaternion.identity;
             button.GetComponent<AnalogueButtons>().GetComponentInChildren<Text>().text = fileName;
             button.GetComponent<AnalogueButtons>().onClick.AddListener(() => { SetLevel(button.GetComponentInChildren<Text>().text); });
-            
-            ++i;
+			buttons.Add(button);
+			++i;
         }
+
+		mainMenu = GetComponent<MainMenu> ();
 
     }
 
     void Update()
     {
-        if (Input.GetAxis("VerticalRight") > 0 && panel.transform.localPosition.y < files.Count)
-            panel.transform.Translate(Vector3.up * 5.0f * Time.deltaTime, Space.Self);
-        else if (Input.GetAxis("VerticalRight") < 0 && panel.transform.localPosition.y > -files.Count)
-            panel.transform.Translate(Vector3.up * -5.0f * Time.deltaTime, Space.Self);
+        if (!mainMenu.ShowingDifficultyPanel) 
+		{
+			if (Input.GetAxis ("VerticalRight") > 0 && panel.transform.localPosition.y < files.Count)
+				panel.transform.Translate (Vector3.up * 5.0f * Time.deltaTime, Space.Self);
+			else if (Input.GetAxis ("VerticalRight") < 0 && panel.transform.localPosition.y > -files.Count)
+				panel.transform.Translate (Vector3.up * -5.0f * Time.deltaTime, Space.Self);
+		}
     }
 
     public void SetLevel(string level)
@@ -58,5 +66,25 @@ public class Levels : MonoBehaviour {
         GameManager.Instance.map = level;
         currentLevelText.text = currentLevel;
     }
+
+	public void DisableButtons()
+	{
+		foreach (var button in buttons) {
+			button.GetComponent<AnalogueButtons>().interactable = false;
+		}
+		foreach (var button in mainButtons) {
+			button.GetComponent<AnalogueButtons>().interactable = false;
+		}
+	}
+
+	public void EnableButtons()
+	{
+		foreach (var button in buttons) {
+			button.GetComponent<AnalogueButtons>().interactable = true;
+		}
+		foreach (var button in mainButtons) {
+			button.GetComponent<AnalogueButtons>().interactable = true;
+		}
+	}
 
 }

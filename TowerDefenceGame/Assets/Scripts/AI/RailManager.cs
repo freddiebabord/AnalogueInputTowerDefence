@@ -121,127 +121,130 @@ public class RailManager : MonoBehaviour {
 
 	void Update()
 	{
-        if (!gameManager.MapReady)
-            return;
+		if(gameManager != null){
 
-		if (Input.GetKey (KeyCode.Space))
-			UpdateIntervalTime ();
+	        if (!gameManager.MapReady)
+	            return;
 
-        timeSinceLastUpdate += Time.deltaTime;
-        if (multiThreadWave)
-        {
-            threadedDeltaTime += Time.deltaTime;
+			if (Input.GetKey (KeyCode.Space))
+				UpdateIntervalTime ();
 
-            if (!updateingRail)
-            {
-                updateingRail = true;
-                this.StartCoroutineAsync(RailCoroutine(), out task);
-            }
+	        timeSinceLastUpdate += Time.deltaTime;
+	        if (multiThreadWave)
+	        {
+	            threadedDeltaTime += Time.deltaTime;
 
-            if (task.State == TaskState.Error)
-            {
-                Debug.LogException(task.Exception);
-            }
-        }
-        else
-        {
+	            if (!updateingRail)
+	            {
+	                updateingRail = true;
+	                this.StartCoroutineAsync(RailCoroutine(), out task);
+	            }
 
-            objectToMove.TrimExcess();
-            timeSinceLastUpdate += Time.deltaTime;
-            if (timeSinceLastUpdate >= intervalRate)
-            {
-                for (int i = 0; i < objectToMove.Count; ++i)
-                {
-                    if (objectToMove[i] == null)
-                    {
-                        objectToMove.TrimExcess();
-                        continue;
-                    }
-                    if (!objectToMove[i].gameObject.activeInHierarchy)
-                        continue;
+	            if (task.State == TaskState.Error)
+	            {
+	                Debug.LogException(task.Exception);
+	            }
+	        }
+	        else
+	        {
+	            objectToMove.TrimExcess();
+	            timeSinceLastUpdate += Time.deltaTime;
+	            if (timeSinceLastUpdate >= intervalRate)
+	            {
+	                for (int i = 0; i < objectToMove.Count; ++i)
+	                {
+	                    if (objectToMove[i] == null)
+	                    {
+	                        objectToMove.TrimExcess();
+	                        continue;
+	                    }
+	                    if (!objectToMove[i].gameObject.activeInHierarchy)
+	                        continue;
 
-                    AIBase aiObj = objectToMove[i];
-                    //Exiting if the target node is 
-                    //outside of the railNodes list.
-                    if (aiObj.CurrentIndex >= railNodes.Count)
-                    {
-                        RemoveEntity(aiObj);
-                        Destroy(aiObj.gameObject);
-                        objectToMove.TrimExcess();
-                        gameManager.AddEnemyInHome();
-                        continue;
-                    }
+	                    AIBase aiObj = objectToMove[i];
+	                    //Exiting if the target node is 
+	                    //outside of the railNodes list.
+	                    if (aiObj.CurrentIndex >= railNodes.Count)
+	                    {
+	                        RemoveEntity(aiObj);
+	                        Destroy(aiObj.gameObject);
+	                        objectToMove.TrimExcess();
+	                        gameManager.AddEnemyInHome();
+	                        continue;
+	                    }
 
-                    if (aiObj.currentTarget == null)
-                    {
+	                    if (aiObj.currentTarget == null)
+	                    {
 
-                        aiObj.DirectionVector = (aiObj.currentNodeTarget - aiObj.transform.position).normalized;
+	                        aiObj.DirectionVector = (aiObj.currentNodeTarget - aiObj.transform.position).normalized;
 
-                        aiObj.transform.Translate(aiObj.DirectionVector * Time.deltaTime * aiObj.Speed, Space.World);
+	                        aiObj.transform.Translate(aiObj.DirectionVector * Time.deltaTime * aiObj.Speed, Space.World);
 
-                        Vector3 smudgeFactor = new Vector3(Random.Range(-2, 2), 0, Random.Range(-2, 2));
+	                        Vector3 smudgeFactor = new Vector3(Random.Range(-2, 2), 0, Random.Range(-2, 2));
 
-                        //Rotating the object to face the target node
-                        //depending on the specified rotation mode.
-                        switch (rotationMode)
-                        {
-                            case RailRotationMode.Snap:
-                                aiObj.transform.LookAt(aiObj.currentNodeTarget + smudgeFactor);
-                                break;
+	                        //Rotating the object to face the target node
+	                        //depending on the specified rotation mode.
+	                        switch (rotationMode)
+	                        {
+	                            case RailRotationMode.Snap:
+	                                aiObj.transform.LookAt(aiObj.currentNodeTarget + smudgeFactor);
+	                                break;
 
-                            case RailRotationMode.Slerp:
-                                Quaternion targetRotation = Quaternion.LookRotation((aiObj.currentNodeTarget + smudgeFactor) - aiObj.transform.position);
-                                aiObj.transform.rotation = Quaternion.Slerp(aiObj.transform.rotation, targetRotation, Time.deltaTime * slerpRotationSpeed);
-                                break;
+	                            case RailRotationMode.Slerp:
+	                                Quaternion targetRotation = Quaternion.LookRotation((aiObj.currentNodeTarget + smudgeFactor) - aiObj.transform.position);
+	                                aiObj.transform.rotation = Quaternion.Slerp(aiObj.transform.rotation, targetRotation, Time.deltaTime * slerpRotationSpeed);
+	                                break;
 
-                            default:
-                                break;
-                        }
+	                            default:
+	                                break;
+	                        }
 
-                        //Incrementing the target node if the object 
-                        //has reached the previous target node.
-                        if (ObjectIsOnNode(aiObj))
-                        {
+	                        //Incrementing the target node if the object 
+	                        //has reached the previous target node.
+	                        if (ObjectIsOnNode(aiObj))
+	                        {
 
-                            aiObj.CurrentIndex++;
+	                            aiObj.CurrentIndex++;
 
-                            if (aiObj.CurrentIndex >= railNodes.Count)
-                            {
-                                RemoveEntity(aiObj);
-                                Destroy(aiObj.gameObject);
-                                objectToMove.TrimExcess();
-                                gameManager.AddEnemyInHome();
-                                continue;
-                            }
+	                            if (aiObj.CurrentIndex >= railNodes.Count)
+	                            {
+	                                RemoveEntity(aiObj);
+	                                Destroy(aiObj.gameObject);
+	                                objectToMove.TrimExcess();
+	                                gameManager.AddEnemyInHome();
+	                                continue;
+	                            }
 
-                            Vector3 targetPosition = new Vector3(((Random.insideUnitSphere.x * 2) * nodeProximityDistance),
-                                                                 0 + (aiObj.collider.bounds.extents.magnitude) / 2 + 0.5f,
-                                                                 ((Random.insideUnitSphere.z * 2) * nodeProximityDistance));
+	                            Vector3 targetPosition = new Vector3(((Random.insideUnitSphere.x * 2) * nodeProximityDistance),
+	                                                                 0 + (aiObj.collider.bounds.extents.magnitude) / 2 + 0.5f,
+	                                                                 ((Random.insideUnitSphere.z * 2) * nodeProximityDistance));
 
-                            
-                            aiObj.currentNodeTarget = targetPosition + railNodes[aiObj.CurrentIndex].transform.position;
-                        }
-                    }
-                    else
-                    {
+	                            
+	                            aiObj.currentNodeTarget = targetPosition + railNodes[aiObj.CurrentIndex].transform.position;
+	                        }
+	                    }
+	                    else
+	                    {
 
-                        aiObj.DirectionVector = (aiObj.currentTarget.transform.position - aiObj.transform.position).normalized;
+	                        aiObj.DirectionVector = (aiObj.currentTarget.transform.position - aiObj.transform.position).normalized;
 
-                        aiObj.transform.Translate(aiObj.DirectionVector * Time.deltaTime * aiObj.Speed, Space.World);
+	                        aiObj.transform.Translate(aiObj.DirectionVector * Time.deltaTime * aiObj.Speed, Space.World);
 
-                        Quaternion targetRotation = Quaternion.LookRotation(aiObj.currentTarget.transform.position - aiObj.transform.position);
-                        aiObj.transform.rotation = Quaternion.Slerp(aiObj.transform.rotation, targetRotation, Time.deltaTime * slerpRotationSpeed);
-                    }
-                }
+	                        Quaternion targetRotation = Quaternion.LookRotation(aiObj.currentTarget.transform.position - aiObj.transform.position);
+	                        aiObj.transform.rotation = Quaternion.Slerp(aiObj.transform.rotation, targetRotation, Time.deltaTime * slerpRotationSpeed);
+	                    }
+	                }
 
-                if (shouldClean && !inRoutine)
-                    StartCoroutine(CleanList());
+	                if (shouldClean && !inRoutine)
+	                    StartCoroutine(CleanList());
 
-                timeSinceLastUpdate = 0.0f;
+	                timeSinceLastUpdate = 0.0f;
 
-            }
-        }
+	            }
+	        }
+		}
 	}
+
 
 
 
@@ -432,7 +435,8 @@ public class RailManager : MonoBehaviour {
     {
         if(waveManager == null)
             waveManager = GetComponent<WaveManager>();
-        waveManager.AddSpawnPoint(point);
+		if(waveManager != null)
+        	waveManager.AddSpawnPoint(point);
     }
 
     public bool BuildNavigationMap(GameObject[,] tiles, int sizeX_, int sizeY_)
@@ -453,29 +457,39 @@ public class RailManager : MonoBehaviour {
         }
 
         Map map_ = new Map() { map = tiles, sizeX = sizeX_, sizeY = sizeY_ };
-        FindNextPoint(map_, startNodes[0], startNodes[0]);
-        if(gameManager == null)gameManager = GameObject.FindObjectOfType<GameManager>();
-        gameManager.MapReady = true;
-        return true;
+       
+		if (startNodes.Count() <= 0)
+			return false;
+
+		bool result = FindNextPoint(map_, startNodes[0], startNodes[0]);
+		if (gameManager == null)
+			return result;
+        
+		if(gameManager == null)gameManager = GameObject.FindObjectOfType<GameManager>();
+		if(gameManager != null)gameManager.MapReady = true;
+        
+		return true;
     }
 
-    private void FindNextPoint(Map map_, GameObject currentPoint, GameObject previousNode)
+    private bool FindNextPoint(Map map_, GameObject currentPoint, GameObject previousNode)
     {
         NodePath path_ = currentPoint.GetComponent<NodePath>();
         if (currentPoint.gameObject.tag == "EnemyEnd")
-            return;
+            return true;
 
 
         if (path_.posX + 1 < map_.sizeX && previousNode != map_.map[path_.posX + 1, path_.posY].gameObject && IsEnemyPathTile(map_.map[path_.posX + 1, path_.posY]))
         {
             AddNode((map_.map[path_.posX + 1, path_.posY]).transform);
             FindNextPoint(map_, (map_.map[path_.posX + 1, path_.posY]), currentPoint);
+			return true;
         }
 
         else if (path_.posX - 1 >= 0 && previousNode != map_.map[path_.posX - 1, path_.posY].gameObject && IsEnemyPathTile(map_.map[path_.posX - 1, path_.posY]))
         {
             AddNode((map_.map[path_.posX - 1, path_.posY]).transform);
             FindNextPoint(map_, (map_.map[path_.posX - 1, path_.posY]), currentPoint);
+			return true;
 
         }
 
@@ -483,15 +497,16 @@ public class RailManager : MonoBehaviour {
         {
             AddNode((map_.map[path_.posX, path_.posY + 1]).transform);
             FindNextPoint(map_, (map_.map[path_.posX, path_.posY + 1]), currentPoint);
-
+			return true;
         }
 
         else if (path_.posY - 1 >= 0 && previousNode != map_.map[path_.posX, path_.posY - 1].gameObject && IsEnemyPathTile(map_.map[path_.posX, path_.posY - 1]))
         {
             AddNode((map_.map[path_.posX, path_.posY - 1]).transform);
             FindNextPoint(map_, (map_.map[path_.posX, path_.posY - 1]), currentPoint);
-
+			return true;
         }
+		return false;
     }
 
     private bool IsEnemyPathTile(GameObject tileToCheck)
