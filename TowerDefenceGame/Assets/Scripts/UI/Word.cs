@@ -22,31 +22,34 @@ public class Word : MonoBehaviour {
 
     void Update()
     {
-        if(AnalogueInput.GetRightHorizontal() >= 1.0f)
+        if(AnalogueInput.GetRightHorizontal() >= 0.8f)
         {
             if (!m_selectingNewCharacetr)
                 StartCoroutine(SelectNextCharacter(true));
         }
-        if (AnalogueInput.GetRightHorizontal() <= -1.0f)
+        if (AnalogueInput.GetRightHorizontal() <= -0.8f)
         {
             if (!m_selectingNewCharacetr)
                 StartCoroutine(SelectNextCharacter(false));
         }
-        if (AnalogueInput.GetRightVertical() >= 1.0f)
+        if (AnalogueInput.GetRightVertical() >= 0.8f)
         {
             if (!m_changingCharacter)
                 StartCoroutine(ChangeCharacter(true));
         }
-        if (AnalogueInput.GetRightVertical() <= -1.0f)
+        if (AnalogueInput.GetRightVertical() <= -0.8f)
         {
             if (!m_changingCharacter)
                 StartCoroutine(ChangeCharacter(false));
         }
     }
 
+
+
     void OnDisable()
     {
-        FindObjectOfType<CameraController>().shouldBeActive = true;
+		if(FindObjectOfType<CameraController>())
+        	FindObjectOfType<CameraController>().shouldBeActive = true;
     }
 
     public string GetWord()
@@ -58,13 +61,13 @@ public class Word : MonoBehaviour {
             word[i] = characters[i].Char;
         }
 
-        return word.ToString();
+		return new string(word);
     }
 
     IEnumerator SelectNextCharacter(bool increment)
     {
         m_selectingNewCharacetr = true;
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.05f);
         if (increment)
         {
             if((m_currentSelcted + 1) < characters.Count)
@@ -90,7 +93,7 @@ public class Word : MonoBehaviour {
     IEnumerator ChangeCharacter(bool increment)
     {
         m_changingCharacter = true;
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.05f);
 
         if (increment)
             characters[m_currentSelcted].IncreaseCharacter();

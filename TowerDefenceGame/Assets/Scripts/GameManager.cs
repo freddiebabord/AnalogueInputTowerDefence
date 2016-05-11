@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour {
     Transition death;
     public int villageHealth = 100;
     bool gameOver_ = false;
-    bool mapReady = false;
+	[SerializeField]bool mapReady = false;
 
     public string map = "";
 
@@ -126,6 +126,7 @@ public class GameManager : MonoBehaviour {
 
     IEnumerator WaitToStart()
     {
+
         yield return new WaitForSeconds(5);
         waveSystem = GameObject.FindObjectOfType<WaveManager>();
         if (waveSystem)
@@ -133,11 +134,11 @@ public class GameManager : MonoBehaviour {
         {
             case GameType.Classic:
                 if (waveSystem)
-                    waveSystem.StartClassic(1);
+                    waveSystem.StartClassic(difficulty);
                 break;
             case GameType.Infinite:
                 if (waveSystem)
-                    waveSystem.StartProcedural(1);
+				waveSystem.StartProcedural(difficulty);
                 break;
             default:
                 print("Error: Wave type not defined / wave type has no logic.");
