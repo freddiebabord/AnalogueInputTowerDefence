@@ -48,7 +48,8 @@ public class TileBase : MonoBehaviour {
                     map[x, z] = Instantiate(Resources.Load(Index)) as GameObject; 
 					Temp.Set(x*4 , 0, z*4);
                     map[x, z].transform.position = Temp;
-                    map[x, z].AddComponent<NodePath>();
+					if(map[x, z].GetComponent<NodePath>() == null)
+                    	map[x, z].AddComponent<NodePath>();
                     if(Index == "G")
                         map[x, z].GetComponent<NodePath>().pathType = NodePath.PathType.Grass;
                     else if (Index == "W")

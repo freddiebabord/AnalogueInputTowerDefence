@@ -2156,7 +2156,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bade4a22c42692445b9a7a13ce61d217, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Waves: []
+  Waves:
+  - Type: 0
+    Prefab: {fileID: 177038, guid: 05533e472bf967b46a04cd26599e7996, type: 2}
+    Count: 10
+    waveEndTimer: 5
+  - Type: 0
+    Prefab: {fileID: 177038, guid: 05533e472bf967b46a04cd26599e7996, type: 2}
+    Count: 10
+    waveEndTimer: 0
+  - Type: 0
+    Prefab: {fileID: 170764, guid: 7de20ed34536ee74e8f886d99f964c32, type: 2}
+    Count: 10
+    waveEndTimer: 8
+  - Type: 0
+    Prefab: {fileID: 170764, guid: 7de20ed34536ee74e8f886d99f964c32, type: 2}
+    Count: 20
+    waveEndTimer: 0
+  - Type: 0
+    Prefab: {fileID: 177038, guid: 05533e472bf967b46a04cd26599e7996, type: 2}
+    Count: 15
+    waveEndTimer: 10
+  - Type: 1
+    Prefab: {fileID: 181982, guid: e3f52c8111ffaf548bb402a9b6453ef1, type: 2}
+    Count: 2
+    waveEndTimer: 0
+  - Type: 0
+    Prefab: {fileID: 170764, guid: 7de20ed34536ee74e8f886d99f964c32, type: 2}
+    Count: 20
+    waveEndTimer: 0
+  - Type: 0
+    Prefab: {fileID: 177038, guid: 05533e472bf967b46a04cd26599e7996, type: 2}
+    Count: 20
+    waveEndTimer: 15
+  - Type: 2
+    Prefab: {fileID: 188292, guid: b7935c1844eadf8408a0df00bf10f561, type: 2}
+    Count: 4
+    waveEndTimer: 5
+  - Type: 3
+    Prefab: {fileID: 164174, guid: 69449d79c9a21a942818714fda529b6b, type: 2}
+    Count: 1
+    waveEndTimer: 10
   spawnPoint: []
   isSpawning: 0
   waveInterimWait: 0
@@ -2167,13 +2207,14 @@ MonoBehaviour:
   proceduralWaveSetUp:
     basic:
     - {fileID: 177038, guid: 05533e472bf967b46a04cd26599e7996, type: 2}
+    - {fileID: 170764, guid: 7de20ed34536ee74e8f886d99f964c32, type: 2}
     medium:
     - {fileID: 181982, guid: e3f52c8111ffaf548bb402a9b6453ef1, type: 2}
     heavy:
     - {fileID: 188292, guid: b7935c1844eadf8408a0df00bf10f561, type: 2}
     - {fileID: 173800, guid: 08bdf81a60d9b5f4abe4e915baa955db, type: 2}
     boss:
-    - {fileID: 177038, guid: 05533e472bf967b46a04cd26599e7996, type: 2}
+    - {fileID: 164174, guid: 69449d79c9a21a942818714fda529b6b, type: 2}
   waveNumber: {fileID: 850890588}
 --- !u!114 &1366389891
 MonoBehaviour:

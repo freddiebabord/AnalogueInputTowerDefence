@@ -687,6 +687,7 @@ MonoBehaviour:
   currentWave: 0
   maxWaves: 0
   villageHealth: 20
+  mapReady: 0
   map: 
 --- !u!1 &243689472
 GameObject:
@@ -1145,7 +1146,7 @@ GameObject:
   - 23: {fileID: 330417695}
   - 54: {fileID: 330417694}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: TNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1354,7 +1355,7 @@ GameObject:
   - 23: {fileID: 420491520}
   - 54: {fileID: 420491519}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: TNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2401,7 +2402,7 @@ GameObject:
   - 23: {fileID: 745033415}
   - 54: {fileID: 745033414}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: TNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2968,7 +2969,7 @@ GameObject:
   - 23: {fileID: 934471720}
   - 54: {fileID: 934471719}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: TNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7083,7 +7084,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: cef9fd6024f944a458893c14b2645e2f, type: 2}
+  - {fileID: 2100000, guid: 66fdd83e9f47b3f4ca807f3fc0809103, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -7441,7 +7442,7 @@ Prefab:
     - target: {fileID: 2387910, guid: ad11c2cc06c2442498751e7ddcb2ce97, type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: cef9fd6024f944a458893c14b2645e2f, type: 2}
+      objectReference: {fileID: 2100000, guid: 66fdd83e9f47b3f4ca807f3fc0809103, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ad11c2cc06c2442498751e7ddcb2ce97, type: 2}
   m_RootGameObject: {fileID: 1335494965}
@@ -8317,7 +8318,7 @@ GameObject:
   - 23: {fileID: 1769585608}
   - 54: {fileID: 1769585607}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: TNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9498,7 +9499,7 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 2034378058}
   m_OnClick:
     m_PersistentCalls:
