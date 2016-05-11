@@ -292,6 +292,7 @@ public class WaveManager : MonoBehaviour {
 		{
 			currentSpawnPoint = waveToSpawn > maxWaves ? 0 : UnityEngine.Random.Range(0, spawnPoint.Count);
 			GameObject obj = Instantiate(Waves[waveToSpawn].Prefab, spawnPoint[currentSpawnPoint].position, spawnPoint[currentSpawnPoint].rotation) as GameObject;
+            obj.GetComponent<AIBase>().GoldDrop *= (int)(difficulty+1);
             if (!godMode)
                 obj.GetComponent<AIBase>().Health *= (int)difficulty;
             else

@@ -8,7 +8,7 @@ public class AIBase : MonoBehaviour {
 	[SerializeField] protected float speed = 10;
 	[SerializeField] protected float damage;
 	[SerializeField] protected bool flying;
-	[SerializeField][Range(0,100)] protected float goldDrop;
+	[SerializeField][Range(0,100)] protected int goldDrop;
 	[HideInInspector] protected int currentIndex = 0;
     [HideInInspector] public GameObject currentTarget;
     [HideInInspector] public Vector3 currentNodeTarget = Vector3.zero;
@@ -43,7 +43,7 @@ public class AIBase : MonoBehaviour {
 		set { hp = value;}
     }
 
-    public float GoldDrop { set { goldDrop = value; } }
+    public int GoldDrop { set { goldDrop = value; } get { return goldDrop; } }
 
 	// Use this for initialization
 	public virtual void Start () 
