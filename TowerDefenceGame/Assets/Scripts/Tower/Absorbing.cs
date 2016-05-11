@@ -29,18 +29,6 @@ public class Absorbing : TowerClass {
 	
 	public override void Update () {
 
-		if (!icy.hologram) 
-		{
-			Transform[] t = gameObject.GetComponentsInChildren<Transform>();
-			Debug.Log (t.Length);
-			foreach(Transform transform in t)
-			{
-				Debug.Log (t);
-				if(transform.renderer != null)
-					transform.renderer.material = Resources.Load("Prefabs/Materials/Holo") as Material;
-			}
-		}
-
 		base.Update ();
 		
 	}

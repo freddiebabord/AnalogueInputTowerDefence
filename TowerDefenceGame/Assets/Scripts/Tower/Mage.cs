@@ -5,7 +5,7 @@ public class Mage : TowerClass {
 
 	LineRenderer line;
 	Magic magic;
-
+	
 	// Use this for initialization
 	protected override void Start () {
 		gameObject.tag = "Mage";
@@ -24,18 +24,6 @@ public class Mage : TowerClass {
 
 	// Update is called once per frame
 	public override void Update () {
-
-		if (!magic.hologram) 
-		{
-			Transform[] t = gameObject.GetComponentsInChildren<Transform>();
-			Debug.Log (t.Length);
-			foreach(Transform transform in t)
-			{
-				Debug.Log (t);
-				if(transform.renderer != null)
-					transform.renderer.material = Resources.Load("Prefabs/Materials/Holo") as Material;
-			}
-		}
 
 		if (!isFired) 
 		{
