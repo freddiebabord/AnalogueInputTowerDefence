@@ -35,7 +35,7 @@ public class Magic : MonoBehaviour {
 
 		if (!point.OverUI) 
 		{
-			if (mage && point.placeTower && point.currentTile.GetComponent<NodePath> ().pathType == NodePath.PathType.Grass && !point.currentTile.GetComponent<NodePath> ().towerPlaced) 
+			if (mage && point.placeTower) 
 			{
 				tile = point.currentTile;
 
@@ -49,23 +49,30 @@ public class Magic : MonoBehaviour {
 
 				}
 
-				if (tile != current && hologram) 
+				if (hologram) 
 				{
 					go.gameObject.transform.position = tile.transform.position;
 					go.gameObject.transform.rotation = tile.transform.rotation;
 
 					Transform[] t = go.gameObject.GetComponentsInChildren<Transform>();
-					Debug.Log (t.Length);
 					foreach(Transform transform in t)
 					{
-						Debug.Log (t);
 						if(transform.renderer != null)
+						{
 							transform.renderer.material = Resources.Load("Prefabs/Materials/Holo") as Material;
+
+							if(point.currentTile.GetComponent<NodePath> ().pathType == NodePath.PathType.Grass && !point.currentTile.GetComponent<NodePath>().towerPlaced)
+								transform.renderer.material.SetColor("_Colour", new Color(0,0,1,1));
+							else
+								transform.renderer.material.SetColor("_Colour", new Color(1,0,0,1));
+						}
+
 					}
 				}
+
 			
 				current = tile;
-			} 
+			}
 			else 
 			{
 				tile = null;
