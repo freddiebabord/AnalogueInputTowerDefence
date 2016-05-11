@@ -1420,6 +1420,10 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11453860, guid: 33962e6b8fa23424c81b20e6f75d54f9, type: 2}
+      propertyPath: m_Interactable
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 33962e6b8fa23424c81b20e6f75d54f9, type: 2}
   m_RootGameObject: {fileID: 1628616895}
@@ -3146,10 +3150,12 @@ MonoBehaviour:
   bullet: {fileID: 0}
   spawnPoint: {fileID: 2072452268}
   health: 100
+  upgradable: 0
   radius: 10
   speed: 0
   exp: 0
   cost: 100
+  upgradePressed: 0
 --- !u!1 &756049389
 GameObject:
   m_ObjectHideFlags: 0
@@ -9690,7 +9696,7 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 1792285568}
   m_OnClick:
     m_PersistentCalls:
