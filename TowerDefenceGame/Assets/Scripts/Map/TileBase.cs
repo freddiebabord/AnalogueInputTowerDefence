@@ -31,8 +31,6 @@ public class TileBase : MonoBehaviour {
 		RowX = int.Parse(reader.ReadLine ());
 		RowZ = int.Parse(reader.ReadLine ());
 
-        Debug.Log(RowX + " " + RowZ);
-
         GameObject[,]map = new GameObject[RowX, RowZ];
 		Txt = new string[RowZ];
 		

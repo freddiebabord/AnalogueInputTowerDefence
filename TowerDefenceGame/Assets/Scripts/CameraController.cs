@@ -51,4 +51,11 @@ public class CameraController : MonoBehaviour {
 		}
         
     }
+
+    public void ReturnToMenu()
+    {
+        if (GameObject.FindObjectOfType<GameManager>())
+            Destroy(GameObject.FindObjectOfType<GameManager>().gameObject);
+        Application.LoadLevel(0);
+    }
 }
