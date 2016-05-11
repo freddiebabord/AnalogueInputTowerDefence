@@ -9,6 +9,11 @@ public class Absorbing : TowerClass {
 
 	Ice icy;
 
+	float health = 2f;
+	float radius = 0.5f;
+	int level = 1;
+	int damage = 2;
+
 	// Use this for initialization
 	protected override void Start () {
 
@@ -28,6 +33,8 @@ public class Absorbing : TowerClass {
 	}
 	
 	public override void Update () {
+
+		base.Upgrade (health, level, radius, damage);
 
 		base.Update ();
 		

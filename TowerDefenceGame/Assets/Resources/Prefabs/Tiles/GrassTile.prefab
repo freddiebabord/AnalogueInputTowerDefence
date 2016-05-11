@@ -201,7 +201,7 @@ GameObject:
   - 114: {fileID: 11487056}
   m_Layer: 0
   m_Name: GrassTile
-  m_TagString: Untagged
+  m_TagString: Grass
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -827,6 +827,7 @@ MonoBehaviour:
   posY: 0
   pathType: 2
   towerPlaced: 0
+  placedTower: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
