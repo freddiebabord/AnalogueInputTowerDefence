@@ -28,7 +28,7 @@ public class RailManager : MonoBehaviour {
 	public bool activated = true;
     [HideInInspector][SerializeField]
     public List<Node> railNodes = new List<Node>();
-    private List<AIBase> objectToMove = new List<AIBase>();
+	[SerializeField]private List<AIBase> objectToMove = new List<AIBase>();
 	public float nodeProximityDistance = 0.1f;
 	public RailRotationMode rotationMode;
 	public float slerpRotationSpeed = 1.0f;
@@ -462,11 +462,12 @@ public class RailManager : MonoBehaviour {
 			return false;
 
 		bool result = FindNextPoint(map_, startNodes[0], startNodes[0]);
-		if (gameManager == null)
-			return result;
         
 		if(gameManager == null)gameManager = GameObject.FindObjectOfType<GameManager>();
-		if(gameManager != null)gameManager.MapReady = true;
+		if (gameManager == null)
+			return result;
+		else
+			gameManager.MapReady = true;
         
 		return true;
     }
