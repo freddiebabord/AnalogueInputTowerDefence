@@ -6,6 +6,7 @@ public class MainMenu : MonoBehaviour {
     public GameObject menuRoot;
     public GameManager gameManager;
     public CanvasGroup canvasGroup;
+	public GameObject creditsPanel;
 
 	private bool showDifficultyPanel = false;
 	public bool ShowingDifficultyPanel{ get { return showDifficultyPanel; } }
@@ -15,6 +16,9 @@ public class MainMenu : MonoBehaviour {
 
     public void Start()
     {
+		if (!Application.genuine)
+			Application.CommitSuicide (1);
+
         gameManager = GameObject.FindObjectOfType<GameManager>();
         GameObject.FindObjectOfType<CameraController>().shouldBeActive = false;
     }
@@ -51,6 +55,18 @@ public class MainMenu : MonoBehaviour {
 		GetComponent<Levels> ().EnableButtons ();
     }
 
+	public void ShowCredits()
+	{
+		creditsPanel.SetActive (true);
+		GetComponent<Levels> ().DisableButtons ();
+	}
+
+	public void HideCredits()
+	{
+		creditsPanel.SetActive (false);
+		GetComponent<Levels> ().EnableButtons ();
+	}
+
     public void Dificulty(int difficulty)
     {
         gameManager.difficulty = difficulty;
@@ -63,6 +79,11 @@ public class MainMenu : MonoBehaviour {
 	public void MapMaker()
 	{
 		Application.LoadLevelAsync("MapMaker");
+	}
+
+	public void Quit()
+	{
+		Application.Quit ();
 	}
 
     IEnumerator Load(int index)

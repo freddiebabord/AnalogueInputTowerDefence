@@ -8,12 +8,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
   - enabled: 1
-    path: Assets/Scenes/UserCreationMap.unity
+    path: Assets/Scenes/Classic.unity
+  - enabled: 1
+    path: Assets/Scenes/Survival.unity
   - enabled: 1
     path: Assets/Scenes/MapMaker.unity
-  - enabled: 0
-    path: Assets/Scenes/TowerWithAI.unity
-  - enabled: 0
-    path: Assets/Scenes/AITest.unity
-  - enabled: 0
-    path: Assets/Scenes/ProceduralAITest.unity

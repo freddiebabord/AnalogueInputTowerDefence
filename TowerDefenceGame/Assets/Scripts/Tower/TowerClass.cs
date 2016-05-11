@@ -57,7 +57,7 @@ public class TowerClass : MonoBehaviour {
 	// Update is called once per frame
 	public virtual void Update () {
 
-		Debug.Log (exp);
+//		Debug.Log (exp);
 
         if (exp == 100)
         {
