@@ -9,8 +9,7 @@ public class Character : MonoBehaviour {
     public Image m_BackgroundImage;
     public Text m_character;
 
-    private char m_firstChar = 'A';
-    private char m_lastChar = 'Z';
+
     private char m_currentCharacter = 'A';
 
     public Color m_SelectedCharacterColour;
@@ -20,19 +19,37 @@ public class Character : MonoBehaviour {
 
     public void IncreaseCharacter()
     {
-        if (m_currentCharacter == ' ')
-            m_currentCharacter = 'A';
-        else if(m_currentCharacter < m_lastChar)
-            m_currentCharacter++;
+		if (m_currentCharacter == '9')
+			m_currentCharacter = ' ';
+		else if (m_currentCharacter == ' ')
+			m_currentCharacter = 'A';
+		else if (m_currentCharacter < 'Z')
+			m_currentCharacter++;
+
+//		if (m_currentCharacter == '9')
+//			m_currentCharacter = 'A';
+//		else if (m_currentCharacter == ' ')
+//            m_currentCharacter = 'A';
+//        else if(m_currentCharacter < m_lastChar)
+//            m_currentCharacter++;
         m_character.text = m_currentCharacter.ToString();
     }
 
     public void DecreaseCharacter()
     {
-        if (m_currentCharacter > m_firstChar)
-            m_currentCharacter--;
-        else
-            m_currentCharacter = ' ';
+		if (m_currentCharacter == 'A')
+			m_currentCharacter = ' ';
+		else if (m_currentCharacter == ' ')
+			m_currentCharacter = '9';
+		else if (m_currentCharacter > '0')
+			m_currentCharacter--;
+
+//		if (m_currentCharacter >= '0')
+//			m_currentCharacter = '9';
+//		else if (m_currentCharacter > m_firstChar)
+//            m_currentCharacter--;
+//        else
+//            m_currentCharacter = ' ';
         m_character.text = m_currentCharacter.ToString();
     }
 

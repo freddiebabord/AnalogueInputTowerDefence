@@ -7,6 +7,13 @@ public class Absorbing : TowerClass {
 	//LineRenderer line;
 	PlayFireAnim bomb;
 
+	Ice icy;
+
+	float health = 2f;
+	float radius = 0.5f;
+	int level = 1;
+	int damage = 2;
+
 	// Use this for initialization
 	protected override void Start () {
 
@@ -20,12 +27,14 @@ public class Absorbing : TowerClass {
 		
 		SetGoal(GameObject.FindGameObjectWithTag("Goal"));
 
-		//line = gameObject.GetComponentInChildren<LineRenderer> ();
+		icy = GameObject.FindObjectOfType<Ice> ();
 		bomb = gameObject.GetComponentInChildren<PlayFireAnim> ();
 
 	}
 	
 	public override void Update () {
+
+		base.Upgrade (health, level, radius, damage);
 
 		base.Update ();
 		

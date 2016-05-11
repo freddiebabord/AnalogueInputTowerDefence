@@ -13,7 +13,7 @@ public class Ice : MonoBehaviour {
 
 	GameObject go;
 	
-	bool hologram = false;
+	public bool hologram = false;
 
 	bool ice = false;
     public float cost = 200;
@@ -26,54 +26,80 @@ public class Ice : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+
+		if ((!hologram && go != null) || point.OverUI || !ice)
+			Destroy (go);
+
 		if (ice && !towers.isTrue)
 			point.placeTower = false;
-		
-		if (ice && point.placeTower && point.currentTile.GetComponent<NodePath>().pathType == NodePath.PathType.Grass && !point.currentTile.GetComponent<NodePath>().towerPlaced) 
+
+		if (!point.OverUI) 
 		{
-			tile = point.currentTile;
-
-			if(!hologram)
+			if (ice && point.placeTower && point.currentTile.GetComponent<NodePath> ().pathType == NodePath.PathType.Grass && !point.currentTile.GetComponent<NodePath> ().towerPlaced) 
 			{
-				go = Instantiate (Resources.Load ("Prefabs/Towers/IceTower"), tile.transform.position, tile.transform.rotation) as GameObject;
+				tile = point.currentTile;
 
-				Ice icy = go.GetComponentInChildren<Ice>();
-				icy.enabled = false;
-				hologram = true;
-			}
+				if (!hologram) 
+				{
+					go = Instantiate (Resources.Load ("Prefabs/Towers/IceTower"), tile.transform.position, tile.transform.rotation) as GameObject;
 
-			if (tile != current && hologram) 
-			{
-				go.gameObject.transform.position = tile.transform.position;
-				go.gameObject.transform.rotation = tile.transform.rotation;
-			}
+					Absorbing icy = go.GetComponentInChildren<Absorbing> ();
+					icy.enabled = false;
+					hologram = true;
+				}
+
+				if (hologram) 
+				{
+					go.gameObject.transform.position = tile.transform.position;
+					go.gameObject.transform.rotation = tile.transform.rotation;
+					
+					Transform[] t = go.gameObject.GetComponentsInChildren<Transform>();
+					foreach(Transform transform in t)
+					{
+						if(transform.renderer != null)
+						{
+							transform.renderer.material = Resources.Load("Prefabs/Materials/Holo") as Material;
+							
+							if(point.currentTile.GetComponent<NodePath> ().pathType == NodePath.PathType.Grass && !point.currentTile.GetComponent<NodePath>().towerPlaced)
+								transform.renderer.material.SetColor("_Colour", new Color(0,0,1,1));
+							else
+								transform.renderer.material.SetColor("_Colour", new Color(1,0,0,1));
+						}
+						
+					}
+				}
 			
-			current = tile;
-		} 
-		else 
-		{
-			tile = null;
-			current = null;
-		}
-		
-		if (ice && point.placeTower && Input.GetAxis ("TriggerSelectRight") >= 1) 
-		{
-			
-			if(tile.GetComponent<NodePath>().pathType == NodePath.PathType.Grass && !tile.GetComponent<NodePath>().towerPlaced)
+				current = tile;
+			} 
+			else 
 			{
-                if (GameObject.FindObjectOfType<GameManager>().gold - cost > 0)
-                {
-                    Instantiate(Resources.Load("Prefabs/Towers/IceTower"), tile.transform.position, tile.transform.rotation);
-                    tile.GetComponent<NodePath>().towerPlaced = true;
-                    GameObject.FindObjectOfType<GameManager>().RemoveGold(cost);
-                }
+				tile = null;
+				current = null;
+			}
+		
+			if (ice && point.placeTower && Input.GetAxis ("TriggerSelectRight") >= 1) 
+			{
+				if (tile != null) 
+				{
+					if (tile.GetComponent<NodePath> ().pathType == NodePath.PathType.Grass && !tile.GetComponent<NodePath> ().towerPlaced) 
+					{
+						if (GameObject.FindObjectOfType<GameManager> ().gold - cost > 0) 
+						{
+							Instantiate (Resources.Load ("Prefabs/Towers/IceTower"), tile.transform.position, tile.transform.rotation);
+							tile.GetComponent<NodePath> ().towerPlaced = true;
+							GameObject.FindObjectOfType<GameManager> ().RemoveGold (cost);
+						}
+					}
+				}
 			}
 		}
+
         if (Input.GetAxis("TriggerSelectLeft") >= 1)
         {
             ice = false;
             point.placeTower = false;
+			hologram = false;
+
         }
 
 	}

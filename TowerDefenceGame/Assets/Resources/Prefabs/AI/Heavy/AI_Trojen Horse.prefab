@@ -468,8 +468,8 @@ Rigidbody:
   m_Mass: 450
   m_Drag: 0
   m_AngularDrag: .0500000007
-  m_UseGravity: 1
-  m_IsKinematic: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
@@ -516,9 +516,13 @@ MonoBehaviour:
   damage: 0
   flying: 0
   goldDrop: 0
-  currentIndex: 0
   currentTarget: {fileID: 0}
   currentNodeTarget: {x: 0, y: 0, z: 0}
+  railUpdatingEntity: 0
+  shadow: {fileID: 0}
+  explosion: {fileID: 0}
+  screemEffect: {fileID: 0}
+  altScreemEffect: {fileID: 0}
   objectToSpawn: {fileID: 177038, guid: 05533e472bf967b46a04cd26599e7996, type: 2}
   spawnRate: 2.5
   maxSpawnCount: 20

@@ -16,14 +16,14 @@ public class TowerClass : MonoBehaviour {
     [SerializeField]
     protected float health = 100;
 
-	int damage = 5;
+	int damage = 0;
 
 	int levelOfUpgrade = 0;
 	
-	bool upgradable = false;
+	public bool upgradable = false;
 	
 	[SerializeField]
-	float radius = 10f;
+	float radius = 6f;
 	
 	int level = 0;
 
@@ -45,22 +45,18 @@ public class TowerClass : MonoBehaviour {
 	int exp = 0;
 
     public float cost = 100;
+
+	public bool upgradePressed = false;
 	 
 	protected virtual void Start()
 	{
 		SetGoal(GameObject.FindGameObjectWithTag("Goal"));
-		SetTower (0, 1, 0);
 		SetCooldown (2);
 
 	}
 
 	// Update is called once per frame
 	public virtual void Update () {
-
-        if (exp == 100)
-        {
-            upgradable = true;
-        }
 
 		if (lastShot > cooldown) 
 		{
@@ -75,7 +71,7 @@ public class TowerClass : MonoBehaviour {
 		{
 			if(!upgradable)
 			{
-				exp += 5;
+				exp += 1;
 			}
 
 			Shooting ();
@@ -151,6 +147,11 @@ public class TowerClass : MonoBehaviour {
 		return chosen;
 	}
 
+	public int GetDamage()
+	{
+		return damage;
+	}
+
     public void SetClassHealth(float hp)
 	{
 		classHealth = hp;
@@ -176,17 +177,14 @@ public class TowerClass : MonoBehaviour {
 		levelOfUpgrade += upgrade;
 	}
 
-	public void SetTower(float hp, int lvl, float rad)
-	{
-		SetClassHealth (hp);
-		SetLevel (lvl);
-		SetRadius (rad);
-		SetHealth ();
-	}
-
 	public void SetGoal(GameObject goal_)
 	{
 		goal = goal_;
+	}
+
+	public void SetDamage(int dmg)
+	{
+		damage += dmg;
 	}
 
     public float GetClassHealth()
@@ -214,15 +212,27 @@ public class TowerClass : MonoBehaviour {
 		return level;
 	}
 
-	public void Upgrade()
+	public void Upgrade(float hp, int lvl, float rad, int dg)
 	{
-		if (levelOfUpgrade >= 100 * level)
-			upgradable = true;
+		if(!upgradable)
+			if (exp >= 1000 * GetLevel())
+				upgradable = true;
 
-		if (upgradable) 
+		if (upgradable && upgradePressed) 
 		{
+			exp = 1000 * GetLevel ();
+
 			Debug.Log ("Tower Upgradable");
-			SetTower(GetHealth(), GetLevel(), GetRadius());
+
+			SetClassHealth (hp);
+			SetLevel (lvl);
+			SetRadius (rad);
+			SetHealth ();
+			SetDamage (dg);	
+
+			exp = 0;
+			upgradable = false;
+			upgradePressed = false;
 		}
 	}
 
@@ -247,5 +257,10 @@ public class TowerClass : MonoBehaviour {
     {
         Destroy(transform.parent.gameObject);
     }
+
+	public void UpgradeNow()
+	{
+		upgradePressed = true;
+	}
 
 }

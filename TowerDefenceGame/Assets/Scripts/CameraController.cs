@@ -42,12 +42,13 @@ public class CameraController : MonoBehaviour {
     }
     IEnumerator WaitForMapReady()
     {
-        while (!game.MapReady)
-        {
-            yield return null;
-        }
+        if (game != null) {
+			while (!game.MapReady) {
+				yield return null;
+			}
 
-        levelFader.StartTranstion(true);
+			levelFader.StartTranstion (true);
+		}
         
     }
 }

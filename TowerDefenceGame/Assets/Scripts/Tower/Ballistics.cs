@@ -4,6 +4,12 @@ using System.Collections;
 public class Ballistics : TowerClass {
 
 	Animation anim;
+	ballistaUI ui;
+
+	float health = 1f;
+	float radius = 0.3f;
+	int level = 1;
+	int damage = 5;
 
 	// Use this for initialization
 	protected override void Start () {
@@ -17,11 +23,13 @@ public class Ballistics : TowerClass {
 		SetHealth ();
 		
 		SetGoal(GameObject.FindGameObjectWithTag("Goal"));
-	
+		ui = GameObject.FindObjectOfType<ballistaUI> ();
 	}
 	
 	// Update is called once per frame
 	public override void Update () {
+
+		base.Upgrade (health, level, radius, damage);
 	
 		speed = GetLevel () * 2;
 

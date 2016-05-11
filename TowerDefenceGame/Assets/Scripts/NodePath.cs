@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[DisallowMultipleComponent]
 public class NodePath : MonoBehaviour
 {
     public enum PathType

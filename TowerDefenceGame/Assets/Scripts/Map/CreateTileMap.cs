@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEditor;
 using System.Collections;
 using System.IO;
 using UnityEngine.UI;
@@ -14,14 +13,18 @@ public class CreateTileMap : MonoBehaviour {
 	public int Column = 20;
 	public int row = 20;
 	Vector3 Temp;
-	 int index = 0;
+	int index = 0;
 	GameObject panel;
 	TurnOff off;
-	 string TileIndex;
+	string TileIndex;
 	bool chooseSize = true;
 	public Text Width;
 	public Text Height;
-
+	public Word saveWord;
+	public RailManager rails;
+	public Text errorText;
+	private bool showError = false;
+	
 	// Use this for initialization
 	void Start () {
 		panel = GameObject.FindGameObjectWithTag ("Panel");
@@ -29,7 +32,7 @@ public class CreateTileMap : MonoBehaviour {
 		off = GameObject.FindObjectOfType<TurnOff> ();
 		TileIndex = "GrassTile";
 	}
-
+	
 	public void CreateMap()
 	{
 		chooseSize = false;
@@ -47,7 +50,7 @@ public class CreateTileMap : MonoBehaviour {
 				Temp.Set(x*4 , 0, z*4);
 				TileType[(z*Column)+x].transform.position = Temp;
 				TileType[(z*Column)+x].transform.parent = this.gameObject.transform;
-
+				
 			}
 		}
 	}
@@ -60,29 +63,29 @@ public class CreateTileMap : MonoBehaviour {
 			Height.text = row.ToString();
 		}
 	}
-
+	
 	public void SetGrass(){TileIndex = "GrassTile";}
-
+	
 	public void SetPath(){TileIndex = "PathTile";}
-
+	
 	public void SetRock(){TileIndex = "RockTile";}
-
+	
 	public void SetTree(){TileIndex = "TreeTile";}
-
+	
 	public void SetWater(){TileIndex = "WaterTile";}
-
+	
 	public void SetEmpty(){TileIndex = "EmptyTile";}
-
+	
 	public void SetSpawn(){TileIndex = "SpawnTile";}
-
+	
 	public void SetEnd(){TileIndex = "EndTile";}
-
+	
 	public void increaseX() {if (Column < 30) {Column ++;}}
 	public void decreaseX() {if (Column > 10) {Column --;}}
 	public void increaseZ() {if (row < 30) {row ++;}}
 	public void decreaseZ() {if (row > 10) {row --;}}
-
-
+	
+	
 	public void changeTile(GameObject raycastResults)
 	{
 		index = 0;
@@ -100,20 +103,30 @@ public class CreateTileMap : MonoBehaviour {
 		TileType[index].transform.position = Temp;
 		TileType[index].transform.parent = this.gameObject.transform;
 	}
-
+	
 	public void save()
 	{
+		saveWord.gameObject.SetActive(false);
+		GameObject[,] map = new GameObject[Column, row];
+		
 		for (int z = 0; z < row; z++)
 		{
 			for (int x = 0; x < Column; x++)
 			{
 				char TileLetter = GetTileLetter(TileType[(z*Column)+x].name);
 				Text[z] += TileLetter;
+				map[x, z] = TileType[(z * Column) + x];
+				map[x, z].GetComponent<NodePath>().posX = x;
+				map[x, z].GetComponent<NodePath>().posY = z;
 			}
 		}
+		
+		string file = Application.dataPath + @"/Levels/" + saveWord.GetWord() + ".txt";
+		
+		
+		rails.enabled = true;
 
-		string file = EditorUtility.SaveFilePanel ("Save File location", Application.dataPath + @"/Levels/", "TDMap.txt", ".txt");
-		if (file != "") 
+		if (file != "" && rails.BuildNavigationMap(map, Column, row)) 
 		{
 			StreamWriter writer = new StreamWriter(file);
 			writer.WriteLine(Column);
@@ -122,8 +135,22 @@ public class CreateTileMap : MonoBehaviour {
 			for (int z = 0; z < row; z++) {	writer.WriteLine(Text[z]);}
 			writer.Close();
 		}
+		else
+		{
+			errorText.gameObject.SetActive(true);
+			errorText.text = "ERROR: AI tiles invalid. Fix before saving!";
+			if (!showError)
+				StartCoroutine(HideError());
+		}
+		GameObject.FindObjectOfType<CameraController> ().shouldBeActive = true;
 	}
-
+	
+	public void ShowSave()
+	{
+		saveWord.gameObject.SetActive(true);
+		GameObject.FindObjectOfType<CameraController> ().shouldBeActive = false;
+	}
+	
 	char GetTileLetter(string name)
 	{
 		if (name == "GrassTile(Clone)"){return (char)'G';}
@@ -135,5 +162,18 @@ public class CreateTileMap : MonoBehaviour {
 		if (name == "SpawnTile(Clone)"){return (char)'S';}
 		if (name == "EndTile(Clone)"){return (char)'E';}
 		return (char)'_';
+	}
+	
+	IEnumerator HideError()
+	{
+		showError = true;
+		yield return new WaitForSeconds(5.0f);
+		errorText.gameObject.SetActive(false);
+		showError = false;
+	}
+	
+	public void ReturnToMenu()
+	{
+		Application.LoadLevel(0);
 	}
 }
