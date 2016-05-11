@@ -23,7 +23,7 @@ public class TowerClass : MonoBehaviour {
 	bool upgradable = false;
 	
 	[SerializeField]
-	float radius = 10f;
+	float radius = 6f;
 	
 	int level = 0;
 
@@ -57,10 +57,14 @@ public class TowerClass : MonoBehaviour {
 	// Update is called once per frame
 	public virtual void Update () {
 
+		Debug.Log (exp);
+
         if (exp == 100)
         {
             upgradable = true;
         }
+
+		Upgrade ();
 
 		if (lastShot > cooldown) 
 		{
@@ -223,6 +227,8 @@ public class TowerClass : MonoBehaviour {
 		{
 			Debug.Log ("Tower Upgradable");
 			SetTower(GetHealth(), GetLevel(), GetRadius());
+			levelOfUpgrade = 0;
+			upgradable = false;
 		}
 	}
 

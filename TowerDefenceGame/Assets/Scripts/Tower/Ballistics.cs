@@ -24,18 +24,6 @@ public class Ballistics : TowerClass {
 	// Update is called once per frame
 	public override void Update () {
 	
-		if (!ui.hologram) 
-		{
-			Transform[] t = gameObject.GetComponentsInChildren<Transform>();
-			Debug.Log (t.Length);
-			foreach(Transform transform in t)
-			{
-				Debug.Log (t);
-				if(transform.renderer != null)
-					transform.renderer.material = Resources.Load("Prefabs/Materials/Holo") as Material;
-			}
-		}
-
 		speed = GetLevel () * 2;
 
 		if (!isFired)
