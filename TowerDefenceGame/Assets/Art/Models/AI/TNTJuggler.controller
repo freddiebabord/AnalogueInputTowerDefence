@@ -5,13 +5,13 @@ AnimatorController:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: male
+  m_Name: TNTJuggler
   serializedVersion: 2
   m_AnimatorParameters: []
   m_AnimatorLayers:
   - serializedVersion: 3
     m_Name: Base Layer
-    m_StateMachine: {fileID: 110798740}
+    m_StateMachine: {fileID: 110784736}
     m_Mask: {fileID: 0}
     m_BlendingMode: 0
     m_SyncedLayerIndex: -1
@@ -20,7 +20,7 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
---- !u!1101 &110199990
+--- !u!1101 &110168138
 Transition:
   serializedVersion: 2
   m_ObjectHideFlags: 3
@@ -28,7 +28,7 @@ Transition:
   m_PrefabInternal: {fileID: 0}
   m_Name: 
   m_SrcState: {fileID: 0}
-  m_DstState: {fileID: 110298740}
+  m_DstState: {fileID: 110261468}
   m_TransitionDuration: .100000001
   m_TransitionOffset: 0
   m_Conditions:
@@ -40,22 +40,7 @@ Transition:
   m_Solo: 0
   m_Mute: 0
   m_CanTransitionToSelf: 0
---- !u!1102 &110260630
-State:
-  m_ObjectHideFlags: 3
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: Male_Death
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Motions:
-  - {fileID: 7400000, guid: a96da93ca2481694db4067dca1c06167, type: 2}
-  m_ParentStateMachine: {fileID: 110798740}
-  m_Position: {x: 59, y: 221, z: 0}
-  m_IKOnFeet: 0
-  m_Mirror: 0
-  m_Tag: 
---- !u!1102 &110292866
+--- !u!1102 &110261468
 State:
   m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
@@ -65,45 +50,28 @@ State:
   m_CycleOffset: 0
   m_Motions:
   - {fileID: 7400000, guid: e7f53193134b5e84792d766d5e6e9af4, type: 2}
-  m_ParentStateMachine: {fileID: 110798740}
-  m_Position: {x: 94, y: 286, z: 0}
+  m_ParentStateMachine: {fileID: 110784736}
+  m_Position: {x: 178, y: 187, z: 0}
   m_IKOnFeet: 0
   m_Mirror: 0
   m_Tag: 
---- !u!1102 &110298740
-State:
-  m_ObjectHideFlags: 3
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: Male_Walk
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Motions:
-  - {fileID: 7400000, guid: cc71ad55c780bc3479ba056f10557589, type: 2}
-  m_ParentStateMachine: {fileID: 110798740}
-  m_Position: {x: 24, y: 156, z: 0}
-  m_IKOnFeet: 0
-  m_Mirror: 0
-  m_Tag: 
---- !u!1107 &110798740
+--- !u!1107 &110784736
 StateMachine:
   serializedVersion: 2
   m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Base Layer
-  m_DefaultState: {fileID: 110298740}
+  m_DefaultState: {fileID: 110261468}
   m_States:
-  - {fileID: 110298740}
-  - {fileID: 110260630}
-  - {fileID: 110292866}
+  - {fileID: 110261468}
   m_ChildStateMachine: []
   m_ChildStateMachinePosition: []
   m_OrderedTransitions:
     data:
       first: {fileID: 0}
       second:
-      - {fileID: 110199990}
+      - {fileID: 110168138}
   m_MotionSetCount: 1
-  m_AnyStatePosition: {x: 36, y: 12, z: 0}
+  m_AnyStatePosition: {x: 50, y: 20, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}

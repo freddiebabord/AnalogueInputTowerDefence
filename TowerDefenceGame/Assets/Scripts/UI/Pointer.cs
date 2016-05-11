@@ -55,7 +55,7 @@ public class Pointer : MonoBehaviour {
         {
             if (rt.localPosition.x + Input.GetAxis(horizontalAxis) > -maxHorizontal-1 &&
                 rt.localPosition.x + Input.GetAxis(horizontalAxis) < maxHorizontal+1)
-                transform.Translate(Vector3.right * (invertXAxis ? Input.GetAxis(horizontalAxis) : -Input.GetAxis(horizontalAxis)) * pointerSpeed * Time.deltaTime);
+                transform.Translate(Vector3.right * (invertXAxis ? Input.GetAxis(horizontalAxis) : -Input.GetAxis(horizontalAxis)) * pointerSpeed * Time.unscaledDeltaTime);
             else
                 cameraController.TranslatCameraHorisontal(Input.GetAxis(horizontalAxis));
         }
@@ -64,7 +64,7 @@ public class Pointer : MonoBehaviour {
         {
             if (rt.localPosition.y + Input.GetAxis(verticalAxis) > -maxVertical-1 &&
                     rt.localPosition.y + Input.GetAxis(verticalAxis) < maxVertical+1)
-                transform.Translate(Vector3.up * (invertYAxis ? Input.GetAxis(verticalAxis) : -Input.GetAxis(verticalAxis)) * pointerSpeed * Time.deltaTime);
+                transform.Translate(Vector3.up * (invertYAxis ? Input.GetAxis(verticalAxis) : -Input.GetAxis(verticalAxis)) * pointerSpeed * Time.unscaledDeltaTime);
             else
                 cameraController.TranslatCameraVertical(Input.GetAxis(verticalAxis));
         }
@@ -176,10 +176,10 @@ public class Pointer : MonoBehaviour {
         selectedButtons.Clear();
 
         // Hack to prevent mouse clicks
-        if (EventSystem.current.currentSelectedGameObject == null)
-            EventSystem.current.SetSelectedGameObject(latSelected);
-        else
-            latSelected = EventSystem.current.currentSelectedGameObject;
+        //if (EventSystem.current.currentSelectedGameObject == null)
+        //    EventSystem.current.SetSelectedGameObject(latSelected);
+        //else
+        //    latSelected = EventSystem.current.currentSelectedGameObject;
 
 	}
 }

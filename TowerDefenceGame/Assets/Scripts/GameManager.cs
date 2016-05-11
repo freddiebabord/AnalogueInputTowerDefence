@@ -84,8 +84,6 @@ public class GameManager : MonoBehaviour {
         death = GameObject.FindGameObjectWithTag("DeathTransition").GetComponent<Transition>();
         if (death != null)
             death.StartTranstion();
-        else
-            Debug.LogError("NO DEATH TRANSITION!");
         GameObject.FindObjectOfType<RailManager>().gameObject.SetActive(false);
         foreach (AIBase ai in GameObject.FindObjectsOfType<AIBase>())
             Destroy(ai);
@@ -109,10 +107,15 @@ public class GameManager : MonoBehaviour {
     {
         if(levelID != 0)
         {
-            StartCoroutine(WaitToStart());
-            TileBase tb = FindObjectOfType<TileBase>();
-            tb.CreateMap(Application.dataPath + @"\Levels\" + map + ".txt");
-            goldQuantity = 500;
+            if (levelID != 3)
+            {
+                StartCoroutine(WaitToStart());
+                TileBase tb = FindObjectOfType<TileBase>();
+                tb.CreateMap(Application.dataPath + @"\Levels\" + map + ".txt");
+                goldQuantity = 500;
+            }
+            else
+                Destroy(gameObject);
         }
     }
 

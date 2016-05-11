@@ -1630,7 +1630,7 @@ Light:
   serializedVersion: 3
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 2.57999992
+  m_Intensity: 1.5
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -6781,6 +6781,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activated: 1
   railNodes: []
+  objectToMove: []
   nodeProximityDistance: .100000001
   rotationMode: 0
   slerpRotationSpeed: 1

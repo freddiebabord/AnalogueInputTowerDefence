@@ -95,7 +95,6 @@ public class WaveManager : MonoBehaviour {
             {
                 if (aiNodePathing.aliveEnemies == 0)
                 {
-                    Debug.Log("Wave Complete");
                     StartCoroutine(WaveComplete());
                 }
             }
@@ -172,7 +171,6 @@ public class WaveManager : MonoBehaviour {
 
     public void StartClassic(int difficulty_)
     {
-		Debug.Log ("Starting");
 		difficulty = difficulty_;
         if (Waves.Count > 0)
         {
@@ -209,7 +207,7 @@ public class WaveManager : MonoBehaviour {
 			rand = MobWave.WaveType.Heavy;
 		else
 			rand = MobWave.WaveType.Boss;
-		Debug.Log ("Starting: " + waveType);
+
 		switch (rand) {
 		case(MobWave.WaveType.Basic):
 			int basicmaxCount = proceduralWaveSetUp.basic.Count;
