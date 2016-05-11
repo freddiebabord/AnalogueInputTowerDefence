@@ -31,6 +31,7 @@ public class Levels : MonoBehaviour {
         }
 
         currentLevelText.text = files[0];
+        SetLevel(files[0]);
         panel.GetComponent<RectTransform>().sizeDelta = new Vector2(panel.GetComponent<RectTransform>().sizeDelta.x, files.Count * 2);
         int i = 0;
         foreach (string fileName in files)

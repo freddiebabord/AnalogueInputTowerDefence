@@ -9,6 +9,7 @@ public class MainMenu : MonoBehaviour {
 	public GameObject creditsPanel;
 
 	private bool showDifficultyPanel = false;
+    private bool showingCredits = false;
 	public bool ShowingDifficultyPanel{ get { return showDifficultyPanel; } }
 
     public Transition eoltransition;
@@ -29,6 +30,8 @@ public class MainMenu : MonoBehaviour {
 		{
 			if(ShowingDifficultyPanel)
 				HideCanvas();
+            if (showingCredits)
+                HideCredits();
 		}
 	}
 
@@ -59,12 +62,14 @@ public class MainMenu : MonoBehaviour {
 	{
 		creditsPanel.SetActive (true);
 		GetComponent<Levels> ().DisableButtons ();
+        showingCredits = true;
 	}
 
 	public void HideCredits()
 	{
 		creditsPanel.SetActive (false);
 		GetComponent<Levels> ().EnableButtons ();
+        showingCredits = false;
 	}
 
     public void Dificulty(int difficulty)
