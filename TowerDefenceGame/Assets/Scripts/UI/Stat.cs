@@ -5,6 +5,11 @@ using System.Collections.Generic;
 
 public class Stat : MonoBehaviour {
 
+	Magic magic;
+	ballistaUI ball;
+	Ice ice;
+	ArrowUI arr;
+
 	Pointer point;
 
 	TowerPlacement tower;
@@ -20,13 +25,19 @@ public class Stat : MonoBehaviour {
 	public Text damage;
 	public GameObject upgradeButton;
 
-	bool stats;
+	public bool stats = false;
 	// Use this for initialization
 	void Start () {
 
 		point = GameObject.FindObjectOfType<Pointer> ();
 		tower = GameObject.FindObjectOfType<TowerPlacement> ();
 		statUI = GameObject.FindGameObjectWithTag("Info");
+
+		magic = GameObject.FindObjectOfType<Magic> ();
+		ball = GameObject.FindObjectOfType<ballistaUI> ();
+		ice = GameObject.FindObjectOfType<Ice> ();
+		arr = GameObject.FindObjectOfType<ArrowUI> ();
+
 	}
 	
 	// Update is called once per frame
@@ -37,6 +48,11 @@ public class Stat : MonoBehaviour {
 
 		if (stats) 
 		{
+			magic.mage = false;
+			ball.ballista = false;
+			ice.ice = false;
+			arr.arrow = false;
+
 			if(point.currentTile.GetComponent<NodePath>().towerPlaced && Input.GetAxis("TriggerSelectRight") >= 1)
 			{
 				go = SearchTower(point.currentTile.gameObject.transform.position);

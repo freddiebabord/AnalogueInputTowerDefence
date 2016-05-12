@@ -3,6 +3,11 @@ using System.Collections;
 
 public class Magic : MonoBehaviour {
 
+	Stat stat;
+	ballistaUI ball;
+	Ice ice;
+	ArrowUI arr;
+
 	Pointer point;
 
 	TowerPlacement towers;
@@ -15,13 +20,18 @@ public class Magic : MonoBehaviour {
 
 	public bool hologram = false;
 
-	bool mage = false;
+	public bool mage = false;
     public float cost = 100;
 	// Use this for initialization
 	void Start () {
 
 		towers = GameObject.FindObjectOfType<TowerPlacement> ();
 		point = GameObject.FindObjectOfType<Pointer> ();
+
+		stat = GameObject.FindObjectOfType<Stat> ();
+		ball = GameObject.FindObjectOfType<ballistaUI> ();
+		ice = GameObject.FindObjectOfType<Ice> ();
+		arr = GameObject.FindObjectOfType<ArrowUI> ();
 	}
 	
 	// Update is called once per frame
@@ -33,6 +43,14 @@ public class Magic : MonoBehaviour {
 		if (mage && !towers.isTrue)
 			point.placeTower = false;
 
+		if (mage) 
+		{
+			stat.stats = false;
+			ball.ballista = false;
+			ice.ice = false;
+			arr.arrow = false;
+		}
+		
 		if (!point.OverUI) 
 		{
 			if (mage && point.placeTower) 
