@@ -8,6 +8,8 @@ public class AITowerSeeker : AIBase {
     public float seekRadius = 5.0f;
     List<Collider> triggerList = new List<Collider>();
 
+    List<string> tags = new List<string>() { "EnemyStart", "EnemyEnd", "Grass", "Enemy", "Untagged" };
+
     public override void Start() {
 
         SphereCollider sc = GetComponent<SphereCollider>();
@@ -32,7 +34,7 @@ public class AITowerSeeker : AIBase {
     void OnCollisionEnter(Collision collision)
     {
             Debug.Log(collision.collider.gameObject);
-        if (collision.collider.gameObject.tag != "Enemy" & collision.collider.gameObject.tag != "Untagged")
+            if (!tags.Contains(collision.collider.gameObject.tag))
         {
             collision.collider.gameObject.BroadcastMessage("ApplyDamage", damage, SendMessageOptions.RequireReceiver);
             Die();
@@ -41,7 +43,7 @@ public class AITowerSeeker : AIBase {
 
 	void OnTriggerEnter(Collider other)
 	{
-        if (other.gameObject.tag != "Enemy" & other.gameObject.tag != "Untagged")
+        if (!tags.Contains(other.gameObject.tag))
         {
             if (!triggerList.Contains(other))
             {

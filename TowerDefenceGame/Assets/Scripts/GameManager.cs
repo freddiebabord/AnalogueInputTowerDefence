@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour {
 	{
 		transform.position = Camera.main.transform.position;
 
-        if(enemiesPassed > villageHealth)
+        if(enemiesPassed >= villageHealth)
         {
             if (!gameOver_)
                 GameOver();

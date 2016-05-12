@@ -43,6 +43,7 @@ public class WaveManager : MonoBehaviour {
 	//Spawn rate in seconds
 	[SerializeField][Range(0.1f, 1.0f)]
 	private float enemySpawnRate = 0.5f;
+    private float basicenemySpawnRate = 0.5f;
 	private int waveToSpawn = 0;
 	private int spawnedEnemies = 0;
 	public int maxWaves = 0;
@@ -56,6 +57,7 @@ public class WaveManager : MonoBehaviour {
 
     public Text waveNumber;
     private bool godMode = false;
+    MobWave.WaveType rand;
 
 	// Use this for initialization
 	void Start () {
@@ -69,10 +71,15 @@ public class WaveManager : MonoBehaviour {
 		game.maxWaves = maxWaves;
 		everloopMaster = FindObjectOfType<EverloopMasterController>();
 
-        //if (Waves.Count <= 0)
-        //    StartProcedural(20);
-        //else
-        //    StartClassic(20);
+        if (Application.isEditor)
+        {
+            if (Waves.Count <= 0)
+                StartProcedural(20);
+            else
+                StartClassic(20);
+        }
+
+        basicenemySpawnRate = enemySpawnRate;
 	}
 
 	void Update () {
@@ -197,16 +204,32 @@ public class WaveManager : MonoBehaviour {
     {
         difficulty = difficulty_;
         maxWaves++;
-		int waveType = UnityEngine.Random.Range(0, 400);
-		MobWave.WaveType rand;
-		if (waveType < 200)
-			rand = MobWave.WaveType.Basic;
-		else if (waveType < 250)
-			rand = MobWave.WaveType.Medium;
-		else if (waveType < 300)
-			rand = MobWave.WaveType.Heavy;
-		else
-			rand = MobWave.WaveType.Boss;
+        //int waveType = UnityEngine.Random.Range(0, 400);
+		
+        //if (waveType < 200)
+        //    rand = MobWave.WaveType.Basic;
+        //else if (waveType < 250)
+        //    rand = MobWave.WaveType.Medium;
+        //else if (waveType < 300)
+        //    rand = MobWave.WaveType.Heavy;
+        //else
+        //    rand = MobWave.WaveType.Boss;
+
+
+        if (currentWave % 11 == 0)
+            rand = MobWave.WaveType.Basic;
+
+        else if (currentWave % 10 == 0)
+            rand = MobWave.WaveType.Boss;
+
+        else if (currentWave % 8 == 0)
+            rand = MobWave.WaveType.Heavy;
+
+        else if (currentWave % 6 == 0)
+            rand = MobWave.WaveType.Medium;
+
+        
+
 
 		switch (rand) {
 		case(MobWave.WaveType.Basic):
@@ -217,10 +240,11 @@ public class WaveManager : MonoBehaviour {
                 {
                     Prefab = proceduralWaveSetUp.basic[UnityEngine.Random.Range(0, basicmaxCount)],
                     Type = MobWave.WaveType.Basic,
-                    Count = maxWaves * (25 + UnityEngine.Random.Range(0, 25)),
+                    Count = currentWave * 17 + (UnityEngine.Random.Range(0, 25)),
                     waveEndTimer = UnityEngine.Random.Range(5, 10)
                 };
                 Waves.Add(BasicbobWave);
+                enemySpawnRate = basicenemySpawnRate;
             }
             else
                 StartProcedural(difficulty_);
@@ -233,10 +257,11 @@ public class WaveManager : MonoBehaviour {
                 {
 					Prefab = proceduralWaveSetUp.medium[UnityEngine.Random.Range(0, MediummaxCount)],
                     Type = MobWave.WaveType.Medium,
-                    Count = maxWaves * (15 + UnityEngine.Random.Range(0, 15)),
+                    Count = currentWave * 2 + (UnityEngine.Random.Range(0, 8)),
                     waveEndTimer = UnityEngine.Random.Range(5, 10)
                 };
                 Waves.Add(MediumbobWave);
+                enemySpawnRate = basicenemySpawnRate / 2;
             }
             else
                 StartProcedural(difficulty_);
@@ -249,10 +274,11 @@ public class WaveManager : MonoBehaviour {
                 {
 					Prefab = proceduralWaveSetUp.heavy[UnityEngine.Random.Range(0, HeavymaxCount)],
                     Type = MobWave.WaveType.Heavy,
-                    Count = maxWaves * (7 + UnityEngine.Random.Range(0, 7)),
+                    Count = Mathf.FloorToInt(currentWave /  2 + (UnityEngine.Random.Range(0, 2))),
                     waveEndTimer = UnityEngine.Random.Range(5, 10)
                 };
                 Waves.Add(HeavybobWave);
+                enemySpawnRate = basicenemySpawnRate * 10;
             }
             else
                 StartProcedural(difficulty_);
@@ -265,10 +291,11 @@ public class WaveManager : MonoBehaviour {
                 {
 					Prefab = proceduralWaveSetUp.boss[UnityEngine.Random.Range(0, BossmaxCount)],
                     Type = MobWave.WaveType.Boss,
-                    Count = maxWaves * (1 + UnityEngine.Random.Range(0, 3)),
+                    Count = Mathf.FloorToInt(currentWave / 8 + (UnityEngine.Random.Range(0, 1))),
                     waveEndTimer = UnityEngine.Random.Range(5, 10)
                 };
                 Waves.Add(BossbobWave);
+                enemySpawnRate = basicenemySpawnRate * 20;
             }
             else
                 StartProcedural(difficulty_);
