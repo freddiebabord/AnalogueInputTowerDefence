@@ -60,7 +60,7 @@ public class VolumetricExplosion : MonoBehaviour {
         {
             if (c.collider.gameObject.tag != "Enemy" & c.collider.gameObject.tag != "Untagged")
             {
-                c.collider.gameObject.BroadcastMessage("ApplyDamage", explosionDamage, SendMessageOptions.RequireReceiver);
+                c.collider.gameObject.BroadcastMessage("ApplyDamage", explosionDamage, SendMessageOptions.DontRequireReceiver);
 //                Die();
             }
         }
