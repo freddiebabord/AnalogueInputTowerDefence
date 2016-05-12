@@ -33,13 +33,19 @@ LevelGameManager:
 LightmapSettings:
   m_ObjectHideFlags: 0
   m_LightProbes: {fileID: 0}
-  m_Lightmaps: []
+  m_Lightmaps:
+  - m_Lightmap: {fileID: 2800000, guid: 3e2b1b0d9c8d21a43b9584f8e19b1242, type: 3}
+    m_IndirectLightmap: {fileID: 2800000, guid: baf5eda7a09e4b445851cf2cd5836623,
+      type: 3}
+  - m_Lightmap: {fileID: 2800000, guid: 3670cae1bb7f27c4899ffa8d871c6178, type: 3}
+    m_IndirectLightmap: {fileID: 2800000, guid: 83d623bb2aef3dd4da583d1e13040e6f,
+      type: 3}
   m_LightmapsMode: 1
   m_BakedColorSpace: 0
   m_UseDualLightmapsInForward: 0
   m_LightmapEditorSettings:
     m_Resolution: 50
-    m_LastUsedResolution: 0
+    m_LastUsedResolution: 50
     m_TextureWidth: 1024
     m_TextureHeight: 1024
     m_BounceBoost: 1
@@ -47,7 +53,7 @@ LightmapSettings:
     m_SkyLightColor: {r: .860000014, g: .930000007, b: 1, a: 1}
     m_SkyLightIntensity: 0
     m_Quality: 0
-    m_Bounces: 1
+    m_Bounces: 2
     m_FinalGatherRays: 1000
     m_FinalGatherContrastThreshold: .0500000007
     m_FinalGatherGradientThreshold: 0
@@ -363,7 +369,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!23 &74301808
 Renderer:
@@ -374,7 +380,7 @@ Renderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_LightmapIndex: 255
+  m_LightmapIndex: 0
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
   - {fileID: 2100000, guid: 189f97fd0a2966a4ca97a3a58ce4ff44, type: 2}
@@ -1516,7 +1522,7 @@ Light:
     m_SoftnessFade: 1
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
-  m_ActuallyLightmapped: 0
+  m_ActuallyLightmapped: 1
   m_Flare: {fileID: 0}
   m_RenderMode: 0
   m_CullingMask:
@@ -3005,7 +3011,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!54 &420491519
 Rigidbody:
@@ -3031,8 +3037,8 @@ Renderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_LightmapIndex: 255
-  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_LightmapIndex: 1
+  m_LightmapTilingOffset: {x: .23828125, y: .238281265, z: .71387732, w: -.000966413121}
   m_Materials:
   - {fileID: 2100000, guid: 3343c08d5451e554aad6e19b25419f6b, type: 2}
   m_SubsetIndices: 
@@ -3084,6 +3090,7 @@ GameObject:
   - 222: {fileID: 436267408}
   - 114: {fileID: 436267407}
   - 114: {fileID: 436267406}
+  - 95: {fileID: 436267409}
   m_Layer: 0
   m_Name: Button
   m_TagString: Untagged
@@ -3196,6 +3203,21 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 1232877962}
   m_GameObject: {fileID: 436267404}
+--- !u!95 &436267409
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 436267404}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5818b8a4fffef31438dc52bebe66fdcb, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &441968895
 GameObject:
   m_ObjectHideFlags: 0
@@ -3592,7 +3614,7 @@ Light:
     m_SoftnessFade: 1
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
-  m_ActuallyLightmapped: 0
+  m_ActuallyLightmapped: 1
   m_Flare: {fileID: 0}
   m_RenderMode: 0
   m_CullingMask:
@@ -3667,7 +3689,7 @@ Light:
     m_SoftnessFade: 1
   m_Cookie: {fileID: 2800000, guid: fc00ec05a89da4ff695a4273715cd5ce, type: 3}
   m_DrawHalo: 0
-  m_ActuallyLightmapped: 0
+  m_ActuallyLightmapped: 1
   m_Flare: {fileID: 0}
   m_RenderMode: 0
   m_CullingMask:
@@ -4771,7 +4793,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 0
 --- !u!4 &795064160
 Transform:
@@ -5472,7 +5494,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!54 &934471719
 Rigidbody:
@@ -5498,8 +5520,8 @@ Renderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_LightmapIndex: 255
-  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_LightmapIndex: 1
+  m_LightmapTilingOffset: {x: .23828125, y: .238281265, z: .4755961, w: -.000966413121}
   m_Materials:
   - {fileID: 2100000, guid: 3343c08d5451e554aad6e19b25419f6b, type: 2}
   m_SubsetIndices: 
@@ -8550,6 +8572,7 @@ GameObject:
   - 222: {fileID: 1214149572}
   - 114: {fileID: 1214149571}
   - 114: {fileID: 1214149570}
+  - 95: {fileID: 1214149573}
   m_Layer: 0
   m_Name: Button
   m_TagString: Untagged
@@ -8662,6 +8685,21 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 1232877962}
   m_GameObject: {fileID: 1214149568}
+--- !u!95 &1214149573
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1214149568}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5818b8a4fffef31438dc52bebe66fdcb, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1001 &1232877962
 Prefab:
   m_ObjectHideFlags: 0
@@ -8896,6 +8934,10 @@ Prefab:
     - target: {fileID: 420276, guid: d21890831e0438a45b5cf64ec0b31723, type: 2}
       propertyPath: m_LocalPosition.y
       value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 10820276, guid: d21890831e0438a45b5cf64ec0b31723, type: 2}
+      propertyPath: m_ActuallyLightmapped
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d21890831e0438a45b5cf64ec0b31723, type: 2}
@@ -10229,10 +10271,10 @@ MonoBehaviour:
   menuRoot: {fileID: 0}
   gameManager: {fileID: 234417299}
   canvasGroup: {fileID: 201293985}
-  creditsPanel: {fileID: 2072543116}
+  creditsPanel: {fileID: 0}
   eoltransition: {fileID: 255727621}
   difficultyTransition: {fileID: 1461234586}
-  optionsPanel: {fileID: 602221163}
+  optionsPanel: {fileID: 0}
 --- !u!4 &1345411216
 Transform:
   m_ObjectHideFlags: 0
@@ -10259,12 +10301,7 @@ MonoBehaviour:
   buttonPrefab: {fileID: 122144, guid: 9aa57164ba6667c40a7d88b513b2e302, type: 2}
   currentLevelText: {fileID: 756049391}
   panel: {fileID: 1932945813}
-  mainButtons:
-  - {fileID: 1398766564}
-  - {fileID: 1792285565}
-  - {fileID: 2034378055}
-  - {fileID: 1637115793}
-  - {fileID: 2142304032}
+  mainButtons: []
 --- !u!1 &1380582789
 GameObject:
   m_ObjectHideFlags: 0
@@ -11465,7 +11502,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!54 &1769585607
 Rigidbody:
@@ -11491,8 +11528,8 @@ Renderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_LightmapIndex: 255
-  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_LightmapIndex: 1
+  m_LightmapTilingOffset: {x: .23828125, y: .238281265, z: .237314835, w: -.000966413121}
   m_Materials:
   - {fileID: 2100000, guid: 3343c08d5451e554aad6e19b25419f6b, type: 2}
   m_SubsetIndices: 
@@ -11943,7 +11980,7 @@ Light:
     m_SoftnessFade: 1
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
-  m_ActuallyLightmapped: 0
+  m_ActuallyLightmapped: 1
   m_Flare: {fileID: 0}
   m_RenderMode: 0
   m_CullingMask:
@@ -12248,6 +12285,7 @@ GameObject:
   - 222: {fileID: 1907543709}
   - 114: {fileID: 1907543708}
   - 114: {fileID: 1907543707}
+  - 95: {fileID: 1907543710}
   m_Layer: 0
   m_Name: Button
   m_TagString: Untagged
@@ -12360,6 +12398,21 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 1232877962}
   m_GameObject: {fileID: 1907543705}
+--- !u!95 &1907543710
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1907543705}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5818b8a4fffef31438dc52bebe66fdcb, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &1932945813
 GameObject:
   m_ObjectHideFlags: 0
@@ -12583,6 +12636,10 @@ Prefab:
     - target: {fileID: 19930392, guid: b710221f4016fb744bf0771e36f3628c, type: 2}
       propertyPath: m_ReceiveShadows
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 10830392, guid: b710221f4016fb744bf0771e36f3628c, type: 2}
+      propertyPath: m_ActuallyLightmapped
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b710221f4016fb744bf0771e36f3628c, type: 2}
@@ -13419,7 +13476,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!54 &2141421303
 Rigidbody:
@@ -13445,8 +13502,8 @@ Renderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_LightmapIndex: 255
-  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_LightmapIndex: 1
+  m_LightmapTilingOffset: {x: .23828125, y: .238281265, z: -.000966413063, w: -.000966413121}
   m_Materials:
   - {fileID: 2100000, guid: 3343c08d5451e554aad6e19b25419f6b, type: 2}
   m_SubsetIndices: 
