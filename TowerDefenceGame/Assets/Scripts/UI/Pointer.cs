@@ -173,7 +173,7 @@ public class Pointer : MonoBehaviour {
                 button.OnDeselect();
         }
 		pointer.Reset ();
-		pointer
+		//pointer.
         selectedButtons.Clear();
 
 	}
