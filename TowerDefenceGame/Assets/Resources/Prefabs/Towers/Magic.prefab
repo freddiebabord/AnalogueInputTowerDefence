@@ -96,8 +96,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 487910}
   - 33: {fileID: 3387910}
-  - 136: {fileID: 13687910}
   - 23: {fileID: 2387910}
+  - 65: {fileID: 6565152}
   m_Layer: 0
   m_Name: Magic
   m_TagString: Mage
@@ -176,7 +176,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 187910}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -13.54, y: 1, z: 9.57999992}
+  m_LocalPosition: {x: 9.01424885, y: 9.41512871, z: 27.9481468}
   m_LocalScale: {x: 2, y: 1, z: 2}
   m_Children:
   - {fileID: 487902}
@@ -290,6 +290,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 187910}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &6565152
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 187910}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.00000012, y: 2, z: 1.00000024}
+  m_Center: {x: 5.96046448e-08, y: 0, z: -8.94069672e-08}
 --- !u!65 &6587910
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -316,9 +328,12 @@ MonoBehaviour:
   bullet: {fileID: 0}
   spawnPoint: {fileID: 187900}
   health: 100
+  upgradable: 0
   radius: 10
   speed: 0
   exp: 0
+  cost: 100
+  upgradePressed: 0
 --- !u!114 &11487910
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -382,19 +397,6 @@ CapsuleCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 187906}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: .5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!136 &13687910
-CapsuleCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 187910}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1

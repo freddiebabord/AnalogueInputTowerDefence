@@ -25,6 +25,7 @@ GameObject:
   - 4: {fileID: 417056}
   - 33: {fileID: 3317056}
   - 23: {fileID: 2317056}
+  - 65: {fileID: 6552838}
   m_Layer: 0
   m_Name: ArrowTower
   m_TagString: Arrow
@@ -214,7 +215,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 117056}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.98000002, y: 0, z: 3.98000002}
+  m_LocalPosition: {x: 10.6880693, y: 9.19733429, z: 28.2180233}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 417058}
@@ -487,6 +488,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 192294}
   m_Mesh: {fileID: 4300008, guid: 3f4dd56e99b2a6b418f1f254e53a4af8, type: 3}
+--- !u!65 &6552838
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 117056}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.4000001, y: 3, z: 2.4000001}
+  m_Center: {x: 0, y: 1.5, z: 0}
 --- !u!111 &11192288
 Animation:
   m_ObjectHideFlags: 1
@@ -516,10 +529,12 @@ MonoBehaviour:
   bullet: {fileID: 106478, guid: 0763730cd45f5a843961aded05c8f8fe, type: 2}
   spawnPoint: {fileID: 109512}
   health: 100
+  upgradable: 0
   radius: 10
   speed: 100
   exp: 0
   cost: 100
+  upgradePressed: 0
 --- !u!114 &11492288
 MonoBehaviour:
   m_ObjectHideFlags: 1
