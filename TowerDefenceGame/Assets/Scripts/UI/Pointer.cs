@@ -10,11 +10,9 @@ public class Pointer : MonoBehaviour {
 	public bool placeTile = false;
 
 	RectTransform rt;
-    List<AnalogueButtons> selectedButtons = new List<AnalogueButtons>();
+    AnalogueButtons selectedButton;
     public GameObject currentTile;
     Color currentTileOriginalColour;
-    public string horizontalAxis = "HorizontalLeft";
-    public string verticalAxis = "VerticalLeft";
     CameraController cameraController;
 
     public float maxHorizontal = 18;
@@ -73,24 +71,28 @@ public class Pointer : MonoBehaviour {
         pointer.position = Camera.main.WorldToScreenPoint(transform.position);
         var raycastResults = new List<RaycastResult>();
         EventSystem.current.RaycastAll(pointer, raycastResults);
-        if (raycastResults.Count > 0)
-        {
-            for (int i = 0; i < raycastResults.Count; i++)
-            {
-                if (raycastResults[i].gameObject.GetComponent<AnalogueButtons>())
-                {
-                    overUI = true;
-                    if (!raycastResults[i].gameObject.GetComponent<AnalogueButtons>().isSelected)
-                    {
-                        selectedButtons.Add(raycastResults[i].gameObject.GetComponent<AnalogueButtons>());
-                        raycastResults[i].gameObject.GetComponent<AnalogueButtons>().OnSelect();
-						EventSystem.current.SetSelectedGameObject (raycastResults [i].gameObject);
-                    }
-                }
-            }
-            if (selectedButtons.Count > 0)
-                overUI = false;
-        }
+
+        if (raycastResults.Count > 0) {
+			for (int i = 0; i < raycastResults.Count; i++) {
+				if (raycastResults [i].gameObject.GetComponent<AnalogueButtons> ()) {
+					overUI = true;
+					if (selectedButton != raycastResults [i].gameObject.GetComponent<AnalogueButtons> ()) {
+						if (selectedButton != null)
+							selectedButton.OnDeselect ();
+
+						selectedButton = raycastResults [i].gameObject.GetComponent<AnalogueButtons> ();
+						selectedButton.OnSelect ();
+						EventSystem.current.SetSelectedGameObject (selectedButton.gameObject);
+					}
+				}
+			}
+		} else {
+			overUI = false;
+			if(selectedButton){
+				selectedButton.OnDeselect();
+				selectedButton = null;
+			}
+		}
 
 		if (placeTower || placeTile) 
 		{
@@ -167,14 +169,7 @@ public class Pointer : MonoBehaviour {
         }
 
 
-        foreach (AnalogueButtons button in selectedButtons)
-        {
-            if (!button.clicked)
-                button.OnDeselect();
-        }
 		pointer.Reset ();
-		//pointer.
-        selectedButtons.Clear();
 
 	}
 }
