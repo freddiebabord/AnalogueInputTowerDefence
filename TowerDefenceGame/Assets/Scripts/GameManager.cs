@@ -55,6 +55,11 @@ public class GameManager : MonoBehaviour {
         get { return gameOver_; }
     }
 
+	public int EnemiesPassed
+	{
+		get {return enemiesPassed;}
+	}
+
     public float gold { get { return goldQuantity; } }
 
     public enum GameType
