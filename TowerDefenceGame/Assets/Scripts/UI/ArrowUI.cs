@@ -3,6 +3,11 @@ using System.Collections;
 
 public class ArrowUI : MonoBehaviour {
 
+	Stat stat;
+	Magic magic;
+	Ice ice;
+	ballistaUI ball;
+
 	Pointer point;
 	
 	TowerPlacement towers;
@@ -15,7 +20,7 @@ public class ArrowUI : MonoBehaviour {
 
 	public bool hologram = false;
 
-	bool arrow = false;
+	public bool arrow = false;
 	public float cost = 100;
 	
 	// Use this for initialization
@@ -23,6 +28,11 @@ public class ArrowUI : MonoBehaviour {
 		
 		towers = GameObject.FindObjectOfType<TowerPlacement> ();
 		point = GameObject.FindObjectOfType<Pointer> ();
+
+		stat = GameObject.FindObjectOfType<Stat> ();
+		magic = GameObject.FindObjectOfType<Magic> ();
+		ice = GameObject.FindObjectOfType<Ice> ();
+		ball = GameObject.FindObjectOfType<ballistaUI> ();
 	}
 	
 	// Update is called once per frame
@@ -33,6 +43,14 @@ public class ArrowUI : MonoBehaviour {
 
 		if (arrow && !towers.isTrue)
 			point.placeTower = false;
+
+		if (arrow) 
+		{
+			stat.stats = false;
+			magic.mage = false;
+			ice.ice = false;
+			ball.ballista = false;
+		}
 
 		if (!point.OverUI) {
 			if (arrow && point.placeTower && point.currentTile.GetComponent<NodePath> ().pathType == NodePath.PathType.Grass && !point.currentTile.GetComponent<NodePath> ().towerPlaced) {

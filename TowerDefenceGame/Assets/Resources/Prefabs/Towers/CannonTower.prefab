@@ -43,7 +43,7 @@ GameObject:
   - 23: {fileID: 2359120}
   m_Layer: 0
   m_Name: CannonTower
-  m_TagString: Arrow
+  m_TagString: Balista
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -106,7 +106,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 115714}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0, z: 2}
+  m_LocalPosition: {x: 0, y: 0, z: 2.96399999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 459122}
@@ -131,7 +131,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 159118}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.76000023, y: 0, z: 3.98000002}
+  m_LocalPosition: {x: 1.5906384, y: 2.66872553e-16, z: -11.0188713}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 459116}
@@ -287,10 +287,12 @@ MonoBehaviour:
   bullet: {fileID: 134528, guid: ef5e8a5dc6de0224bbb2ec2893dfeb90, type: 2}
   spawnPoint: {fileID: 115714}
   health: 100
+  upgradable: 0
   radius: 10
   speed: 100
   exp: 0
   cost: 100
+  upgradePressed: 0
 --- !u!114 &11469612
 MonoBehaviour:
   m_ObjectHideFlags: 1

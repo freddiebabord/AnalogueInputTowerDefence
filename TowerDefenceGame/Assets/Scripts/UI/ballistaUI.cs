@@ -3,6 +3,11 @@ using System.Collections;
 
 public class ballistaUI : MonoBehaviour {
 
+	Stat stat;
+	Magic magic;
+	Ice ice;
+	ArrowUI arr;
+
 	Pointer point;
 	
 	TowerPlacement towers;
@@ -15,13 +20,18 @@ public class ballistaUI : MonoBehaviour {
 
 	public bool hologram = false;
 
-	bool ballista = false;
+	public bool ballista = false;
     public float cost = 150;
 	// Use this for initialization
 	void Start () {
 		
 		towers = GameObject.FindObjectOfType<TowerPlacement> ();
 		point = GameObject.FindObjectOfType<Pointer> ();
+
+		stat = GameObject.FindObjectOfType<Stat> ();
+		magic = GameObject.FindObjectOfType<Magic> ();
+		ice = GameObject.FindObjectOfType<Ice> ();
+		arr = GameObject.FindObjectOfType<ArrowUI> ();
 	}
 	
 	// Update is called once per frame
@@ -33,12 +43,20 @@ public class ballistaUI : MonoBehaviour {
 		if (ballista && !towers.isTrue)
 			point.placeTower = false;
 
+		if (ballista) 
+		{
+			stat.stats = false;
+			magic.mage = false;
+			ice.ice = false;
+			arr.arrow = false;
+		}
+
 		if (!point.OverUI) {
 			if (ballista && point.placeTower && point.currentTile.GetComponent<NodePath> ().pathType == NodePath.PathType.Grass && !point.currentTile.GetComponent<NodePath> ().towerPlaced) {
 				tile = point.currentTile;
 
 				if (!hologram) {
-					go = Instantiate (Resources.Load ("Prefabs/Towers/Ballistics"), tile.transform.position, tile.transform.rotation) as GameObject;
+					go = Instantiate (Resources.Load ("Prefabs/Towers/CannonTower"), tile.transform.position, tile.transform.rotation) as GameObject;
 
 					Ballistics bal = go.GetComponentInChildren<Ballistics> ();
 					bal.enabled = false;
@@ -77,7 +95,7 @@ public class ballistaUI : MonoBehaviour {
 				if (tile != null) {
 					if (tile.GetComponent<NodePath> ().pathType == NodePath.PathType.Grass && !tile.GetComponent<NodePath> ().towerPlaced) {
 						if (GameObject.FindObjectOfType<GameManager> ().gold - cost > 0) {
-							Instantiate (Resources.Load ("Prefabs/Towers/Ballistics"), tile.transform.position, tile.transform.rotation);
+							Instantiate (Resources.Load ("Prefabs/Towers/CannonTower"), tile.transform.position, tile.transform.rotation);
 							tile.GetComponent<NodePath> ().towerPlaced = true;
 							GameObject.FindObjectOfType<GameManager> ().RemoveGold (cost);
 						}
