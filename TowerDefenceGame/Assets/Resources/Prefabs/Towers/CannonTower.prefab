@@ -41,6 +41,7 @@ GameObject:
   - 4: {fileID: 459118}
   - 33: {fileID: 3359120}
   - 23: {fileID: 2359120}
+  - 65: {fileID: 6577890}
   m_Layer: 0
   m_Name: CannonTower
   m_TagString: Balista
@@ -131,7 +132,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 159118}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.5906384, y: 2.66872553e-16, z: -11.0188713}
+  m_LocalPosition: {x: 9.28659058, y: 8.94974995, z: 27.4938793}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 459116}
@@ -258,6 +259,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 159124}
   m_Mesh: {fileID: 4300002, guid: e4aedd2eb3bd6ac489ce3a933011f443, type: 3}
+--- !u!65 &6577890
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 159118}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.4000001, y: 3, z: 2.4000001}
+  m_Center: {x: 0, y: 1.5, z: 0}
 --- !u!111 &11169612
 Animation:
   m_ObjectHideFlags: 1

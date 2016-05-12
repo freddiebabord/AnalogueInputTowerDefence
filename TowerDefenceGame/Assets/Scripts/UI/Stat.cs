@@ -11,9 +11,7 @@ public class Stat : MonoBehaviour {
 	ArrowUI arr;
 
 	Pointer point;
-
-	TowerPlacement tower;
-
+	
 	GameObject tile;
 
 	GameObject go;
@@ -30,7 +28,6 @@ public class Stat : MonoBehaviour {
 	void Start () {
 
 		point = GameObject.FindObjectOfType<Pointer> ();
-		tower = GameObject.FindObjectOfType<TowerPlacement> ();
 		statUI = GameObject.FindGameObjectWithTag("Info");
 
 		magic = GameObject.FindObjectOfType<Magic> ();
@@ -164,7 +161,6 @@ public class Stat : MonoBehaviour {
 
 	public void GetStats()
 	{
-		point.placeTower = !point.placeTower;
 		stats = !stats;
 	}
 

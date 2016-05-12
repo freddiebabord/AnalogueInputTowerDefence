@@ -9,6 +9,8 @@ public class Pointer : MonoBehaviour {
 	public bool placeTower = false;
 	public bool placeTile = false;
 
+	GameObject go;
+
 	RectTransform rt;
     AnalogueButtons selectedButton;
     public GameObject currentTile;
@@ -94,50 +96,52 @@ public class Pointer : MonoBehaviour {
 			}
 		}
 
-		if (placeTower || placeTile) 
-		{
-            if (!overUI)
+        if (!overUI)
+        {
+            Ray screenToGround = new Ray(transform.position, transform.forward);
+            RaycastHit hit;
+            if (Physics.Raycast(screenToGround, out hit, 150))
             {
-                Ray screenToGround = new Ray(transform.position, transform.forward);
-                RaycastHit hit;
-                if (Physics.Raycast(screenToGround, out hit, 150))
+                Debug.DrawLine(transform.position, hit.transform.position, Color.yellow);
+                if (hit.collider.gameObject.GetComponentInChildren<TowerClass>() && AnalogueInput.GetRightTrigger() >= 1)
                 {
-                    Debug.DrawLine(transform.position, hit.transform.position, Color.yellow);
-                    if (hit.collider.gameObject.GetComponent<TowerClass>())
-                    {
-                        TowerClass tc = hit.collider.gameObject.GetComponent<TowerClass>();
-                        towerInfo.SetActive(true);
-                        towerName.text = tc.name;
-                        towerLevel.text = "Level: " + tc.GetLevel();
-                        towerDamage.text = "Health: " + Mathf.RoundToInt(tc.GetHealth());
-                    } 
-                    else if (hit.collider.gameObject.GetComponent<NodePath>())
-                    {
-                        if (currentTile != hit.collider.gameObject)
-                        {
-                            if (hit.collider.gameObject.GetComponent<NodePath>().pathType == NodePath.PathType.Grass)
-                            {
-                                if (currentTile != null)
-                                    currentTile.renderer.material.SetColor("_DiffuseColour", currentTileOriginalColour);
-                                currentTile = hit.collider.gameObject;
-                                currentTileOriginalColour = currentTile.renderer.material.GetColor("_DiffuseColour");
-                                currentTile.renderer.material.SetColor("_DiffuseColour", new Color(0, 1, 0, 1));
-                            }
-                            else
-                            {
-                                if (currentTile != null)
-                                    currentTile.renderer.material.SetColor("_DiffuseColour", currentTileOriginalColour);
-                                currentTile = hit.collider.gameObject;
-                                currentTileOriginalColour = currentTile.renderer.material.GetColor("_DiffuseColour");
-                                currentTile.renderer.material.SetColor("_DiffuseColour", new Color(1, 0, 0, 1));
+                    TowerClass tc = hit.collider.gameObject.GetComponentInChildren<TowerClass>();
+                    towerInfo.SetActive(true);
+                    towerName.text = hit.collider.gameObject.name;
+                    towerLevel.text = "Level: " + tc.GetLevel();
+                    towerDamage.text = "Health: " + Mathf.RoundToInt(tc.GetHealth());
 
-                                
-                            }
-                        }
-                    }
+					go = hit.collider.gameObject;
+                } 
+                else if (hit.collider.gameObject.GetComponent<NodePath>())
+                {
+					if(placeTower)
+					{
+	                    if (currentTile != hit.collider.gameObject)
+	                    {
+	                        if (hit.collider.gameObject.GetComponent<NodePath>().pathType == NodePath.PathType.Grass)
+	                        {
+	                            if (currentTile != null)
+	                                currentTile.renderer.material.SetColor("_DiffuseColour", currentTileOriginalColour);
+	                            currentTile = hit.collider.gameObject;
+	                            currentTileOriginalColour = currentTile.renderer.material.GetColor("_DiffuseColour");
+	                            currentTile.renderer.material.SetColor("_DiffuseColour", new Color(0, 1, 0, 1));
+	                        }
+	                        else
+	                        {
+	                            if (currentTile != null)
+	                                currentTile.renderer.material.SetColor("_DiffuseColour", currentTileOriginalColour);
+	                            currentTile = hit.collider.gameObject;
+	                            currentTileOriginalColour = currentTile.renderer.material.GetColor("_DiffuseColour");
+	                            currentTile.renderer.material.SetColor("_DiffuseColour", new Color(1, 0, 0, 1));
+
+	                                
+	                        }
+	                    }
+					}
                 }
             }
-		}
+        }
         else if(currentTile)
         {
             currentTile.renderer.material.SetColor("_DiffuseColour", currentTileOriginalColour);
@@ -171,5 +175,70 @@ public class Pointer : MonoBehaviour {
 
 		pointer.Reset ();
 
+	}
+
+	public void Sell()
+	{
+		if (go != null) 
+		{
+
+			if (go.tag == "Arrow") 
+			{
+				var bui = GameObject.FindObjectOfType<ArrowUI> ();
+			
+				float gold = bui.cost - (10 * (bui.cost / bui.cost));
+				GameManager.Instance.AddGold (gold);
+				GameObject tiley = SearchTile (go.gameObject.transform.position);
+				tiley.GetComponent<NodePath> ().towerPlaced = false;
+				Destroy (go);
+			} 
+			else if (go.tag == "Mage") 
+			{
+				var bui = GameObject.FindObjectOfType<Magic> ();
+			
+				float gold = bui.cost - (10 * (bui.cost / bui.cost));
+				GameManager.Instance.AddGold (gold);
+				GameObject tiley = SearchTile (go.gameObject.transform.position);
+				tiley.GetComponent<NodePath> ().towerPlaced = false;
+				Destroy (go);
+			} 
+			else if (go.tag == "Balista") 
+			{
+				var bui = GameObject.FindObjectOfType<ballistaUI> ();
+			
+				float gold = bui.cost - (10 * (bui.cost / bui.cost));
+				GameManager.Instance.AddGold (gold);
+				GameObject tiley = SearchTile (go.gameObject.transform.position);
+				tiley.GetComponent<NodePath> ().towerPlaced = false;
+				Destroy (go);
+			
+			} 
+			else if (go.tag == "Freeze") 
+			{
+				var bui = GameObject.FindObjectOfType<Ice> ();
+			
+				float gold = bui.cost - (10 * (bui.cost / bui.cost));
+				GameManager.Instance.AddGold (gold);
+				GameObject tiley = SearchTile (go.gameObject.transform.position);
+				tiley.GetComponent<NodePath> ().towerPlaced = false;
+				Destroy (go);
+			
+			}
+		}
+	}
+
+	GameObject SearchTile(Vector3 pos)
+	{
+		GameObject[] tiles = GameObject.FindGameObjectsWithTag ("Grass");
+		
+		foreach (GameObject t in tiles) 
+		{
+			if(t.transform.position == pos)
+				return t;
+			else
+				continue;
+		}
+		
+		return null;
 	}
 }
