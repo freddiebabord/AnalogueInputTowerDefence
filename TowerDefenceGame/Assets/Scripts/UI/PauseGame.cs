@@ -5,13 +5,13 @@ public class PauseGame : MonoBehaviour {
 
     public GameObject panel;
     public Animation pauseAnimation;
-
+	public GameObject optionsPanel;
 
     public void Pause()
     {
         panel.SetActive(true);
         pauseAnimation.Play();
-        Time.timeScale = 0.0f;
+        Time.timeScale = 0.0001f;
     }
 
     public void Unpause()
@@ -26,5 +26,10 @@ public class PauseGame : MonoBehaviour {
         Application.LoadLevel(0);
         Destroy(GameObject.FindObjectOfType<GameManager>().gameObject);
     }
+
+	public void ShowOptions()
+	{
+		optionsPanel.SetActive (true);
+	}
 
 }
