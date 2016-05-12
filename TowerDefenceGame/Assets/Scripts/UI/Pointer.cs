@@ -11,10 +11,8 @@ public class Pointer : MonoBehaviour {
 
 	RectTransform rt;
     List<AnalogueButtons> selectedButtons = new List<AnalogueButtons>();
-    GameObject latSelected;
     public GameObject currentTile;
     Color currentTileOriginalColour;
-    public float pointerSpeed = 5.0f;
     public string horizontalAxis = "HorizontalLeft";
     public string verticalAxis = "VerticalLeft";
     CameraController cameraController;
@@ -51,22 +49,22 @@ public class Pointer : MonoBehaviour {
         
         overUI = false;
 
-        if (Input.GetAxis(horizontalAxis) >= 0.1f || Input.GetAxis(horizontalAxis) <= -0.1f)
+		if (AnalogueInput.GetLeftHorizontal() >= 0.1f || AnalogueInput.GetLeftHorizontal() <= -0.1f)
         {
-            if (rt.localPosition.x + Input.GetAxis(horizontalAxis) > -maxHorizontal-1 &&
-                rt.localPosition.x + Input.GetAxis(horizontalAxis) < maxHorizontal+1)
-                transform.Translate(Vector3.right * (invertXAxis ? Input.GetAxis(horizontalAxis) : -Input.GetAxis(horizontalAxis)) * pointerSpeed * Time.unscaledDeltaTime);
+			if (rt.localPosition.x + AnalogueInput.GetLeftHorizontal() > -maxHorizontal-1 &&
+			    rt.localPosition.x + AnalogueInput.GetLeftHorizontal() < maxHorizontal+1)
+				transform.Translate(Vector3.right * (ConfigSettings.Instance.invertXAxis ? AnalogueInput.GetLeftHorizontal() * ConfigSettings.Instance.sensitivity * Time.unscaledDeltaTime : -AnalogueInput.GetLeftHorizontal()) * ConfigSettings.Instance.sensitivity * Time.unscaledDeltaTime);
             else
-                cameraController.TranslatCameraHorisontal(Input.GetAxis(horizontalAxis));
+				cameraController.TranslatCameraHorisontal(AnalogueInput.GetLeftHorizontal());
         }
 
-        if (Input.GetAxis(verticalAxis) >= 0.1f || Input.GetAxis(verticalAxis) <= -0.1f)
+		if (AnalogueInput.GetLeftVertical() >= 0.1f || AnalogueInput.GetLeftVertical() <= -0.1f)
         {
-            if (rt.localPosition.y + Input.GetAxis(verticalAxis) > -maxVertical-1 &&
-                    rt.localPosition.y + Input.GetAxis(verticalAxis) < maxVertical+1)
-                transform.Translate(Vector3.up * (invertYAxis ? Input.GetAxis(verticalAxis) : -Input.GetAxis(verticalAxis)) * pointerSpeed * Time.unscaledDeltaTime);
+			if (rt.localPosition.y + AnalogueInput.GetLeftVertical() > -maxVertical-1 &&
+			    rt.localPosition.y + AnalogueInput.GetLeftVertical() < maxVertical+1)
+				transform.Translate(Vector3.up * (ConfigSettings.Instance.invertYAxis ? AnalogueInput.GetLeftVertical() * ConfigSettings.Instance.sensitivity * Time.unscaledDeltaTime : -AnalogueInput.GetLeftVertical()) * ConfigSettings.Instance.sensitivity * Time.unscaledDeltaTime);
             else
-                cameraController.TranslatCameraVertical(Input.GetAxis(verticalAxis));
+				cameraController.TranslatCameraVertical(AnalogueInput.GetLeftVertical());
         }
         
         
@@ -86,6 +84,7 @@ public class Pointer : MonoBehaviour {
                     {
                         selectedButtons.Add(raycastResults[i].gameObject.GetComponent<AnalogueButtons>());
                         raycastResults[i].gameObject.GetComponent<AnalogueButtons>().OnSelect();
+						EventSystem.current.SetSelectedGameObject (raycastResults [i].gameObject);
                     }
                 }
             }
@@ -146,9 +145,9 @@ public class Pointer : MonoBehaviour {
 
 
         // Simulation of click event
-        if(Input.GetAxis("TriggerSelectRight") >= 1)
+		if(AnalogueInput.GetRightTrigger() >= 1)
         {
-            if (Input.GetAxis("TriggerSelectLeft") >= 1)
+			if (AnalogueInput.GetLeftTrigger() >= 1)
             {
                 transform.localPosition = new Vector3(0, 0, 0);
             }
@@ -167,19 +166,15 @@ public class Pointer : MonoBehaviour {
             } 
         }
 
+
         foreach (AnalogueButtons button in selectedButtons)
         {
             if (!button.clicked)
                 button.OnDeselect();
         }
-
+		pointer.Reset ();
+		pointer
         selectedButtons.Clear();
-
-        // Hack to prevent mouse clicks
-        //if (EventSystem.current.currentSelectedGameObject == null)
-        //    EventSystem.current.SetSelectedGameObject(latSelected);
-        //else
-        //    latSelected = EventSystem.current.currentSelectedGameObject;
 
 	}
 }

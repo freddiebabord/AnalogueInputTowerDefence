@@ -22,23 +22,23 @@ public class CameraController : MonoBehaviour {
 	void Update () {
         if (shouldBeActive)
         {
-            if (Input.GetAxis("HorizontalRight") >= 0.1f || Input.GetAxis("HorizontalRight") <= -0.1f)
-                transform.Translate(Vector3.right * (invertXAxis ? Input.GetAxis("HorizontalRight") : -Input.GetAxis("HorizontalRight")) * movementSpeed * Time.deltaTime);
-            if (Input.GetAxis("VerticalRight") >= 0.1f || Input.GetAxis("VerticalRight") <= -0.1f)
-                transform.Translate(Vector3.Normalize(Vector3.up + Vector3.forward) * (invertYAxis ? Input.GetAxis("VerticalRight") : -Input.GetAxis("VerticalRight")) * movementSpeed * Time.deltaTime);
+			if (AnalogueInput.GetRightHorizontal() >= 0.1f || AnalogueInput.GetRightHorizontal() <= -0.1f)
+				transform.Translate(Vector3.right * (ConfigSettings.Instance.invertXAxis ? AnalogueInput.GetRightHorizontal() : -AnalogueInput.GetRightHorizontal()) * ConfigSettings.Instance.sensitivity * Time.unscaledDeltaTime);
+			if (AnalogueInput.GetRightVertical() >= 0.1f || AnalogueInput.GetRightVertical() <= -0.1f)
+				transform.Translate(Vector3.Normalize(Vector3.up + Vector3.forward) * (ConfigSettings.Instance.invertYAxis ? AnalogueInput.GetRightVertical() : -AnalogueInput.GetRightVertical()) * ConfigSettings.Instance.sensitivity * Time.unscaledDeltaTime);
         }
     }
 
     public void TranslatCameraHorisontal(float mag)
     {
         if (shouldBeActive)
-            transform.Translate(Vector3.right * mag * movementSpeed * Time.deltaTime);
+			transform.Translate(Vector3.right * (ConfigSettings.Instance.invertXAxis ? mag : -mag) * ConfigSettings.Instance.sensitivity * Time.unscaledDeltaTime);
     }
 
     public void TranslatCameraVertical(float mag)
     {
         if(shouldBeActive)
-            transform.Translate(Vector3.Normalize(Vector3.up + Vector3.forward) * (invertYAxis ? mag : -mag) * movementSpeed * Time.deltaTime);
+			transform.Translate(Vector3.Normalize(Vector3.up + Vector3.forward) * (ConfigSettings.Instance.invertYAxis ? mag : -mag) * ConfigSettings.Instance.sensitivity * Time.unscaledDeltaTime);
     }
     IEnumerator WaitForMapReady()
     {

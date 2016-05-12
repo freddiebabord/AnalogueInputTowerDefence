@@ -10,10 +10,13 @@ public class MainMenu : MonoBehaviour {
 
 	private bool showDifficultyPanel = false;
     private bool showingCredits = false;
+	private bool showingOptions = false;
+	public bool showOptions{ set { showingOptions = value; } }
 	public bool ShowingDifficultyPanel{ get { return showDifficultyPanel; } }
 
     public Transition eoltransition;
     public Transition difficultyTransition;
+	public GameObject optionsPanel;
 
     public void Start()
     {
@@ -32,6 +35,8 @@ public class MainMenu : MonoBehaviour {
 				HideCanvas();
             if (showingCredits)
                 HideCredits();
+			if(showingOptions)
+				HideOptions();
 		}
 	}
 
@@ -70,6 +75,20 @@ public class MainMenu : MonoBehaviour {
 		creditsPanel.SetActive (false);
 		GetComponent<Levels> ().EnableButtons ();
         showingCredits = false;
+	}
+
+	public void ShowOptions()
+	{
+		optionsPanel.SetActive (true);
+		GetComponent<Levels> ().DisableButtons ();
+		showingOptions = true;
+	}
+	
+	public void HideOptions()
+	{
+		optionsPanel.SetActive (false);
+		GetComponent<Levels> ().EnableButtons ();
+		showingOptions = false;
 	}
 
     public void Dificulty(int difficulty)
