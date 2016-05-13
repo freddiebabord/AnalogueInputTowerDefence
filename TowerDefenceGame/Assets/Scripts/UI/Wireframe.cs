@@ -1,12 +1,12 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿//using UnityEngine;
+//using System.Collections;
 
-public class Wireframe : MonoBehaviour {
+//public class Wireframe : MonoBehaviour {
 
-	void OnPreRender() {
-		GL.wireframe = true;
-	}
-	void OnPostRender() {
-		GL.wireframe = false;
-	}
-}
+//    void OnPreRender() {
+//        GL.wireframe = true;
+//    }
+//    void OnPostRender() {
+//        GL.wireframe = false;
+//    }
+//}

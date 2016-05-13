@@ -6,7 +6,7 @@ using System.Linq;
 public class TowerPlacement : MonoBehaviour {
 
 	public bool isTrue = false;
-    public Animation animation;
+    public Animation m_animation;
 
 	GameObject panel;
     bool isPlaying = false;
@@ -38,7 +38,8 @@ public class TowerPlacement : MonoBehaviour {
     {
         isTrue = false;
         done = false;
-        animation.Play();
+        if (m_animation)
+            m_animation.Play();
         StartCoroutine(waitForAnimComplete(false));
         done = true;
     }
@@ -54,7 +55,7 @@ public class TowerPlacement : MonoBehaviour {
 
     IEnumerator WaitForAnimOpencomplete()
     {
-        while (animation.isPlaying)
+        while (m_animation.isPlaying)
             yield return null;
     }
 
@@ -72,7 +73,7 @@ public class TowerPlacement : MonoBehaviour {
             b.interactable = false;
         if (enable_)
         {
-            while (animation.isPlaying)
+            while (m_animation.isPlaying)
                 yield return null;
             panel.SetActive(true);
         }

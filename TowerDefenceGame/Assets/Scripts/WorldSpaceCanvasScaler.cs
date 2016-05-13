@@ -10,7 +10,7 @@ public class WorldSpaceCanvasScaler : UIBehaviour
 {
     float height, width;
     CanvasScaler scalar;
-    Pointer pointer;
+    Pointer pointer = null;
 
     protected WorldSpaceCanvasScaler() { }
 
@@ -19,6 +19,7 @@ public class WorldSpaceCanvasScaler : UIBehaviour
         base.OnEnable();
         scalar = GetComponent<CanvasScaler>();
     }
+
     public virtual void UpdateSize()
     {
         height = 2f * Camera.main.orthographicSize;

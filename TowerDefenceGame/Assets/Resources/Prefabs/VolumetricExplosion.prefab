@@ -210,8 +210,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   loopduration: 3
   fadeDuration: 5
-  explosionDamage: 10
-  radius: 3
+  explosionDamage: 5
+  radius: 1
 --- !u!198 &19876704
 ParticleSystem:
   m_ObjectHideFlags: 1

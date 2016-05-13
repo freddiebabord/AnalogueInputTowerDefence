@@ -160,6 +160,14 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1345411215}
+    - target: {fileID: 11453868, guid: 33962e6b8fa23424c81b20e6f75d54f9, type: 2}
+      propertyPath: m_Transition
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 11453874, guid: 33962e6b8fa23424c81b20e6f75d54f9, type: 2}
+      propertyPath: m_Transition
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 33962e6b8fa23424c81b20e6f75d54f9, type: 2}
   m_RootGameObject: {fileID: 1628616895}
@@ -12852,6 +12860,7 @@ GameObject:
   - 222: {fileID: 2034378059}
   - 114: {fileID: 2034378058}
   - 114: {fileID: 2034378057}
+  - 95: {fileID: 2034378060}
   m_Layer: 0
   m_Name: SurvivalButton
   m_TagString: Untagged
@@ -12896,7 +12905,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 3
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: .816176474, g: 0, b: 0, a: 1}
@@ -12964,6 +12973,21 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 1567136}
   m_GameObject: {fileID: 2034378055}
+--- !u!95 &2034378060
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2034378055}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b9804072ca40409479914d6a1eb85376, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &2052944207
 GameObject:
   m_ObjectHideFlags: 0
@@ -13623,6 +13647,7 @@ GameObject:
   - 222: {fileID: 2142304036}
   - 114: {fileID: 2142304035}
   - 114: {fileID: 2142304034}
+  - 95: {fileID: 2142304037}
   m_Layer: 0
   m_Name: MapMakerButton
   m_TagString: Untagged
@@ -13667,7 +13692,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 3
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: .816176474, g: 0, b: 0, a: 1}
@@ -13735,3 +13760,18 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 1567136}
   m_GameObject: {fileID: 2142304032}
+--- !u!95 &2142304037
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2142304032}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b9804072ca40409479914d6a1eb85376, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1

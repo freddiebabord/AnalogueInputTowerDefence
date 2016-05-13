@@ -8,15 +8,9 @@ public class TileBase : MonoBehaviour {
 	Vector3 Temp;
 	int RowX;
 	int RowZ;
-    RailManager railManager;
 	bool hasStart = false;
 	bool hasEnd = false;
-
-	// Use this for initialization
-	void Start () {
-        railManager = GameObject.FindObjectOfType<RailManager>();
-
-	}
+    
 	
 	// Update is called once per frame
 	void Update () {

@@ -645,7 +645,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 181982}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 11.0595388, y: .400000006, z: 23.7842045}
+  m_LocalPosition: {x: -8.98658752, y: .400000006, z: -.876426697}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 481948}
@@ -1584,8 +1584,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 877d17404a103714ab22c83a7df85c36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 1000
-  speed: 15
+  hp: 500
+  speed: 8
   damage: 50
   flying: 0
   goldDrop: 21
@@ -1619,7 +1619,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .5
+  m_Radius: 5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!198 &19822964
 ParticleSystem:

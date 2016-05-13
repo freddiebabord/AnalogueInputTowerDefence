@@ -46,7 +46,7 @@ public class RailManager : MonoBehaviour {
     private bool multiThreadWave = false;
     Task task;
 
-    RailSystemThread railThread = new RailSystemThread();
+    //RailSystemThread railThread = new RailSystemThread();
     GameManager gameManager;
 
 
