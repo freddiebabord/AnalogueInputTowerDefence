@@ -599,9 +599,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_currentTarget: {fileID: 0}
+  m_classMultiplyer: 1
   m_rotationSpeed: 4
   m_rotationPoint: {fileID: 117058}
-  m_explosion: {fileID: 0}
+  m_explosion: {fileID: 178182, guid: 533c0a880d4a7a5478deca0dc5644c34, type: 2}
   m_rangeIndicator: {fileID: 154246}
   m_damage: 10
   m_spawnPoint: {fileID: 409512}

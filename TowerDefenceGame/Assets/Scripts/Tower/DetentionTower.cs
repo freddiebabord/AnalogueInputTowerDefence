@@ -18,7 +18,7 @@ class DetentionTower : TowerBase
             if (enemy)
             {
                 AIBase ai = enemy.GetComponent<AIBase>();
-                ai.ApplyDamage(10);
+                ai.ApplyDamage(10 + (2 * m_level));
                 if (ai.Speed >= 3)
                     ai.Speed /= 2;
             }

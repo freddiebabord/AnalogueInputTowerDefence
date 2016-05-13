@@ -213,22 +213,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &157358
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 457352}
-  - 114: {fileID: 11457360}
-  m_Layer: 0
-  m_Name: Upgrading
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
 --- !u!1 &157360
 GameObject:
   m_ObjectHideFlags: 0
@@ -569,22 +553,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &157398
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 457356}
-  - 114: {fileID: 11457424}
-  m_Layer: 0
-  m_Name: Ballisticsa
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
 --- !u!1 &157400
 GameObject:
   m_ObjectHideFlags: 1
@@ -602,22 +570,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &157404
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 457358}
-  - 114: {fileID: 11457430}
-  m_Layer: 0
-  m_Name: Arrows
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
 --- !u!1 &157406
 GameObject:
   m_ObjectHideFlags: 1
@@ -636,22 +588,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &157408
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 457360}
-  - 114: {fileID: 11457436}
-  m_Layer: 0
-  m_Name: Mage
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
 --- !u!1 &157412
 GameObject:
   m_ObjectHideFlags: 1
@@ -683,22 +619,6 @@ GameObject:
   m_Layer: 0
   m_Name: TowerInfo
   m_TagString: Info
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &157416
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 457362}
-  - 114: {fileID: 11457446}
-  m_Layer: 0
-  m_Name: Statistics
-  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -883,38 +803,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &157438
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 457366}
-  - 114: {fileID: 11457474}
-  m_Layer: 0
-  m_Name: PlaceTowers
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!1 &157440
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 457368}
-  - 114: {fileID: 11457476}
-  m_Layer: 0
-  m_Name: Icy
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
 --- !u!1 &157442
 GameObject:
   m_ObjectHideFlags: 1
@@ -1395,18 +1283,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &457352
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 157358}
-  m_LocalRotation: {x: -.176703557, y: .819491148, z: -.339444399, w: .426600069}
-  m_LocalPosition: {x: 2.82999992, y: -7.78000021, z: -14.75}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 457364}
-  m_RootOrder: 8
 --- !u!4 &457354
 Transform:
   m_ObjectHideFlags: 1
@@ -1419,54 +1295,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 457364}
   m_RootOrder: 1
---- !u!4 &457356
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 157398}
-  m_LocalRotation: {x: -6.35683639e-09, y: 5.0581157e-09, z: 1.22113697e-08, w: 1}
-  m_LocalPosition: {x: -8.19346237, y: 1.65477765, z: -6.57768393}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 457364}
-  m_RootOrder: 5
---- !u!4 &457358
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 157404}
-  m_LocalRotation: {x: -6.35683639e-09, y: 5.0581157e-09, z: 1.22113697e-08, w: 1}
-  m_LocalPosition: {x: -8.19346237, y: 1.65477765, z: -6.57768393}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 457364}
-  m_RootOrder: 6
---- !u!4 &457360
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 157408}
-  m_LocalRotation: {x: -6.35683639e-09, y: 5.0581157e-09, z: 1.22113697e-08, w: 1}
-  m_LocalPosition: {x: -4.77458048, y: -.348446041, z: -9.06134701}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 457364}
-  m_RootOrder: 3
---- !u!4 &457362
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 157416}
-  m_LocalRotation: {x: -.176703557, y: .819491148, z: -.339444399, w: .426600069}
-  m_LocalPosition: {x: -.825619876, y: -5.97463655, z: -12.9461851}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 457364}
-  m_RootOrder: 7
 --- !u!4 &457364
 Transform:
   m_ObjectHideFlags: 1
@@ -1479,39 +1307,8 @@ Transform:
   m_Children:
   - {fileID: 22457382}
   - {fileID: 457354}
-  - {fileID: 457366}
-  - {fileID: 457360}
-  - {fileID: 457368}
-  - {fileID: 457356}
-  - {fileID: 457358}
-  - {fileID: 457362}
-  - {fileID: 457352}
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!4 &457366
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 157438}
-  m_LocalRotation: {x: -.176703557, y: .819491148, z: -.339444399, w: .426600069}
-  m_LocalPosition: {x: 1.37180805, y: -3.25578237, z: 6.01381063}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 457364}
-  m_RootOrder: 2
---- !u!4 &457368
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 157440}
-  m_LocalRotation: {x: -6.35683639e-09, y: 5.0581157e-09, z: 1.22113697e-08, w: 1}
-  m_LocalPosition: {x: -8.19346237, y: 1.65477765, z: -6.57768393}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 457364}
-  m_RootOrder: 4
 --- !u!20 &2057352
 Camera:
   m_ObjectHideFlags: 1
@@ -2377,27 +2174,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'Damage: 50'
---- !u!114 &11457360
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 157358}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f55699077786eb642b6d6dd2f72a7137, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bullet: {fileID: 0}
-  spawnPoint: {fileID: 0}
-  health: 100
-  upgradable: 0
-  radius: 6
-  speed: 0
-  exp: 0
-  cost: 100
-  upgradePressed: 0
-  tile: {fileID: 0}
 --- !u!114 &11457362
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2568,8 +2344,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11457446}
-        m_MethodName: Upgrading
+      - m_Target: {fileID: 11492614}
+        m_MethodName: UpgradeTower
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2671,8 +2447,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11457432}
-        m_MethodName: Sell
+      - m_Target: {fileID: 11492614}
+        m_MethodName: SellTower
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3216,20 +2992,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Arrow
---- !u!114 &11457424
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 157398}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bc4a094c18409b40ac5cf271a043efd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hologram: 0
-  ballista: 0
-  cost: 150
 --- !u!114 &11457426
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3256,20 +3018,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: $150
---- !u!114 &11457430
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 157404}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77f03a4392d5c4541997411ea66732c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hologram: 0
-  arrow: 0
-  cost: 100
 --- !u!114 &11457432
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3283,6 +3031,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   placeTower: 0
   placeTile: 0
+  selectedTower: {fileID: 0}
   currentTile: {fileID: 0}
   maxHorizontal: 18
   maxVertical: 9
@@ -3290,6 +3039,7 @@ MonoBehaviour:
   towerName: {fileID: 11457402}
   towerLevel: {fileID: 11457378}
   towerDamage: {fileID: 11457358}
+  selectedTowerEffect: {fileID: 0}
   invertXAxis: 1
   invertYAxis: 1
 --- !u!114 &11457434
@@ -3313,20 +3063,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &11457436
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 157408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a021059e04d3c1f4f97bf076cd1b7880, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hologram: 0
-  mage: 0
-  cost: 100
 --- !u!114 &11457442
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3369,22 +3105,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &11457446
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 157416}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fc75d7764fb49f4c823e8bd1851fa5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  name: {fileID: 11457402}
-  level: {fileID: 11457378}
-  damage: {fileID: 11457358}
-  upgradeButton: {fileID: 157364}
-  stats: 0
 --- !u!114 &11457448
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3713,7 +3433,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11457474}
+      - m_Target: {fileID: 0}
         m_MethodName: Placement
         m_Mode: 1
         m_Arguments:
@@ -3751,33 +3471,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &11457474
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 157438}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c791849f985fdb419cc93115f105a59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isTrue: 0
-  animation: {fileID: 11177850}
---- !u!114 &11457476
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 157440}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9069c4d1e4519784fbd271f35169778d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hologram: 0
-  ice: 0
-  cost: 200
 --- !u!114 &11457478
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4806,6 +4499,7 @@ MonoBehaviour:
   m_holoColour: {r: .602941155, g: .98356992, b: 1, a: .517647088}
   m_normalColor: {r: 1, g: .433823526, b: .433823526, a: 1}
   m_currentItem: 0
+  UpgradeButton: {fileID: 11457374}
 --- !u!114 &11494644
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5871,7 +5565,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 8.54350281, y: 1.91158748}
+  m_AnchoredPosition: {x: 9.46000004, y: 1.90999997}
   m_SizeDelta: {x: 17.0978203, y: 2.72999954}
   m_Pivot: {x: .5, y: .5}
 --- !u!224 &22457404
@@ -5881,8 +5575,8 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 157414}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: .545403063, y: .545403063, z: .545403063}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalScale: {x: .62853688, y: .628537059, z: .628537059}
   m_Children:
   - {fileID: 22457360}
   - {fileID: 22457380}
@@ -5893,7 +5587,7 @@ RectTransform:
   m_RootOrder: 4
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -16.5599995, y: 8.55000019}
+  m_AnchoredPosition: {x: -15.3999996, y: 8.31999969}
   m_SizeDelta: {x: -28.5725002, y: -13.6525002}
   m_Pivot: {x: .5, y: .5}
 --- !u!224 &22457406
@@ -5920,7 +5614,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 157420}
   m_LocalRotation: {x: -7.0497542e-08, y: -1.95364905e-07, z: -5.40730468e-07, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 5.47189984e-07}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 22457422}
@@ -5928,7 +5622,7 @@ RectTransform:
   m_RootOrder: 5
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1, y: -1}
+  m_AnchoredPosition: {x: -1.67999995, y: -1}
   m_SizeDelta: {x: 2, y: 2}
   m_Pivot: {x: .5, y: .5}
 --- !u!224 &22457410
@@ -6033,7 +5727,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 157434}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 22457414}
@@ -6041,7 +5735,7 @@ RectTransform:
   m_RootOrder: 1
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: -16.5799999, y: -8.15999985}
+  m_AnchoredPosition: {x: -15.6300001, y: -8.15999985}
   m_SizeDelta: {x: 5, y: 3}
   m_Pivot: {x: .5, y: .5}
 --- !u!224 &22457422

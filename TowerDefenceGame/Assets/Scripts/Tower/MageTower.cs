@@ -22,7 +22,7 @@ class MageTower : TowerBase
         if (m_currentTarget)
         {
             line.SetPosition(1, m_currentTarget.transform.position);
-            m_currentTarget.BroadcastMessage("ApplyDamage", m_damage);
+            m_currentTarget.BroadcastMessage("ApplyDamage", m_damage + (10 * m_level));
             line.enabled = true;
         }
         else

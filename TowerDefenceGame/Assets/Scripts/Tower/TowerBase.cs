@@ -13,6 +13,7 @@ public class TowerBase : MonoBehaviour
     [SerializeField]protected GameObject m_currentTarget = null;
     protected List<GameObject> m_tragetList = new List<GameObject>();
 
+    public int m_classMultiplyer = 1;
     public float m_rotationSpeed = 4f;
     public GameObject m_rotationPoint = null;
     public GameObject m_explosion = null;
@@ -36,6 +37,8 @@ public class TowerBase : MonoBehaviour
 
     public float Health { get { return m_health; } set { m_health = value * m_level; } }
     public int Cost { get { return m_cost; } }
+    public int Level { get { return m_level; } }
+    public bool Upgradable { get { return m_upgradable; } }
     public NodePath Tile { set { m_pathTile = value; } get { return m_pathTile; } }
     // --------------------- PROPERTIES ---------------------
 
@@ -66,6 +69,9 @@ public class TowerBase : MonoBehaviour
             m_isAttacking = true;
             StartCoroutine(Attack());
         }
+
+        if (m_xp >= 1000 * m_level)
+            m_upgradable = true;
 
         if (m_health < 0)
             Die();
@@ -128,7 +134,13 @@ public class TowerBase : MonoBehaviour
 
     public virtual void Upgrade()
     {
-        m_xp = 1000 * m_level;
+        if (m_upgradable)
+        {
+            m_level++;
+            m_health = 100 + (m_level * m_classMultiplyer);
+            m_xp = 0;
+            m_upgradable = false;
+        }
     }
 
     protected virtual GameObject GetClosestEnemy() 
@@ -150,7 +162,7 @@ public class TowerBase : MonoBehaviour
         return currentClosest; 
     }
 
-    protected virtual void Die()
+    public virtual void Die()
     {
         if (m_pathTile)
         {

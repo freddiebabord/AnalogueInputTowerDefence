@@ -194,7 +194,7 @@ public class WaveManager : MonoBehaviour {
 				aiNodePathing.AddEntity(obj);
 				obj.SetActive(false);
 			}
-			hasStarted = true;
+            StartCoroutine(WaitToStart());
         }
         else
             StartProcedural(difficulty_);
@@ -204,17 +204,6 @@ public class WaveManager : MonoBehaviour {
     {
         difficulty = difficulty_;
         maxWaves++;
-        //int waveType = UnityEngine.Random.Range(0, 400);
-		
-        //if (waveType < 200)
-        //    rand = MobWave.WaveType.Basic;
-        //else if (waveType < 250)
-        //    rand = MobWave.WaveType.Medium;
-        //else if (waveType < 300)
-        //    rand = MobWave.WaveType.Heavy;
-        //else
-        //    rand = MobWave.WaveType.Boss;
-
 
         if (currentWave % 11 == 0)
             rand = MobWave.WaveType.Basic;
@@ -261,7 +250,7 @@ public class WaveManager : MonoBehaviour {
                     waveEndTimer = UnityEngine.Random.Range(5, 10)
                 };
                 Waves.Add(MediumbobWave);
-                enemySpawnRate = basicenemySpawnRate / 2;
+                enemySpawnRate = basicenemySpawnRate * 50;
             }
             else
                 StartProcedural(difficulty_);
@@ -278,7 +267,7 @@ public class WaveManager : MonoBehaviour {
                     waveEndTimer = UnityEngine.Random.Range(5, 10)
                 };
                 Waves.Add(HeavybobWave);
-                enemySpawnRate = basicenemySpawnRate * 10;
+                enemySpawnRate = basicenemySpawnRate * 100;
             }
             else
                 StartProcedural(difficulty_);
@@ -295,7 +284,7 @@ public class WaveManager : MonoBehaviour {
                     waveEndTimer = UnityEngine.Random.Range(5, 10)
                 };
                 Waves.Add(BossbobWave);
-                enemySpawnRate = basicenemySpawnRate * 20;
+                enemySpawnRate = basicenemySpawnRate * 200;
             }
             else
                 StartProcedural(difficulty_);
@@ -327,7 +316,13 @@ public class WaveManager : MonoBehaviour {
 			obj.SetActive(false);
 		}
 
-		hasStarted = true;
+        StartCoroutine(WaitToStart());
+    }
+
+    IEnumerator WaitToStart()
+    {
+        yield return new WaitForSeconds(5);
+        hasStarted = true;
     }
 
 }

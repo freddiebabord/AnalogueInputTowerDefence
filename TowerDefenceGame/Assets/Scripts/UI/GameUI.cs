@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -23,6 +24,8 @@ public class GameUI : MonoBehaviour {
     private GameObject m_currentTile;
     private GameObject m_ObjectToPlace;
     GameManager m_gameManager;
+    public Button UpgradeButton;
+    
 
     void Start()
     {
@@ -64,12 +67,21 @@ public class GameUI : MonoBehaviour {
 
             if(AnalogueInput.GetLeftTrigger() >= 1)
             {
-                pointer.placeTower = false;
-                m_shouldPlaceTower = false;
-                Destroy(m_ObjectToPlace);
+                if (pointer.placeTower)
+                {
+                    pointer.placeTower = false;
+                    m_shouldPlaceTower = false;
+                    Destroy(m_ObjectToPlace);
+                }
+                else if (!pointer.towerInfo.activeInHierarchy)
+                    FindObjectOfType<TowerPlacement>().HidePanel();
+
             }
             
         }
+
+        if(pointer.selectedTower)
+            UpgradeButton.interactable = pointer.selectedTower.GetComponent<TowerBase>().Upgradable;
     }
 
     public void SetItem(int item)
@@ -117,8 +129,18 @@ public class GameUI : MonoBehaviour {
         }
     }
 
-    //public void RemoveTower(TowerBase item)
-    //{
-    //    Destroy(item.gameObject);
-    //}
+    public void SellTower()
+    {
+        GameManager.Instance.AddGold(pointer.selectedTower.GetComponent<TowerBase>().Cost * 0.9f);
+        pointer.selectedTower.GetComponent<TowerBase>().Die();
+        pointer.towerInfo.SetActive(false);
+        pointer.selectedTower = null;
+    }
+
+    public void UpgradeTower()
+    {
+        pointer.selectedTower.GetComponent<TowerBase>().Upgrade();
+        pointer.towerLevel.text = "Level: " + pointer.selectedTower.GetComponent<TowerBase>().Level;
+        pointer.towerDamage.text = "Health: " + Mathf.RoundToInt(pointer.selectedTower.GetComponent<TowerBase>().Health);
+    }
 }

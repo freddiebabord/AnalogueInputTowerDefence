@@ -114,10 +114,10 @@ public class GameManager : MonoBehaviour {
         {
             if (levelID != 3)
             {
-                StartCoroutine(WaitToStart());
                 TileBase tb = FindObjectOfType<TileBase>();
                 tb.CreateMap(Application.dataPath + @"\Levels\" + map + ".txt");
                 goldQuantity = 500;
+                StartCoroutine(WaitToStart());
             }
             else
                 Destroy(gameObject);
@@ -135,7 +135,7 @@ public class GameManager : MonoBehaviour {
     IEnumerator WaitToStart()
     {
 
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(10);
         waveSystem = GameObject.FindObjectOfType<WaveManager>();
         if (waveSystem)
         switch (gameType)

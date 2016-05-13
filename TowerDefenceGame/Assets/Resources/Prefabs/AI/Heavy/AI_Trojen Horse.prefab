@@ -520,7 +520,7 @@ MonoBehaviour:
   currentNodeTarget: {x: 0, y: 0, z: 0}
   railUpdatingEntity: 0
   shadow: {fileID: 0}
-  explosion: {fileID: 0}
+  explosion: {fileID: 198470, guid: bd48a2a3e06d05d498643d5af81a45db, type: 2}
   screemEffect: {fileID: 0}
   altScreemEffect: {fileID: 0}
   objectToSpawn: {fileID: 177038, guid: 05533e472bf967b46a04cd26599e7996, type: 2}
