@@ -18,7 +18,6 @@ public class GameUI : MonoBehaviour {
     public Items m_currentItem = Items.Magic;
     private Items m_previousItem = Items.Magic;
     private bool m_shouldPlaceTower = false;
-    private bool m_playingPlaceItemButtonAnimation = false;
     
     private Pointer pointer;
     private GameObject m_currentTile;

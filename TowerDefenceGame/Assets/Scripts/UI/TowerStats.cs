@@ -1,22 +1,22 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿//using UnityEngine;
+//using System.Collections;
 
-public class TowerStats : MonoBehaviour {
+//public class TowerStats : MonoBehaviour {
 
-	Pointer point;
+//    Pointer point;
 
-	// Use this for initialization
-	void Start () {
+//    // Use this for initialization
+//    void Start () {
 
-		point = GameObject.FindObjectOfType<Pointer> ();
+//        point = GameObject.FindObjectOfType<Pointer> ();
 	
-	}
+//    }
 	
-	// Update is called once per frame
-	void Update () {
+//    // Update is called once per frame
+//    void Update () {
 
 	
-	}
+//    }
 
 
-}
+//}

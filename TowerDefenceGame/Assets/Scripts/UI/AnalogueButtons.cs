@@ -26,7 +26,7 @@ public class AnalogueButtons : Button, ISelectHandler, IDeselectHandler {
     // This checks if the analogue "button" has been released
     private bool clickReset = true;
 
-    void Start()
+    protected override void Start()
     {
         if (clickAnalogueAxis == "TriggerSelect")
             clickAnalogueAxis = "TriggerSelectRight";

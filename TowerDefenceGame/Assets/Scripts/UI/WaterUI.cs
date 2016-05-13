@@ -28,20 +28,10 @@ public class WaterUI : MonoBehaviour {
 			point.placeTile = false;
 		
 		if (point.placeTile) 
-		{
 			tile = point.currentTile;
-			//GameObject go = Instantiate (Resources.Load ("Prefabs/tiles/" + index.ToString ()), tile.transform.position, tile.transform.rotation) as GameObject;
-			
-			if (Input.GetAxis ("TriggerSelectRight") < 1) 
-			{
-				//Destroy(go);
-			}
-		} 
 		else 
-		{
 			tile = null;
-		}
-		
+
 		if (water && point.placeTile && Input.GetAxis ("TriggerSelectRight") >= 1) 
 		{
 			if (tile != null)

@@ -607,7 +607,7 @@ MonoBehaviour:
   m_damage: 10
   m_spawnPoint: {fileID: 409512}
   m_bullet: {fileID: 106478, guid: 0763730cd45f5a843961aded05c8f8fe, type: 2}
-  m_speed: 5
+  m_speed: 20
 --- !u!114 &11492288
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -634,7 +634,7 @@ MonoBehaviour:
   armPoint1: {fileID: 492298}
   armPoint2: {fileID: 492300}
   pullBack: {fileID: 492302}
-  renderer: {fileID: 12092288}
+  m_renderer: {fileID: 0}
 --- !u!120 &12092288
 LineRenderer:
   m_ObjectHideFlags: 1

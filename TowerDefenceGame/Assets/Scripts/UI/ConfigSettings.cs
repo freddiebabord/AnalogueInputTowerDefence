@@ -13,7 +13,7 @@ public class ConfigSettings
 		}
 	}
 	
-	public int sensitivity = 25;
+	public int sensitivity = 40;
 
 	public bool invertXAxis = true;
 	public bool invertYAxis = true;

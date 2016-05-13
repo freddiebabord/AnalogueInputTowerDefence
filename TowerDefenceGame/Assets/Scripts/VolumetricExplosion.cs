@@ -8,12 +8,6 @@ public class VolumetricExplosion : MonoBehaviour {
     public float explosionDamage = 50;
     Coroutine explosionRoutine;
     public float radius = 5.0f;
-    int maxAIToInfluence = 2;
-    int aiInfluenced = 0;
-	// Use this for initialization
-	void Start () {
-        
-	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -55,13 +49,12 @@ public class VolumetricExplosion : MonoBehaviour {
     IEnumerator ExplodeAfterTime()
     {
         yield return new WaitForSeconds(1.5f);
-        var cols = Physics.OverlapSphere(transform.position, radius);
+        var cols = Physics.OverlapSphere(transform.position, radius / 2);
         foreach (var c in cols)
         {
             if (c.collider.gameObject.tag != "Enemy" & c.collider.gameObject.tag != "Untagged")
             {
                 c.collider.gameObject.BroadcastMessage("ApplyDamage", explosionDamage, SendMessageOptions.DontRequireReceiver);
-//                Die();
             }
         }
     }

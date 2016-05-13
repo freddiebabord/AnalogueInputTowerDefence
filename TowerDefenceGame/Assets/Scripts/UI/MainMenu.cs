@@ -20,8 +20,8 @@ public class MainMenu : MonoBehaviour {
 
     public void Start()
     {
-		if (!Application.genuine)
-			Application.CommitSuicide (1);
+        if (!Application.genuine)
+            Application.Quit();
 
         gameManager = GameObject.FindObjectOfType<GameManager>();
         GameObject.FindObjectOfType<CameraController>().shouldBeActive = false;

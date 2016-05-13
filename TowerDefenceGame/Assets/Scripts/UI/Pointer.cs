@@ -53,7 +53,7 @@ public class Pointer : MonoBehaviour {
         {
 			if (rt.localPosition.x + AnalogueInput.GetLeftHorizontal() > -maxHorizontal-1 &&
 			    rt.localPosition.x + AnalogueInput.GetLeftHorizontal() < maxHorizontal+1)
-				transform.Translate(Vector3.right * (ConfigSettings.Instance.invertXAxis ? AnalogueInput.GetLeftHorizontal() * ConfigSettings.Instance.sensitivity * Time.unscaledDeltaTime : -AnalogueInput.GetLeftHorizontal()) * ConfigSettings.Instance.sensitivity * Time.unscaledDeltaTime);
+				transform.Translate(Vector3.right * (ConfigSettings.Instance.invertXAxis ? AnalogueInput.GetLeftHorizontal() * ConfigSettings.Instance.sensitivity * Time.deltaTime : -AnalogueInput.GetLeftHorizontal()) * ConfigSettings.Instance.sensitivity * Time.deltaTime);
             else
 				cameraController.TranslatCameraHorisontal(AnalogueInput.GetLeftHorizontal());
         }
@@ -62,7 +62,7 @@ public class Pointer : MonoBehaviour {
         {
 			if (rt.localPosition.y + AnalogueInput.GetLeftVertical() > -maxVertical-1 &&
 			    rt.localPosition.y + AnalogueInput.GetLeftVertical() < maxVertical+1)
-				transform.Translate(Vector3.up * (ConfigSettings.Instance.invertYAxis ? AnalogueInput.GetLeftVertical() * ConfigSettings.Instance.sensitivity * Time.unscaledDeltaTime : -AnalogueInput.GetLeftVertical()) * ConfigSettings.Instance.sensitivity * Time.unscaledDeltaTime);
+				transform.Translate(Vector3.up * (ConfigSettings.Instance.invertYAxis ? AnalogueInput.GetLeftVertical() * ConfigSettings.Instance.sensitivity * Time.deltaTime : -AnalogueInput.GetLeftVertical()) * ConfigSettings.Instance.sensitivity * Time.deltaTime);
             else
 				cameraController.TranslatCameraVertical(AnalogueInput.GetLeftVertical());
         }
@@ -105,10 +105,8 @@ public class Pointer : MonoBehaviour {
                 
         }
 
-        if (!overUI)
+        if (!overUI) 
         {
-                    
-            Ray screenToGround = new Ray(transform.position, transform.forward);
             RaycastHit[] hits = Physics.RaycastAll(transform.position, transform.forward);
             foreach(RaycastHit hit in hits)
             {
