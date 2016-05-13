@@ -113,7 +113,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 176710}
   m_LocalRotation: {x: -.0017871079, y: .684653878, z: .00167870836, w: .728864253}
-  m_LocalPosition: {x: -31.6031361, y: .955468655, z: 4.01251268}
+  m_LocalPosition: {x: 9.61971664, y: .623429656, z: 16.8944778}
   m_LocalScale: {x: 1.24687409, y: 1.24687433, z: 1.24687433}
   m_Children:
   - {fileID: 476708}
@@ -210,7 +210,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   loopduration: 3
   fadeDuration: 5
-  explosionDamage: 50
+  explosionDamage: 10
+  radius: 3
 --- !u!198 &19876704
 ParticleSystem:
   m_ObjectHideFlags: 1

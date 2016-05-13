@@ -7,7 +7,7 @@ public class VolumetricExplosion : MonoBehaviour {
     public float fadeDuration = 2.5f;
     public float explosionDamage = 50;
     Coroutine explosionRoutine;
-    float radius = 5.0f;
+    public float radius = 5.0f;
     int maxAIToInfluence = 2;
     int aiInfluenced = 0;
 	// Use this for initialization

@@ -30,7 +30,7 @@ GameObject:
   - 65: {fileID: 6564228}
   m_Layer: 0
   m_Name: TrollBossAI
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -462,7 +462,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 164174}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.01999998, y: 2.58999991, z: -12.0200005}
+  m_LocalPosition: {x: 34.8199997, y: 3, z: 18.2800007}
   m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_Children:
   - {fileID: 436892}
@@ -828,7 +828,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: .0500000007
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
@@ -909,7 +909,7 @@ Animator:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 136892}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 9000000, guid: fb72103d4ac3b744b9bbde5a32187263, type: 3}
   m_Controller: {fileID: 9100000, guid: 53fc1ab87c7dde248aa621621616ac12, type: 2}
   m_CullingMode: 1

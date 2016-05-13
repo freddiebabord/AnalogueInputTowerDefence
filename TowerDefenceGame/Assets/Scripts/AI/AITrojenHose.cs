@@ -5,7 +5,7 @@ public class AITrojenHose : AIBase {
 
     public GameObject objectToSpawn;
     public float spawnRate = 2.5f;
-    public int maxSpawnCount = 20;
+    public int maxSpawnCount = 10;
     private bool isSpawning = false;
     private int currentSpawnCount = 0;
     private RailManager aiNodePathing;

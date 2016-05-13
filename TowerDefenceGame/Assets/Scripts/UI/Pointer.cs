@@ -9,7 +9,7 @@ public class Pointer : MonoBehaviour {
 	public bool placeTower = false;
 	public bool placeTile = false;
 
-	GameObject go;
+	public GameObject selectedTower;
 
 	RectTransform rt;
     AnalogueButtons selectedButton;
@@ -24,7 +24,7 @@ public class Pointer : MonoBehaviour {
     public Text towerName;
     public Text towerLevel;
     public Text towerDamage;
-
+    public GameObject selectedTowerEffect;
     public bool invertXAxis = false, invertYAxis = false;
 
     private bool overUI = false;
@@ -88,7 +88,9 @@ public class Pointer : MonoBehaviour {
 					}
 				}
 			}
-		} else {
+		} 
+        else 
+        {
 			overUI = false;
 			if(selectedButton){
 				selectedButton.OnDeselect();
@@ -96,49 +98,56 @@ public class Pointer : MonoBehaviour {
 			}
 		}
 
+        if (AnalogueInput.GetLeftTrigger() >= 1)
+        {
+            if(towerInfo.activeInHierarchy)
+                DiableTowerSelctionUIAndEffect();
+                
+        }
+
         if (!overUI)
         {
+                    
             Ray screenToGround = new Ray(transform.position, transform.forward);
-            RaycastHit hit;
-            if (Physics.Raycast(screenToGround, out hit, 150))
+            RaycastHit[] hits = Physics.RaycastAll(transform.position, transform.forward);
+            foreach(RaycastHit hit in hits)
             {
                 Debug.DrawLine(transform.position, hit.transform.position, Color.yellow);
-                if (hit.collider.gameObject.GetComponentInChildren<TowerClass>() && AnalogueInput.GetRightTrigger() >= 1)
+                if (hit.collider.gameObject.GetComponent<NodePath>())
                 {
-                    TowerClass tc = hit.collider.gameObject.GetComponentInChildren<TowerClass>();
-                    towerInfo.SetActive(true);
-                    towerName.text = hit.collider.gameObject.name;
-                    towerLevel.text = "Level: " + tc.GetLevel();
-                    towerDamage.text = "Health: " + Mathf.RoundToInt(tc.GetHealth());
+                    if (placeTower)
+                    {
+                        if (currentTile != hit.collider.gameObject)
+                        {
+                            if (hit.collider.gameObject.GetComponent<NodePath>().pathType == NodePath.PathType.Grass)
+                            {
+                                if (currentTile != null)
+                                    currentTile.renderer.material.SetColor("_DiffuseColour", currentTileOriginalColour);
+                                currentTile = hit.collider.gameObject;
+                                currentTileOriginalColour = currentTile.renderer.material.GetColor("_DiffuseColour");
+                                currentTile.renderer.material.SetColor("_DiffuseColour", new Color(0, 1, 0, 1));
+                            }
+                            else
+                            {
+                                if (currentTile != null)
+                                    currentTile.renderer.material.SetColor("_DiffuseColour", currentTileOriginalColour);
+                                currentTile = hit.collider.gameObject;
+                                currentTileOriginalColour = currentTile.renderer.material.GetColor("_DiffuseColour");
+                                currentTile.renderer.material.SetColor("_DiffuseColour", new Color(1, 0, 0, 1));
 
-					go = hit.collider.gameObject;
-                } 
-                else if (hit.collider.gameObject.GetComponent<NodePath>())
-                {
-					if(placeTower)
-					{
-	                    if (currentTile != hit.collider.gameObject)
-	                    {
-	                        if (hit.collider.gameObject.GetComponent<NodePath>().pathType == NodePath.PathType.Grass)
-	                        {
-	                            if (currentTile != null)
-	                                currentTile.renderer.material.SetColor("_DiffuseColour", currentTileOriginalColour);
-	                            currentTile = hit.collider.gameObject;
-	                            currentTileOriginalColour = currentTile.renderer.material.GetColor("_DiffuseColour");
-	                            currentTile.renderer.material.SetColor("_DiffuseColour", new Color(0, 1, 0, 1));
-	                        }
-	                        else
-	                        {
-	                            if (currentTile != null)
-	                                currentTile.renderer.material.SetColor("_DiffuseColour", currentTileOriginalColour);
-	                            currentTile = hit.collider.gameObject;
-	                            currentTileOriginalColour = currentTile.renderer.material.GetColor("_DiffuseColour");
-	                            currentTile.renderer.material.SetColor("_DiffuseColour", new Color(1, 0, 0, 1));
 
-	                                
-	                        }
-	                    }
-					}
+                            }
+                        }
+                    }
+                    else if (AnalogueInput.GetRightTrigger() >= 1)
+                    {
+                        TowerBase tc = hit.collider.gameObject.GetComponent<NodePath>().placedTower;
+                        if (tc != null)
+                        {
+                            selectedTower = tc.gameObject;
+                            EnableTowerSelectionUIAndEffect();
+                        }
+                    }
                 }
             }
         }
@@ -168,6 +177,17 @@ public class Pointer : MonoBehaviour {
                             raycastResults[i].gameObject.GetComponent<AnalogueButtons>().OnClick();
 						}
                     }
+                    if(raycastResults[i].gameObject.GetComponent<NodePath>())
+                    {
+                        if(raycastResults[i].gameObject.GetComponent<NodePath>().placedTower != null)
+                        {
+                            selectedTower = raycastResults[i].gameObject.GetComponent<NodePath>().placedTower.gameObject;
+                            towerInfo.SetActive(true);
+                            towerName.text = selectedTower.name;
+                            towerLevel.text = "Level: " + selectedTower.GetComponent<TowerBase>().Level;
+                            towerDamage.text = "Health: " + Mathf.RoundToInt(selectedTower.GetComponent<TowerBase>().Health);
+                        }
+                    }
                 }
             } 
         }
@@ -177,68 +197,21 @@ public class Pointer : MonoBehaviour {
 
 	}
 
-	public void Sell()
-	{
-		if (go != null) 
-		{
+    public void EnableTowerSelectionUIAndEffect()
+    {
+        TowerBase tc = selectedTower.GetComponent<TowerBase>();
+        towerInfo.SetActive(true);
+        selectedTowerEffect.SetActive(true);
+        selectedTowerEffect.transform.position = selectedTower.transform.position;
+        towerName.text = selectedTower.gameObject.name;
+        towerLevel.text = "Level: " + tc.Level;
+        towerDamage.text = "Health: " + Mathf.RoundToInt(tc.Health);
+    }
 
-			if (go.tag == "Arrow") 
-			{
-				var bui = GameObject.FindObjectOfType<ArrowUI> ();
-			
-				float gold = bui.cost - (10 * (bui.cost / bui.cost));
-				GameManager.Instance.AddGold (gold);
-				GameObject tiley = SearchTile (go.gameObject.transform.position);
-				tiley.GetComponent<NodePath> ().towerPlaced = false;
-				Destroy (go);
-			} 
-			else if (go.tag == "Mage") 
-			{
-				var bui = GameObject.FindObjectOfType<Magic> ();
-			
-				float gold = bui.cost - (10 * (bui.cost / bui.cost));
-				GameManager.Instance.AddGold (gold);
-				GameObject tiley = SearchTile (go.gameObject.transform.position);
-				tiley.GetComponent<NodePath> ().towerPlaced = false;
-				Destroy (go);
-			} 
-			else if (go.tag == "Balista") 
-			{
-				var bui = GameObject.FindObjectOfType<ballistaUI> ();
-			
-				float gold = bui.cost - (10 * (bui.cost / bui.cost));
-				GameManager.Instance.AddGold (gold);
-				GameObject tiley = SearchTile (go.gameObject.transform.position);
-				tiley.GetComponent<NodePath> ().towerPlaced = false;
-				Destroy (go);
-			
-			} 
-			else if (go.tag == "Freeze") 
-			{
-				var bui = GameObject.FindObjectOfType<Ice> ();
-			
-				float gold = bui.cost - (10 * (bui.cost / bui.cost));
-				GameManager.Instance.AddGold (gold);
-				GameObject tiley = SearchTile (go.gameObject.transform.position);
-				tiley.GetComponent<NodePath> ().towerPlaced = false;
-				Destroy (go);
-			
-			}
-		}
-	}
-
-	GameObject SearchTile(Vector3 pos)
-	{
-		GameObject[] tiles = GameObject.FindGameObjectsWithTag ("Grass");
-		
-		foreach (GameObject t in tiles) 
-		{
-			if(t.transform.position == pos)
-				return t;
-			else
-				continue;
-		}
-		
-		return null;
-	}
+    public void DiableTowerSelctionUIAndEffect()
+    {
+        towerInfo.SetActive(false);
+        selectedTowerEffect.SetActive(false);
+    }
 }
+
