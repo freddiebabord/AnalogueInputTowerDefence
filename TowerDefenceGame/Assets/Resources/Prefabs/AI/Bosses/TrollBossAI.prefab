@@ -1,5 +1,21 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &136892
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 436892}
+  - 95: {fileID: 9536892}
+  m_Layer: 0
+  m_Name: TrollBossAI
+  m_TagString: Enemy
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &164174
 GameObject:
   m_ObjectHideFlags: 0
@@ -8,21 +24,20 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 464174}
-  - 95: {fileID: 9564228}
   - 114: {fileID: 11464228}
   - 82: {fileID: 8264228}
   - 54: {fileID: 5464228}
   - 65: {fileID: 6564228}
   m_Layer: 0
   m_Name: TrollBossAI
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!1 &164176
 GameObject:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
@@ -37,7 +52,7 @@ GameObject:
   m_IsActive: 1
 --- !u!1 &164178
 GameObject:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
@@ -426,6 +441,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &436892
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 136892}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -.925000012, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 464176}
+  - {fileID: 464178}
+  m_Father: {fileID: 464174}
+  m_RootOrder: 0
 --- !u!4 &464174
 Transform:
   m_ObjectHideFlags: 1
@@ -433,11 +462,10 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 164174}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 16.9014359, y: -2.67972161e-16, z: 12.0683937}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalPosition: {x: 19.9300003, y: 2.54999995, z: 20.9200001}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_Children:
-  - {fileID: 464176}
-  - {fileID: 464178}
+  - {fileID: 436892}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &464176
@@ -451,7 +479,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 464180}
-  m_Father: {fileID: 464174}
+  m_Father: {fileID: 436892}
   m_RootOrder: 0
 --- !u!4 &464178
 Transform:
@@ -463,7 +491,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 464174}
+  m_Father: {fileID: 436892}
   m_RootOrder: 1
 --- !u!4 &464180
 Transform:
@@ -815,7 +843,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 2, z: 1}
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!82 &8264228
 AudioSource:
   m_ObjectHideFlags: 1
@@ -824,7 +852,7 @@ AudioSource:
   m_GameObject: {fileID: 164174}
   m_Enabled: 1
   serializedVersion: 3
-  m_audioClip: {fileID: 8300000, guid: 6cc9221ba58eaa64b9386f654caab41a, type: 3}
+  m_audioClip: {fileID: 8300000, guid: aea72bbc163829546b6897f74b412537, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -874,13 +902,13 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
---- !u!95 &9564228
+--- !u!95 &9536892
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 164174}
+  m_GameObject: {fileID: 136892}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: fb72103d4ac3b744b9bbde5a32187263, type: 3}
   m_Controller: {fileID: 9100000, guid: 53fc1ab87c7dde248aa621621616ac12, type: 2}
@@ -901,7 +929,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 20000
-  speed: 3
+  speed: 2
   damage: 0
   flying: 0
   goldDrop: 50
@@ -910,7 +938,7 @@ MonoBehaviour:
   railUpdatingEntity: 0
   shadow: {fileID: 0}
   explosion: {fileID: 0}
-  screemEffect: {fileID: 0}
+  screemEffect: {fileID: 8264228}
   altScreemEffect: {fileID: 8300000, guid: aea72bbc163829546b6897f74b412537, type: 3}
 --- !u!137 &13764228
 SkinnedMeshRenderer:

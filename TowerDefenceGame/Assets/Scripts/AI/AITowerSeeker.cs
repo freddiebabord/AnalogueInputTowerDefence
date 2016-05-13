@@ -33,8 +33,7 @@ public class AITowerSeeker : AIBase {
 
     void OnCollisionEnter(Collision collision)
     {
-            Debug.Log(collision.collider.gameObject);
-            if (!tags.Contains(collision.collider.gameObject.tag))
+        if (!tags.Contains(collision.collider.gameObject.tag))
         {
             collision.collider.gameObject.BroadcastMessage("ApplyDamage", damage, SendMessageOptions.RequireReceiver);
             Die();

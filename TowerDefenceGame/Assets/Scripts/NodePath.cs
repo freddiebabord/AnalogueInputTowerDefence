@@ -20,5 +20,5 @@ public class NodePath : MonoBehaviour
 
 	public bool towerPlaced = false;
 
-    public TowerClass placedTower;
+    public TowerBase placedTower;
 }

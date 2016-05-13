@@ -20,7 +20,8 @@ public class TowerPlacement : MonoBehaviour {
         {
             panel.SetActive(true);
             //animation["PlaceItemAnimation"].speed = 1;
-            animation.Play();
+            if (animation)
+                animation.Play();
             done = true;
         }
         else if (!isPlaying && !done)

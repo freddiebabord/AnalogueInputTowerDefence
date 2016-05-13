@@ -26,7 +26,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 498636}
-  - 114: {fileID: 11498638}
   m_Layer: 0
   m_Name: MountPoint
   m_TagString: Untagged
@@ -604,24 +603,6 @@ MonoBehaviour:
   armPoint2: {fileID: 498626}
   pullBack: {fileID: 498616}
   renderer: {fileID: 12098638}
---- !u!114 &11498638
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 198616}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe465f93c701cff478aa5141363adf59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bullet: {fileID: 157974, guid: deffc2f8fcbd0ec4fba387386baede54, type: 2}
-  spawnPoint: {fileID: 198626}
-  health: 100
-  radius: 10
-  speed: 0
-  exp: 0
-  cost: 100
 --- !u!120 &12098638
 LineRenderer:
   m_ObjectHideFlags: 1

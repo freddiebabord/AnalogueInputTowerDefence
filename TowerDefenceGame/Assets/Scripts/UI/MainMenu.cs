@@ -42,18 +42,18 @@ public class MainMenu : MonoBehaviour {
 
     public void LoadClassicGame()
     {
+		GetComponent<Levels> ().DisableButtons ();
         gameManager.gameType = GameManager.GameType.Classic;
         difficultyTransition.StartTranstion();
 		showDifficultyPanel = true;
-		GetComponent<Levels> ().DisableButtons ();
     }
 
     public void LoadSurvivalGame()
     {
+		GetComponent<Levels> ().DisableButtons ();
         gameManager.gameType = GameManager.GameType.Infinite;
         difficultyTransition.StartTranstion();
 		showDifficultyPanel = true;
-		GetComponent<Levels> ().DisableButtons ();
     }
 
     public void HideCanvas()
